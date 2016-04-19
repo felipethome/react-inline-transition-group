@@ -1,6 +1,6 @@
 var React = require('react');
 var ReactTransitionGroup = require('react-addons-transition-group');
-var FadeContainer = require('./transition-container');
+var TransitionContainer = require('./transition-container');
 
 var Fade = React.createClass({
   displayName: 'Fade',
@@ -9,11 +9,9 @@ var Fade = React.createClass({
     afterStyles: React.PropTypes.object.isRequired,
     beforeStyles: React.PropTypes.object.isRequired,
     children: React.PropTypes.node,
-    fadeOut: React.PropTypes.bool,
     onComponentAppear: React.PropTypes.func,
     onComponentEnter: React.PropTypes.func,
     onComponentLeave: React.PropTypes.func,
-    style: React.PropTypes.object,
     transitionAppearDelay: React.PropTypes.number,
     transitionAppearFunction: React.PropTypes.string,
     transitionAppearTimeout: React.PropTypes.number,
@@ -30,12 +28,11 @@ var Fade = React.createClass({
       <ReactTransitionGroup>
         {React.Children.map(this.props.children, function (child, i) {
           return (
-            <FadeContainer
+            <TransitionContainer
               key={i}
               id={((child || {}).props || {}).id}
               afterStyles={this.props.afterStyles}
               beforeStyles={this.props.beforeStyles}
-              fadeOut={this.props.fadeOut}
               onComponentAppear={this.props.onComponentAppear}
               onComponentEnter={this.props.onComponentEnter}
               onComponentLeave={this.props.onComponentLeave}
@@ -48,10 +45,9 @@ var Fade = React.createClass({
               transitionLeaveDelay={this.props.transitionLeaveDelay}
               transitionLeaveFunction={this.props.transitionLeaveFunction}
               transitionLeaveTimeout={this.props.transitionLeaveTimeout}
-              style={this.props.style}
             >
               {child}
-            </FadeContainer>
+            </TransitionContainer>
           );
         }, this)}
       </ReactTransitionGroup>

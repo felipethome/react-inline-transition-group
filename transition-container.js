@@ -1,13 +1,14 @@
 var React = require('react');
 var merge = require('../utils/merge');
 
-var FadeContainer = React.createClass({
-  displayName: 'FadeContainer',
+var TransitionContainer = React.createClass({
+  displayName: 'TransitionContainer',
 
   propTypes: {
     afterStyles: React.PropTypes.object.isRequired,
     beforeStyles: React.PropTypes.object.isRequired,
     children: React.PropTypes.node,
+    component: React.PropTypes.string,
     id: React.PropTypes.string || React.PropTypes.number,
     onComponentAppear: React.PropTypes.func,
     onComponentEnter: React.PropTypes.func,
@@ -25,6 +26,7 @@ var FadeContainer = React.createClass({
 
   getDefaultProps: function () {
     return {
+      component: 'div',
       transitionAppearDelay: 0,
       transitionAppearFunction: 'ease-out',
       transitionAppearTimeout: 0,
@@ -181,21 +183,19 @@ var FadeContainer = React.createClass({
       },
     };
 
+    var props = {
+      style: merge(
+        styles.transition,
+        this.props.beforeStyles,
+        this.state.phase && this.props.afterStyles
+      ),
+    };
+
     return (
-      <div
-        style={
-          merge(
-            styles.transition,
-            this.props.beforeStyles,
-            this.state.phase && this.props.afterStyles
-          )
-        }
-      >
-        {this.props.children}
-      </div>
+      React.createElement(this.props.component, props, this.props.children)
     );
   },
 
 });
 
-module.exports = FadeContainer;
+module.exports = TransitionContainer;

@@ -192,7 +192,7 @@ var TransitionContainer = React.createClass({
     };
 
     return (
-      React.createElement(this.props.component, props, this.props.children)
+      React.cloneElement(this.props.children, props)
     );
   },
 

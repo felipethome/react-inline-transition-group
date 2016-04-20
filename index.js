@@ -24,9 +24,15 @@ var Transition = React.createClass({
     transitionLeaveTimeout: React.PropTypes.number,
   },
 
+  getDefaultProps: function () {
+    return {
+      component: 'div',
+    };
+  },
+
   render: function () {
     return (
-      <ReactTransitionGroup component="div">
+      <ReactTransitionGroup component={this.props.component}>
         {React.Children.map(this.props.children, function (child, i) {
           return (
             <TransitionContainer

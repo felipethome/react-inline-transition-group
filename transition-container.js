@@ -8,7 +8,6 @@ var TransitionContainer = React.createClass({
     afterStyles: React.PropTypes.object.isRequired,
     beforeStyles: React.PropTypes.object.isRequired,
     children: React.PropTypes.node,
-    component: React.PropTypes.string,
     id: React.PropTypes.string || React.PropTypes.number,
     onComponentAppear: React.PropTypes.func,
     onComponentEnter: React.PropTypes.func,
@@ -26,7 +25,6 @@ var TransitionContainer = React.createClass({
 
   getDefaultProps: function () {
     return {
-      component: 'div',
       transitionAppearDelay: 0,
       transitionAppearFunction: 'ease-out',
       transitionAppearTimeout: 0,

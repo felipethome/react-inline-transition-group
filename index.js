@@ -10,9 +10,9 @@ var Transition = React.createClass({
     childrenAppearStyle: React.PropTypes.object,
     childrenBaseStyle: React.PropTypes.object,
     childrenEnterStyle: React.PropTypes.object,
+    childrenLeaveStyle: React.PropTypes.object,
     component: React.PropTypes.string,
     id: React.PropTypes.string || React.PropTypes.number,
-    leaveStyle: React.PropTypes.object,
     onComponentAppear: React.PropTypes.func,
     onComponentEnter: React.PropTypes.func,
     onComponentLeave: React.PropTypes.func,
@@ -39,7 +39,7 @@ var Transition = React.createClass({
               childrenBaseStyle={this.props.childrenBaseStyle}
               childrenAppearStyle={this.props.childrenAppearStyle}
               childrenEnterStyle={this.props.childrenEnterStyle}
-              leaveStyle={this.props.leaveStyle}
+              childrenLeaveStyle={this.props.childrenLeaveStyle}
               onComponentAppear={this.props.onComponentAppear}
               onComponentEnter={this.props.onComponentEnter}
               onComponentLeave={this.props.onComponentLeave}

@@ -11,8 +11,8 @@ var TransitionContainer = React.createClass({
     childrenAppearStyle: React.PropTypes.object,
     childrenBaseStyle: React.PropTypes.object,
     childrenEnterStyle: React.PropTypes.object,
+    childrenLeaveStyle: React.PropTypes.object,
     id: React.PropTypes.string || React.PropTypes.number,
-    leaveStyle: React.PropTypes.object,
     onComponentAppear: React.PropTypes.func,
     onComponentEnter: React.PropTypes.func,
     onComponentLeave: React.PropTypes.func,
@@ -63,7 +63,7 @@ var TransitionContainer = React.createClass({
     var currentStyle;
     if (phase === 'appear') currentStyle = this.props.childrenAppearStyle;
     else if (phase === 'enter') currentStyle = this.props.childrenEnterStyle;
-    else currentStyle = this.props.leaveStyle;
+    else currentStyle = this.props.childrenLeaveStyle;
 
     var mergedStyle = merge(this.props.childrenBaseStyle, currentStyle);
 
@@ -108,7 +108,7 @@ var TransitionContainer = React.createClass({
   _transition: function (callback, phase) {
     if ((phase === 'appear' && !this.props.childrenAppearStyle) ||
         (phase === 'enter' && !this.props.childrenEnterStyle) ||
-        (phase === 'leave' && !this.props.leaveStyle)) {
+        (phase === 'leave' && !this.props.childrenLeaveStyle)) {
       callback();
     }
     else {

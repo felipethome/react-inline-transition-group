@@ -11,16 +11,16 @@ var TransitionContainer = React.createClass({
     baseStyle: React.PropTypes.object,
     children: React.PropTypes.node,
     enterStyle: React.PropTypes.object,
-    leaveStyle: React.PropTypes.object,
     id: React.PropTypes.string || React.PropTypes.number,
+    leaveStyle: React.PropTypes.object,
     onComponentAppear: React.PropTypes.func,
     onComponentEnter: React.PropTypes.func,
     onComponentLeave: React.PropTypes.func,
   },
 
   componentWillMount: function () {
-    this._dispatchTimeout;
-    this._callbackTimeout;
+    this._dispatchTimeout = null;
+    this._callbackTimeout = null;
     this._tick = 17;
   },
 
@@ -88,7 +88,7 @@ var TransitionContainer = React.createClass({
       else factor = 1;
       longestTime = Math.max(parseFloat(groups[1]) * factor, longestTime);
     }
-    
+
     return longestTime;
   },
 
@@ -100,7 +100,7 @@ var TransitionContainer = React.createClass({
   },
 
   _registerCallbackTimeout: function (callback, maxTransitionTime) {
-    var timeoutId = setTimeout(function () {
+    this._callbackTimeout = setTimeout(function () {
       callback();
     }, maxTransitionTime);
   },

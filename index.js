@@ -6,16 +6,17 @@ var Transition = React.createClass({
   displayName: 'Transition',
 
   propTypes: {
-    appearStyle: React.PropTypes.object,
-    baseStyle: React.PropTypes.object,
     children: React.PropTypes.node,
+    childrenAppearStyle: React.PropTypes.object,
+    childrenBaseStyle: React.PropTypes.object,
+    childrenEnterStyle: React.PropTypes.object,
     component: React.PropTypes.string,
-    enterStyle: React.PropTypes.object,
     id: React.PropTypes.string || React.PropTypes.number,
     leaveStyle: React.PropTypes.object,
     onComponentAppear: React.PropTypes.func,
     onComponentEnter: React.PropTypes.func,
     onComponentLeave: React.PropTypes.func,
+    style: React.PropTypes.object,
   },
 
   getDefaultProps: function () {
@@ -26,15 +27,18 @@ var Transition = React.createClass({
 
   render: function () {
     return (
-      <ReactTransitionGroup component={this.props.component}>
+      <ReactTransitionGroup
+        component={this.props.component}
+        style={this.props.style}
+      >
         {React.Children.map(this.props.children, function (child, i) {
           return (
             <TransitionContainer
               key={i}
               id={((child || {}).props || {}).id}
-              baseStyle={this.props.baseStyle}
-              appearStyle={this.props.appearStyle}
-              enterStyle={this.props.enterStyle}
+              childrenBaseStyle={this.props.childrenBaseStyle}
+              childrenAppearStyle={this.props.childrenAppearStyle}
+              childrenEnterStyle={this.props.childrenEnterStyle}
               leaveStyle={this.props.leaveStyle}
               onComponentAppear={this.props.onComponentAppear}
               onComponentEnter={this.props.onComponentEnter}

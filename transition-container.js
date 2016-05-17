@@ -7,10 +7,10 @@ var TransitionContainer = React.createClass({
   displayName: 'TransitionContainer',
 
   propTypes: {
-    appearStyle: React.PropTypes.object,
-    baseStyle: React.PropTypes.object,
     children: React.PropTypes.node,
-    enterStyle: React.PropTypes.object,
+    childrenAppearStyle: React.PropTypes.object,
+    childrenBaseStyle: React.PropTypes.object,
+    childrenEnterStyle: React.PropTypes.object,
     id: React.PropTypes.string || React.PropTypes.number,
     leaveStyle: React.PropTypes.object,
     onComponentAppear: React.PropTypes.func,
@@ -61,13 +61,13 @@ var TransitionContainer = React.createClass({
 
   _computeNewStyle: function (phase) {
     var currentStyle;
-    if (phase === 'appear') currentStyle = this.props.appearStyle;
-    else if (phase === 'enter') currentStyle = this.props.enterStyle;
+    if (phase === 'appear') currentStyle = this.props.childrenAppearStyle;
+    else if (phase === 'enter') currentStyle = this.props.childrenEnterStyle;
     else currentStyle = this.props.leaveStyle;
 
-    var mergedStyle = merge(this.props.baseStyle, currentStyle);
-    var styleStr = '';
+    var mergedStyle = merge(this.props.childrenBaseStyle, currentStyle);
 
+    var styleStr = '';
     Object.keys(mergedStyle).forEach(function (key) {
       styleStr += hyphenateStyleName(key) + ':' + mergedStyle[key] + ';';
     });
@@ -106,8 +106,8 @@ var TransitionContainer = React.createClass({
   },
 
   _transition: function (callback, phase) {
-    if ((phase === 'appear' && !this.props.appearStyle) ||
-        (phase === 'enter' && !this.props.enterStyle) ||
+    if ((phase === 'appear' && !this.props.childrenAppearStyle) ||
+        (phase === 'enter' && !this.props.childrenEnterStyle) ||
         (phase === 'leave' && !this.props.leaveStyle)) {
       callback();
     }
@@ -135,9 +135,9 @@ var TransitionContainer = React.createClass({
   },
 
   render: function () {
-    var props = {style: this.props.baseStyle};
-
+    var props = {style: this.props.childrenBaseStyle};
     return (
+
       React.cloneElement(this.props.children, props)
     );
   },

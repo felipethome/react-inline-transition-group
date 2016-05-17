@@ -6,22 +6,16 @@ var Transition = React.createClass({
   displayName: 'Transition',
 
   propTypes: {
-    afterStyles: React.PropTypes.object.isRequired,
-    beforeStyles: React.PropTypes.object.isRequired,
+    appearStyle: React.PropTypes.object,
+    baseStyle: React.PropTypes.object,
     children: React.PropTypes.node,
     component: React.PropTypes.string,
+    enterStyle: React.PropTypes.object,
+    leaveStyle: React.PropTypes.object,
+    id: React.PropTypes.string || React.PropTypes.number,
     onComponentAppear: React.PropTypes.func,
     onComponentEnter: React.PropTypes.func,
     onComponentLeave: React.PropTypes.func,
-    transitionAppearDelay: React.PropTypes.number,
-    transitionAppearFunction: React.PropTypes.string,
-    transitionAppearTimeout: React.PropTypes.number,
-    transitionEnterDelay: React.PropTypes.number,
-    transitionEnterFunction: React.PropTypes.string,
-    transitionEnterTimeout: React.PropTypes.number,
-    transitionLeaveDelay: React.PropTypes.number,
-    transitionLeaveFunction: React.PropTypes.string,
-    transitionLeaveTimeout: React.PropTypes.number,
   },
 
   getDefaultProps: function () {
@@ -38,21 +32,13 @@ var Transition = React.createClass({
             <TransitionContainer
               key={i}
               id={((child || {}).props || {}).id}
-              afterStyles={this.props.afterStyles}
-              beforeStyles={this.props.beforeStyles}
-              component={this.props.component}
+              baseStyle={this.props.baseStyle}
+              appearStyle={this.props.appearStyle}
+              enterStyle={this.props.enterStyle}
+              leaveStyle={this.props.leaveStyle}
               onComponentAppear={this.props.onComponentAppear}
               onComponentEnter={this.props.onComponentEnter}
               onComponentLeave={this.props.onComponentLeave}
-              transitionAppearDelay={this.props.transitionAppearDelay}
-              transitionAppearFunction={this.props.transitionAppearFunction}
-              transitionAppearTimeout={this.props.transitionAppearTimeout}
-              transitionEnterDelay={this.props.transitionEnterDelay}
-              transitionEnterFunction={this.props.transitionEnterFunction}
-              transitionEnterTimeout={this.props.transitionEnterTimeout}
-              transitionLeaveDelay={this.props.transitionLeaveDelay}
-              transitionLeaveFunction={this.props.transitionLeaveFunction}
-              transitionLeaveTimeout={this.props.transitionLeaveTimeout}
             >
               {child}
             </TransitionContainer>

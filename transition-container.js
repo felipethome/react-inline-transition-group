@@ -1,83 +1,36 @@
 var React = require('react');
+var ReactDOM = require('react-dom');
+var hyphenateStyleName = require('fbjs/lib/hyphenateStyleName');
 var merge = require('../utils/merge');
 
 var TransitionContainer = React.createClass({
   displayName: 'TransitionContainer',
 
   propTypes: {
-    afterStyles: React.PropTypes.object.isRequired,
-    beforeStyles: React.PropTypes.object.isRequired,
+    appearStyle: React.PropTypes.object,
+    baseStyle: React.PropTypes.object,
     children: React.PropTypes.node,
+    enterStyle: React.PropTypes.object,
+    leaveStyle: React.PropTypes.object,
     id: React.PropTypes.string || React.PropTypes.number,
     onComponentAppear: React.PropTypes.func,
     onComponentEnter: React.PropTypes.func,
     onComponentLeave: React.PropTypes.func,
-    transitionAppearDelay: React.PropTypes.number,
-    transitionAppearFunction: React.PropTypes.string,
-    transitionAppearTimeout: React.PropTypes.number,
-    transitionEnterDelay: React.PropTypes.number,
-    transitionEnterFunction: React.PropTypes.string,
-    transitionEnterTimeout: React.PropTypes.number,
-    transitionLeaveDelay: React.PropTypes.number,
-    transitionLeaveFunction: React.PropTypes.string,
-    transitionLeaveTimeout: React.PropTypes.number,
-  },
-
-  getDefaultProps: function () {
-    return {
-      transitionAppearDelay: 0,
-      transitionAppearFunction: 'ease-out',
-      transitionAppearTimeout: 0,
-      transitionEnterDelay: 0,
-      transitionEnterFunction: 'ease-out',
-      transitionEnterTimeout: 0,
-      transitionLeaveDelay: 0,
-      transitionLeaveFunction: 'ease-out',
-      transitionLeaveTimeout: 0,
-    };
-  },
-
-  getInitialState: function () {
-    return {
-      phase: false,
-    };
   },
 
   componentWillMount: function () {
-    this._dispatchTimeout = null;
-    this._lastTransition = null;
-    this._timeoutStack = [];
+    this._dispatchTimeout;
+    this._callbackTimeout;
     this._tick = 17;
   },
 
   componentWillUnmount: function () {
     clearTimeout(this._dispatchTimeout);
-
-    this._timeoutStack.forEach(function (timeoutId) {
-      clearTimeout(timeoutId);
-    });
-  },
-
-  componentWillEnter: function (callback) {
-    this._transition(
-      callback,
-      true,
-      this.props.transitionEnterTimeout + this.props.transitionEnterDelay
-    );
-  },
-
-  componentDidEnter: function () {
-    if (this.props.onComponentEnter) {
-      this.props.onComponentEnter(this.props.id);
-    }
+    clearTimeout(this._callbackTimeout);
   },
 
   componentWillAppear: function (callback) {
-    this._transition(
-      callback,
-      true,
-      this.props.transitionAppearTimeout + this.props.transitionAppearDelay
-    );
+    this._transition(callback, 'appear');
   },
 
   componentDidAppear: function () {
@@ -88,106 +41,101 @@ var TransitionContainer = React.createClass({
     this._appeared = true;
   },
 
+  componentWillEnter: function (callback) {
+    this._transition(callback, 'enter');
+  },
+
+  componentDidEnter: function () {
+    if (this.props.onComponentEnter) {
+      this.props.onComponentEnter(this.props.id);
+    }
+  },
+
   componentWillLeave: function (callback) {
-    this._transition(
-      callback,
-      false,
-      this.props.transitionLeaveTimeout + this.props.transitionLeaveDelay
-    );
+    this._transition(callback, 'leave');
   },
 
   componentDidLeave: function () {
     if (this.props.onComponentLeave) this.props.onComponentLeave(this.props.id);
   },
 
-  _transition: function (callback, phase, time) {
-    var timeoutId = null;
+  _computeNewStyle: function (phase) {
+    var currentStyle;
+    if (phase === 'appear') currentStyle = this.props.appearStyle;
+    else if (phase === 'enter') currentStyle = this.props.enterStyle;
+    else currentStyle = this.props.leaveStyle;
 
-    var timeOver = function () {
-      clearTimeout(timeoutId);
-      callback();
-    };
+    var mergedStyle = merge(this.props.baseStyle, currentStyle);
+    var styleStr = '';
 
-    this._queueTransition(phase);
+    Object.keys(mergedStyle).forEach(function (key) {
+      styleStr += hyphenateStyleName(key) + ':' + mergedStyle[key] + ';';
+    });
 
-    if (time) {
-      timeoutId = setTimeout(timeOver, time);
-      this._timeoutStack.push(timeoutId);
-    }
-    else {
-      callback();
-    }
+    return styleStr;
   },
 
-  _queueTransition: function (value) {
-    this._lastTransition = value;
+  _getTimeInMilliseconds: function (transitionPropValue) {
+    var timeArray = transitionPropValue.split(',');
+    var longestTime = 0;
+    var factor;
+    var re = /([0-9]*\.?[0-9]+)(m?s)/;
+    var groups;
 
-    if (!this._dispatchTimeout) {
+    for (var i = 0; i < timeArray.length; i++) {
+      groups = timeArray[i].match(re);
+      if (groups[2] === 's') factor = 1000;
+      else factor = 1;
+      longestTime = Math.max(parseFloat(groups[1]) * factor, longestTime);
+    }
+    
+    return longestTime;
+  },
+
+  _getTransitionMaximumTime: function (transitionDuration, transitionDelay) {
+    var maxDuration = this._getTimeInMilliseconds(transitionDuration);
+    var maxDelay = this._getTimeInMilliseconds(transitionDelay);
+
+    return maxDuration + maxDelay;
+  },
+
+  _registerCallbackTimeout: function (callback, maxTransitionTime) {
+    var timeoutId = setTimeout(function () {
+      callback();
+    }, maxTransitionTime);
+  },
+
+  _transition: function (callback, phase) {
+    if ((phase === 'appear' && !this.props.appearStyle) ||
+        (phase === 'enter' && !this.props.enterStyle) ||
+        (phase === 'leave' && !this.props.leaveStyle)) {
+      callback();
+    }
+    else {
       this._dispatchTimeout = setTimeout(
-        this._executeTransition,
+        this._executeTransition.bind(this, callback, phase),
         this._tick
       );
     }
   },
 
-  _executeTransition: function () {
-    this.setState({
-      phase: this._lastTransition,
-    }, function () {
-      this._dispatchTimeout = null;
-    });
-  },
+  _executeTransition: function (callback, phase) {
+    var node = ReactDOM.findDOMNode(this);
 
-  _getTransitionParameters: function () {
-    var transition = {};
+    if (!node) return;
 
-    if (this.state.phase) {
-      if (this._appeared) {
-        transition.func = this.props.transitionEnterFunction;
-        transition.duration = this.props.transitionEnterTimeout;
-        transition.delay = this.props.transitionEnterDelay;
-      }
-      else {
-        transition.func = this.props.transitionAppearFunction;
-        transition.duration = this.props.transitionAppearTimeout;
-        transition.delay = this.props.transitionAppearDelay;
-      }
-    }
-    else {
-      transition.func = this.props.transitionLeaveFunction;
-      transition.duration = this.props.transitionLeaveTimeout;
-      transition.delay = this.props.transitionLeaveDelay;
-    }
+    node.setAttribute('style', this._computeNewStyle(phase));
 
-    return transition;
-  },
+    var maxTransitionTime = this._getTransitionMaximumTime(
+      getComputedStyle(node).transitionDuration,
+      getComputedStyle(node).transitionDelay
+    );
 
-  _getCSSTransitionString: function () {
-    var transition = this._getTransitionParameters();
-    var transitionStr = '';
-
-    if (transition.duration) {
-      transitionStr = ((transition.delay) ? transition.delay + 'ms ' : '') +
-        'all ' + transition.duration + 'ms ' + transition.func;
-    }
-
-    return transitionStr;
+    this._registerCallbackTimeout(callback, maxTransitionTime);
   },
 
   render: function () {
-    var styles = {
-      transition: {
-        transition: this._getCSSTransitionString(),
-      },
-    };
-
-    var props = {
-      style: merge(
-        styles.transition,
-        this.props.beforeStyles,
-        this.state.phase && this.props.afterStyles
-      ),
-    };
+    var props = {style: this.props.baseStyle};
 
     return (
       React.cloneElement(this.props.children, props)

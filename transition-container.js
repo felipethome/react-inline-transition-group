@@ -171,8 +171,8 @@ var TransitionContainer = React.createClass({
 
   render: function () {
     var props = {style: this.props.childrenBaseStyle};
-    return (
 
+    return (
       React.cloneElement(this.props.children, props)
     );
   },

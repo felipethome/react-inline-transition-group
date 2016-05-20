@@ -8,8 +8,10 @@
   "keywords": [
     "react",
     "react-component",
+    "react-transition-group",
     "inline-styles",
-    "transition"
+    "transition",
+    "transition-group"
   ],
   "dependencies": {},
   "devDependencies": {

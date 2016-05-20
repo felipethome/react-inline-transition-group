@@ -1,0 +1,31 @@
+{
+  "name": "react-inline-transition-group",
+  "author": "Felipe Thomé",
+  "description": "Control inline styles transition for components built with React.",
+  "license": "BSD-3-Clause",
+  "repository": "https://github.com/felipethome/react-inline-transition-group",
+  "homepage": "http://felipethome.github.io/react-inline-transition-group",
+  "keywords": [
+    "react",
+    "react-component"
+    "inline-styles",
+    "transition",
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "babel-eslint": "^6.0.4",
+    "babel-preset-react": "~6.1.2",
+    "babelify": "~7.2.0",
+    "browserify": "^13.0.1",
+    "eslint": "^2.9.0",
+    "eslint-plugin-react": "^5.1.1",
+    "react": "^15.0.2",
+    "react-addons-transition-group": "^15.0.2",
+    "react-dom": "^15.0.2",
+    "watchify": "~3.6.0"
+  },
+  "scripts": {
+    "lint": "eslint src/*"
+  },
+  "version": "0.1.0"
+}

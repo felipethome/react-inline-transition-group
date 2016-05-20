@@ -7,25 +7,36 @@
   "homepage": "http://felipethome.github.io/react-inline-transition-group",
   "keywords": [
     "react",
-    "react-component"
+    "react-component",
     "inline-styles",
-    "transition",
+    "transition"
   ],
   "dependencies": {},
   "devDependencies": {
+    "babel-cli": "^6.9.0",
     "babel-eslint": "^6.0.4",
-    "babel-preset-react": "~6.1.2",
+    "babel-preset-react": "^6.1.18",
     "babelify": "~7.2.0",
     "browserify": "^13.0.1",
     "eslint": "^2.9.0",
     "eslint-plugin-react": "^5.1.1",
+    "gulp": "^3.9.1",
+    "gulp-connect": "~2.2.0",
+    "gulp-if": "^2.0.1",
+    "gulp-notify": "~2.2.0",
+    "gulp-streamify": "~1.0.2",
+    "gulp-uglify": "^1.5.3",
+    "gulp-util": "~3.0.7",
     "react": "^15.0.2",
     "react-addons-transition-group": "^15.0.2",
     "react-dom": "^15.0.2",
+    "vinyl-source-stream": "~1.1.0",
     "watchify": "~3.6.0"
   },
   "scripts": {
-    "lint": "eslint src/*"
+    "lint": "eslint src/*",
+    "build": "babel ./src --out-dir ./lib",
+    "demo": "gulp demo"
   },
   "version": "0.1.0"
 }

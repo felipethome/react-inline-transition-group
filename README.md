@@ -14,43 +14,41 @@ Helps to control transitions defined using inline styles. Build upon [ReactTrans
 
 Import the component to your project and then wrap the nodes you want to control the transition with it. Example:
 
-    var React = require('React');
+    var React = require('react');
     var Transition = require('react-inline-transition-group');
 
     React.createClass({
       getInitialState: function () { return { count: 1 }; },
 
-      _handleAdd: function () {
+      handleAdd: function () {
         this.setState(function (previousState) {
           return { count: previousState.count + 1 };
         });
       },
 
-      _handleRemove: function () {
+      handleRemove: function () {
         this.setState(function (previousState) {
           return { count: Math.max(previousState.count - 1, 0) };
         });
       },
 
-      _leaveCallback: function (id) {
-        console.log(id + ' left');
-      },
+      leaveCallback: function (id) { console.log(id + ' left'); },
 
       render: function () {
         var styles = {
           base: {
-            background: '#f00',
+            background: '#F00',
             width: '500px',
             height: '50px',
           },
 
           appear: {
-            background: '#ff0',
+            background: '#FF0',
             transition: 'all 500ms',
           },
 
           leave: {
-            background: '#f00',
+            background: '#F00',
             transition: 'all 250ms',
           }
         };
@@ -63,15 +61,15 @@ Import the component to your project and then wrap the nodes you want to control
         return (
           <div>
             <div>
-              <button onClick={this._handleAdd}>Add</button>
-              <button onClick={this._handleRemove}>Remove</button>
+              <button onClick={this.handleAdd}>Add</button>
+              <button onClick={this.handleRemove}>Remove</button>
             </div>
             <Transition
               baseStyle={styles.before}
               appearStyle={styles.appear}
               enterStyle={styles.appear}
               leaveStyle={styles.leave}
-              onComponentLeave={this._leaveCallback}
+              onComponentLeave={this.leaveCallback}
             >
               {elems}
             </Transition>
@@ -84,6 +82,7 @@ Import the component to your project and then wrap the nodes you want to control
 
 Property name | Description
 ------------ | -------------
+component | The component that will wrap all the children. Default: div
 baseStyle | Style that will be applied to all children in all transition phases
 appearStyle | Style that will be merged into baseStyle to make the appear transition
 enterStyle | Style that will be merged into baseStyle to make the enter transition

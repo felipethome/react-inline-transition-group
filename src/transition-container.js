@@ -1,7 +1,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var hyphenateStyleName = require('fbjs/lib/hyphenateStyleName');
-var merge = require('../utils/merge');
+var CSSPropertyOperations = require('react/lib/CSSPropertyOperations');
+var merge = require('./utils/merge');
 
 var TransitionContainer = React.createClass({
   displayName: 'TransitionContainer',
@@ -12,10 +12,15 @@ var TransitionContainer = React.createClass({
     childrenBaseStyle: React.PropTypes.object,
     childrenEnterStyle: React.PropTypes.object,
     childrenLeaveStyle: React.PropTypes.object,
-    id: React.PropTypes.string || React.PropTypes.number,
-    onComponentAppear: React.PropTypes.func,
-    onComponentEnter: React.PropTypes.func,
-    onComponentLeave: React.PropTypes.func,
+    id: React.PropTypes.oneOfType(
+      [React.PropTypes.string, React.PropTypes.number]
+    ),
+    onComponentAppeared: React.PropTypes.func,
+    onComponentEntered: React.PropTypes.func,
+    onComponentLeft: React.PropTypes.func,
+    onComponentStartAppear: React.PropTypes.func,
+    onComponentStartEnter: React.PropTypes.func,
+    onComponentStartLeave: React.PropTypes.func,
   },
 
   componentWillMount: function () {
@@ -31,11 +36,15 @@ var TransitionContainer = React.createClass({
 
   componentWillAppear: function (callback) {
     this._transition(callback, 'appear');
+
+    if (this.props.onComponentStartAppear) {
+      this.props.onComponentStartAppear(this.props.id);
+    }
   },
 
   componentDidAppear: function () {
-    if (this.props.onComponentAppear) {
-      this.props.onComponentAppear(this.props.id);
+    if (this.props.onComponentAppeared) {
+      this.props.onComponentAppeared(this.props.id);
     }
 
     this._appeared = true;
@@ -43,20 +52,28 @@ var TransitionContainer = React.createClass({
 
   componentWillEnter: function (callback) {
     this._transition(callback, 'enter');
+
+    if (this.props.onComponentStartEnter) {
+      this.props.onComponentStartEnter(this.props.id);
+    }
   },
 
   componentDidEnter: function () {
-    if (this.props.onComponentEnter) {
-      this.props.onComponentEnter(this.props.id);
+    if (this.props.onComponentEntered) {
+      this.props.onComponentEntered(this.props.id);
     }
   },
 
   componentWillLeave: function (callback) {
     this._transition(callback, 'leave');
+
+    if (this.props.onComponentStartLeave) {
+      this.props.onComponentStartLeave(this.props.id);
+    }
   },
 
   componentDidLeave: function () {
-    if (this.props.onComponentLeave) this.props.onComponentLeave(this.props.id);
+    if (this.props.onComponentLeft) this.props.onComponentLeft(this.props.id);
   },
 
   _getTransitionProperties: function (computedStyle) {
@@ -122,14 +139,7 @@ var TransitionContainer = React.createClass({
     else if (phase === 'enter') currentStyle = this.props.childrenEnterStyle;
     else currentStyle = this.props.childrenLeaveStyle;
 
-    var mergedStyle = merge(this.props.childrenBaseStyle, currentStyle);
-
-    var styleStr = '';
-    Object.keys(mergedStyle).forEach(function (key) {
-      styleStr += hyphenateStyleName(key) + ':' + mergedStyle[key] + ';';
-    });
-
-    return styleStr;
+    return merge(this.props.childrenBaseStyle, currentStyle);
   },
 
   _registerCallbackTimeout: function (callback, maxTransitionTime) {
@@ -157,7 +167,7 @@ var TransitionContainer = React.createClass({
 
     if (!node) return;
 
-    node.setAttribute('style', this._computeNewStyle(phase));
+    CSSPropertyOperations.setValueForStyles(node, this._computeNewStyle(phase));
     var properties = this._getTransitionProperties(getComputedStyle(node));
 
     var maxTransitionTime = this._getTransitionMaximumTime(

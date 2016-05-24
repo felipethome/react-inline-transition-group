@@ -85,29 +85,6 @@ var browserifyDepsTask = function (options) {
 
 };
 
-gulp.task('demo-deploy', function () {
-
-  var browserifyDepsOpt = {
-    development: false,
-    src: files.dependencies,
-    output: 'vendors.js',
-    dest: './demo/build/scripts',
-  };
-
-  var browserifyOpt = {
-    development: true,
-    src: files.browserify,
-    output: 'bundle.js',
-    dest: './demo/build/scripts',
-  };
-
-  return merge(
-    browserifyDepsTask(browserifyDepsOpt),
-    browserifyTask(browserifyOpt)
-  );
-
-});
-
 gulp.task('demo', function() {
 
   var browserifyDepsOpt = {

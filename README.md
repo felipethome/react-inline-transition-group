@@ -6,6 +6,10 @@ Helps to control transitions defined using inline styles. Build upon [ReactTrans
 * You don't need to supply timeout properties as in ReactCSSTransitionGroup because the component can infer them based on the style object you pass to it.
 * You have callbacks to control the start and end of your transitions for each children.
 
+# Demo
+
+Check out the [demo](http://felipethome.github.io/react-inline-transition-group/demo/index.html).
+
 # How to install
 
     npm install react-inline-transition-group

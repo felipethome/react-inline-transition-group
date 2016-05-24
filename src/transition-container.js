@@ -15,12 +15,12 @@ var TransitionContainer = React.createClass({
     id: React.PropTypes.oneOfType(
       [React.PropTypes.string, React.PropTypes.number]
     ),
-    onComponentAppeared: React.PropTypes.func,
-    onComponentEntered: React.PropTypes.func,
-    onComponentLeft: React.PropTypes.func,
-    onComponentStartAppear: React.PropTypes.func,
-    onComponentStartEnter: React.PropTypes.func,
-    onComponentStartLeave: React.PropTypes.func,
+    onChildAppeared: React.PropTypes.func,
+    onChildEntered: React.PropTypes.func,
+    onChildLeft: React.PropTypes.func,
+    onChildStartAppear: React.PropTypes.func,
+    onChildStartEnter: React.PropTypes.func,
+    onChildStartLeave: React.PropTypes.func,
   },
 
   componentWillMount: function () {
@@ -37,14 +37,14 @@ var TransitionContainer = React.createClass({
   componentWillAppear: function (callback) {
     this._transition(callback, 'appear');
 
-    if (this.props.onComponentStartAppear) {
-      this.props.onComponentStartAppear(this.props.id);
+    if (this.props.onChildStartAppear) {
+      this.props.onChildStartAppear(this.props.id);
     }
   },
 
   componentDidAppear: function () {
-    if (this.props.onComponentAppeared) {
-      this.props.onComponentAppeared(this.props.id);
+    if (this.props.onChildAppeared) {
+      this.props.onChildAppeared(this.props.id);
     }
 
     this._appeared = true;
@@ -53,27 +53,27 @@ var TransitionContainer = React.createClass({
   componentWillEnter: function (callback) {
     this._transition(callback, 'enter');
 
-    if (this.props.onComponentStartEnter) {
-      this.props.onComponentStartEnter(this.props.id);
+    if (this.props.onChildStartEnter) {
+      this.props.onChildStartEnter(this.props.id);
     }
   },
 
   componentDidEnter: function () {
-    if (this.props.onComponentEntered) {
-      this.props.onComponentEntered(this.props.id);
+    if (this.props.onChildEntered) {
+      this.props.onChildEntered(this.props.id);
     }
   },
 
   componentWillLeave: function (callback) {
     this._transition(callback, 'leave');
 
-    if (this.props.onComponentStartLeave) {
-      this.props.onComponentStartLeave(this.props.id);
+    if (this.props.onChildStartLeave) {
+      this.props.onChildStartLeave(this.props.id);
     }
   },
 
   componentDidLeave: function () {
-    if (this.props.onComponentLeft) this.props.onComponentLeft(this.props.id);
+    if (this.props.onChildLeft) this.props.onChildLeft(this.props.id);
   },
 
   _getTransitionProperties: function (computedStyle) {

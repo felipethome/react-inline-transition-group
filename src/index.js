@@ -12,12 +12,12 @@ var Transition = React.createClass({
     childrenEnterStyle: React.PropTypes.object,
     childrenLeaveStyle: React.PropTypes.object,
     component: React.PropTypes.string,
-    onComponentAppeared: React.PropTypes.func,
-    onComponentEntered: React.PropTypes.func,
-    onComponentLeft: React.PropTypes.func,
-    onComponentStartAppear: React.PropTypes.func,
-    onComponentStartEnter: React.PropTypes.func,
-    onComponentStartLeave: React.PropTypes.func,
+    onChildAppeared: React.PropTypes.func,
+    onChildEntered: React.PropTypes.func,
+    onChildLeft: React.PropTypes.func,
+    onChildStartAppear: React.PropTypes.func,
+    onChildStartEnter: React.PropTypes.func,
+    onChildStartLeave: React.PropTypes.func,
     style: React.PropTypes.object,
   },
 
@@ -42,12 +42,12 @@ var Transition = React.createClass({
               childrenAppearStyle={this.props.childrenAppearStyle}
               childrenEnterStyle={this.props.childrenEnterStyle}
               childrenLeaveStyle={this.props.childrenLeaveStyle}
-              onComponentAppeared={this.props.onComponentAppeared}
-              onComponentEntered={this.props.onComponentEntered}
-              onComponentLeft={this.props.onComponentLeft}
-              onComponentStartAppear={this.props.onComponentStartAppear}
-              onComponentStartEnter={this.props.onComponentStartEnter}
-              onComponentStartLeave={this.props.onComponentStartLeave}
+              onChildAppeared={this.props.onChildAppeared}
+              onChildEntered={this.props.onChildEntered}
+              onChildLeft={this.props.onChildLeft}
+              onChildStartAppear={this.props.onChildStartAppear}
+              onChildStartEnter={this.props.onChildStartEnter}
+              onChildStartLeave={this.props.onChildStartLeave}
             >
               {child}
             </TransitionContainer>

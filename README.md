@@ -83,16 +83,16 @@ Import the component to your project and then wrap the nodes you want to control
 Property name | Description
 ------------ | -------------
 component | The component that will wrap all the children. Default: div
-baseStyle | Style that will be applied to all children in all transition phases
-appearStyle | Style that will be merged into baseStyle to make the appear transition
-enterStyle | Style that will be merged into baseStyle to make the enter transition
-leaveStyle | Style that will be merge d into baseStyle to make the leave transition
-onComponentAppeared | Callback that will be called with the child *id* when the component appeared
-onComponentEntered | Callback that will be called with the child *id* when the component entered
-onComponentLeft | Callback that will be called with the child *id* when the component left
-onComponentStartAppear | Callback that will be called with the child *id* when the component start to appear
-onComponentStartEnter | Callback that will be called with the child *id* when the component start to enter
-onComponentStartLeave | Callback that will be called with the child *id* when the component start to leave
+childrenBaseStyle | Style that will be applied to all children in all transition phases
+childrenAppearStyle | Style that will be merged into baseStyle to make the appear transition
+childrenEnterStyle | Style that will be merged into baseStyle to make the enter transition
+childrenLeaveStyle | Style that will be merge d into baseStyle to make the leave transition
+onChildAppeared | Callback that will be called with the child *id* when the component appeared
+onChildEntered | Callback that will be called with the child *id* when the component entered
+onChildLeft | Callback that will be called with the child *id* when the component left
+onChildStartAppear | Callback that will be called with the child *id* when the component start to appear
+onChildStartEnter | Callback that will be called with the child *id* when the component start to enter
+onChildStartLeave | Callback that will be called with the child *id* when the component start to leave
 
 **Observation:** You can pass an *id* property to your children components and the callback will be called with it so you know exactly for which child the event is happening. This *id* is optional.
 

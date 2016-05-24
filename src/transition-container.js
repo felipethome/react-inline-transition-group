@@ -1,6 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var CSSPropertyOperations = require('react/lib/CSSPropertyOperations');
+var hyphenateStyleName = require('fbjs/lib/hyphenateStyleName');
 var merge = require('./utils/merge');
 
 var TransitionContainer = React.createClass({
@@ -139,7 +139,14 @@ var TransitionContainer = React.createClass({
     else if (phase === 'enter') currentStyle = this.props.childrenEnterStyle;
     else currentStyle = this.props.childrenLeaveStyle;
 
-    return merge(this.props.childrenBaseStyle, currentStyle);
+    var mergedStyle = merge(this.props.childrenBaseStyle, currentStyle);
+
+    var styleStr = '';
+    Object.keys(mergedStyle).forEach(function (key) {
+      styleStr += hyphenateStyleName(key) + ':' + mergedStyle[key] + ';';
+    });
+
+    return styleStr;
   },
 
   _registerCallbackTimeout: function (callback, maxTransitionTime) {
@@ -167,9 +174,7 @@ var TransitionContainer = React.createClass({
 
     if (!node) return;
 
-    CSSPropertyOperations.setValueForStyles(
-      node, this._computeNewStyle(phase), this
-    );
+    node.setAttribute('style', this._computeNewStyle(phase));
     var properties = this._getTransitionProperties(getComputedStyle(node));
 
     var maxTransitionTime = this._getTransitionMaximumTime(

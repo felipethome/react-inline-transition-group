@@ -60,7 +60,7 @@ Import the component to your project and then wrap the nodes you want to control
         var elems = [];
 
         for (var i = 0; i < this.state.count; i++)
-          elems.push(<div key={i} id={i}>{'Demo ' + i}</div>);
+          elems.push(<div key={i} id={i}>{i}</div>);
 
         return (
           <div>
@@ -69,11 +69,11 @@ Import the component to your project and then wrap the nodes you want to control
               <button onClick={this.handleRemove}>Remove</button>
             </div>
             <Transition
-              baseStyle={styles.before}
-              appearStyle={styles.appear}
-              enterStyle={styles.appear}
-              leaveStyle={styles.leave}
-              onComponentLeave={this.leaveCallback}
+              childrenBaseStyle={styles.before}
+              childrenAppearStyle={styles.appear}
+              childrenEnterStyle={styles.appear}
+              childrenLeaveStyle={styles.leave}
+              onChildLeft={this.leaveCallback}
             >
               {elems}
             </Transition>

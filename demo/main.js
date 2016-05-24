@@ -14,7 +14,7 @@ var Demo = React.createClass({
 
   _handleAdd: function () {
     this.setState(function (previousState) {
-      return {count: Math.min(previousState.count + 1, 8)};
+      return {count: Math.min(previousState.count + 1, 7)};
     });
   },
 
@@ -54,16 +54,18 @@ var Demo = React.createClass({
         height: '100%',
         width: '100%',
       },
+
       base: {
         background: '#FFF',
         borderRadius: '2px',
-        width: '500px',
+        boxSizing: 'border-box',
         height: '50px',
         marginBottom: '10px',
+        padding: '10px',
       },
 
       appear: {
-        background: '#2196F3',
+        background: '#81C784',
         transition: 'all 1000ms',
       },
 
@@ -72,25 +74,50 @@ var Demo = React.createClass({
         transition: 'all 500ms',
       },
 
+      button: {
+        cursor: 'pointer',
+        border: 'none',
+        borderRadius: '2px',
+        backgroundColor: '#039BE5',
+        padding: '10px 15px',
+        color: '#FFF',
+        fontFamily: '"Roboto", sans-serif',
+        textDecoration: 'none',
+        textTransform: 'uppercase',
+        margin: '0px 15px 15px 0',
+        outline: 'none',
+      },
+
       callback: {
         height: '20px',
-        width: '500px',
         backgroundColor: '#FFF',
+        border: '1px solid #81C784',
+        borderRadius: '2px',
+        marginBottom: '15px',
         padding: '5px 5px 5px 5px',
       },
     };
 
     var elems = [];
 
-    for (var i = 0; i < this.state.count; i++)
-      elems.push(<div key={i} id={i}>{i}</div>);
+    for (var i = 0; i < this.state.count; i++) {
+      elems.push(
+        <div key={i} id={i}>{'id: ' + i}</div>
+      );
+    }
 
     return (
       <div style={styles.container}>
-        <div style={styles.callback}>{this.state.callbackMsg}</div>
         <div>
-          <button onClick={this._handleAdd}>Add</button>
-          <button onClick={this._handleRemove}>Remove</button>
+          <button style={styles.button} onClick={this._handleAdd}>
+            Add
+          </button>
+          <button style={styles.button} onClick={this._handleRemove}>
+            Remove
+          </button>
+        </div>
+        <div style={styles.callback}>
+          {'Callback: ' + this.state.callbackMsg}
         </div>
         <Transition
           childrenBaseStyle={styles.base}

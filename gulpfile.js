@@ -87,6 +87,8 @@ var browserifyDepsTask = function (options) {
 
 gulp.task('demo', function() {
 
+  process.env.NODE_ENV = 'development';
+
   var browserifyDepsOpt = {
     development: true,
     src: files.dependencies,

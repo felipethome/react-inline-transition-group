@@ -18,7 +18,7 @@ var files = {
   ],
 
   browserify: [
-    './demo/main.js',
+    './build/main.js',
   ],
 };
 
@@ -91,18 +91,18 @@ gulp.task('demo', function() {
     development: true,
     src: files.dependencies,
     output: 'vendors.js',
-    dest: './demo/build/scripts',
+    dest: './build/build/scripts',
   };
 
   var browserifyOpt = {
     development: true,
     src: files.browserify,
     output: 'bundle.js',
-    dest: './demo/build/scripts',
+    dest: './build/build/scripts',
   };
 
   var serverOpt = {
-    root: './demo',
+    root: './build',
     port: 8889,
     livereload: true,
   };

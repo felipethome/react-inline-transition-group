@@ -167,7 +167,9 @@ var TransitionContainer = React.createClass({
 
     if (!node) return;
 
-    CSSPropertyOperations.setValueForStyles(node, this._computeNewStyle(phase));
+    CSSPropertyOperations.setValueForStyles(
+      node, this._computeNewStyle(phase), this
+    );
     var properties = this._getTransitionProperties(getComputedStyle(node));
 
     var maxTransitionTime = this._getTransitionMaximumTime(

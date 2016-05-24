@@ -14,7 +14,7 @@ Check out the [demo](http://felipethome.github.io/react-inline-transition-group/
 
     npm install react-inline-transition-group
 
-# How to use it
+# How to use
 
 Import the component to your project and then wrap the nodes you want to control the transition with it. Example:
 
@@ -99,6 +99,10 @@ onChildStartEnter | Callback that will be called with the child *id* when the co
 onChildStartLeave | Callback that will be called with the child *id* when the component start to leave
 
 **Observation:** You can pass an *id* property to your children components and the callback will be called with it so you know exactly for which child the event is happening. This *id* is optional.
+
+**Observation 2:** The start callbacks will be called sooner a node is being add or removed to the group. It doesn't matter if you have a delay or not. The end callbacks will be called when the longest transition time (delay + duration ) completes.
+
+**Observation 3:** If you add a React component to the group make sure its root node is able to receive a style property.
 
 ## LICENSE
 

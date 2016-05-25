@@ -13,6 +13,10 @@
     "transition",
     "transition-group"
   ],
+  "peerDependencies": {
+    "react": ">=0.14.x || >=15.x",
+    "react-addons-transition-group": ">=0.14.x || >=15.x",
+  },
   "dependencies": {},
   "devDependencies": {
     "babel-cli": "^6.9.0",

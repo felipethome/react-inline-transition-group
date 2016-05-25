@@ -14,6 +14,10 @@ Check out the [demo](http://felipethome.github.io/react-inline-transition-group/
 
     npm install react-inline-transition-group
 
+Don't forget that you must have ReactTransitionGroup installed too. If you don't have it installed yet:
+
+    npm install react-addons-transition-group
+
 # How to use
 
 Import the component to your project and then wrap the nodes you want to control the transition with it. Example:

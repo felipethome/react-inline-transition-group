@@ -44,5 +44,5 @@
     "build": "babel ./src --out-dir ./lib",
     "demo": "gulp demo"
   },
-  "version": "0.1.7"
+  "version": "0.1.8"
 }

@@ -14,7 +14,7 @@
     "transition-group",
     "css-transition",
     "react-inline-style-transition-group",
-    "react-inline-css-transition-group",
+    "react-inline-css-transition-group"
   ],
   "peerDependencies": {
     "react": ">=0.14.x || >=15.x",

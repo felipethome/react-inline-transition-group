@@ -13,7 +13,8 @@
     "transition",
     "transition-group",
     "css-transition",
-    "inline-style-transition-group"
+    "react-inline-style-transition-group",
+    "react-inline-css-transition-group",
   ],
   "peerDependencies": {
     "react": ">=0.14.x || >=15.x",

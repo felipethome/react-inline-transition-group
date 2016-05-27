@@ -1,10 +1,10 @@
 # React Inline Transition Group
 
-Helps to control transitions defined using inline styles. Build upon [ReactTransitionGroup](https://facebook.github.io/react/docs/animation.html), the aim is to supply a component similar to ReactCSSTransitionGroup, but that instead of working with CSS classes work with inline styles. This approach bring some advantages like:
+Helps to control transitions defined using inline styles. Build upon [ReactTransitionGroup](https://facebook.github.io/react/docs/animation.html), the aim is to supply a component similar to ReactCSSTransitionGroup, but that instead of working with CSS classes work with inline styles. This approach brings some advantages like:
 
 * You don't need to decouple your styles from the component.
 * You don't need to supply timeout properties as in ReactCSSTransitionGroup because the component can infer them based on the style object you pass to it.
-* You have callbacks to control the start and end of your transitions for each children.
+* You have callbacks to control the start and end of your transitions for each child.
 
 # Demo
 
@@ -102,9 +102,9 @@ onChildStartAppear | Callback that will be called with the child *id* when the c
 onChildStartEnter | Callback that will be called with the child *id* when the component start to enter
 onChildStartLeave | Callback that will be called with the child *id* when the component start to leave
 
-**Observation:** You can pass an *id* property to your children components and the callback will be called with it so you know exactly for which child the event is happening. This *id* is optional.
+**Observation:** You can pass an *id* property to your children components and the callback will be called with it so you know exactly for which child the event happened. This *id* is optional.
 
-**Observation 2:** The start callbacks will be called sooner a node is being add or removed to the group. It doesn't matter if you have a delay or not. The end callbacks will be called when the longest transition time (delay + duration ) completes.
+**Observation 2:** The *start* callbacks will be called sooner a node is being added or removed to/from the group. It doesn't matter if you have a delay or not. The *end* callbacks will be called when the longest transition time (delay + duration ) completes.
 
 ## LICENSE
 

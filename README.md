@@ -104,7 +104,7 @@ onChildStartLeave | Callback that will be called with the child *id* when the co
 
 **Observation:** You can pass an *id* property to your children components and the callback will be called with it so you know exactly for which child the event happened. This *id* is optional.
 
-**Observation 2:** The *start* callbacks will be called sooner a node is being added or removed to/from the group. It doesn't matter if you have a delay or not. The *end* callbacks will be called when the longest transition time (delay + duration ) completes.
+**Observation 2:** The *start* callbacks will be called sooner a node is being added or removed to/from the group. It doesn't matter if you have a delay or not. The *end* callbacks will be called when the longest transition time (delay + duration) completes.
 
 ## LICENSE
 

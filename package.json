@@ -1,7 +1,7 @@
 {
   "name": "react-inline-transition-group",
   "author": "Felipe Thomé",
-  "description": "Control inline styles transition for components built with React.",
+  "description": "Control inline style transitions for components built with React.",
   "license": "BSD-3-Clause",
   "repository": "https://github.com/felipethome/react-inline-transition-group",
   "homepage": "http://felipethome.github.io/react-inline-transition-group",
@@ -14,6 +14,7 @@
     "transition-group",
     "css-transition",
     "react-inline-style-transition-group",
+    "react-inline-styles-transition-group",
     "react-inline-css-transition-group"
   ],
   "peerDependencies": {

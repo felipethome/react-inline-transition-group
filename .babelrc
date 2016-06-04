@@ -1,8 +1,3 @@
 {
-  "presets": ["react"],
-  "env": {
-    "test": {
-      "sourceMaps": "both"
-    }
-  }
+  "presets": ["es2015", "stage-2", "react"]
 }

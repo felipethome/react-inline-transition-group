@@ -18,7 +18,6 @@ var Transition = React.createClass({
     onChildStartAppear: React.PropTypes.func,
     onChildStartEnter: React.PropTypes.func,
     onChildStartLeave: React.PropTypes.func,
-    style: React.PropTypes.object,
   },
 
   getDefaultProps: function () {
@@ -28,26 +27,42 @@ var Transition = React.createClass({
   },
 
   render: function () {
+    var {
+      children,
+      childrenAppearStyle,
+      childrenBaseStyle,
+      childrenEnterStyle,
+      childrenLeaveStyle,
+      component,
+      onChildAppeared,
+      onChildEntered,
+      onChildLeft,
+      onChildStartAppear,
+      onChildStartEnter,
+      onChildStartLeave,
+      ...others,
+    } = this.props;
+
     return (
       <ReactTransitionGroup
-        component={this.props.component}
-        style={this.props.style}
+        component={component}
+        {...others}
       >
-        {React.Children.map(this.props.children, function (child, i) {
+        {React.Children.map(children, function (child, i) {
           return (
             <TransitionContainer
               key={i}
               id={((child || {}).props || {}).id}
-              childrenBaseStyle={this.props.childrenBaseStyle}
-              childrenAppearStyle={this.props.childrenAppearStyle}
-              childrenEnterStyle={this.props.childrenEnterStyle}
-              childrenLeaveStyle={this.props.childrenLeaveStyle}
-              onChildAppeared={this.props.onChildAppeared}
-              onChildEntered={this.props.onChildEntered}
-              onChildLeft={this.props.onChildLeft}
-              onChildStartAppear={this.props.onChildStartAppear}
-              onChildStartEnter={this.props.onChildStartEnter}
-              onChildStartLeave={this.props.onChildStartLeave}
+              childrenBaseStyle={childrenBaseStyle}
+              childrenAppearStyle={childrenAppearStyle}
+              childrenEnterStyle={childrenEnterStyle}
+              childrenLeaveStyle={childrenLeaveStyle}
+              onChildAppeared={onChildAppeared}
+              onChildEntered={onChildEntered}
+              onChildLeft={onChildLeft}
+              onChildStartAppear={onChildStartAppear}
+              onChildStartEnter={onChildStartEnter}
+              onChildStartLeave={onChildStartLeave}
             >
               {child}
             </TransitionContainer>

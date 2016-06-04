@@ -7,7 +7,7 @@ var TransitionContainer = React.createClass({
   displayName: 'TransitionContainer',
 
   propTypes: {
-    children: React.PropTypes.node,
+    children: React.PropTypes.any,
     childrenAppearStyle: React.PropTypes.object,
     childrenBaseStyle: React.PropTypes.object,
     childrenEnterStyle: React.PropTypes.object,
@@ -27,6 +27,12 @@ var TransitionContainer = React.createClass({
     this._dispatchTimeout = null;
     this._callbackTimeout = null;
     this._tick = 17;
+  },
+
+  componentDidMount: function () {
+    var node = ReactDOM.findDOMNode(this);
+    if (!node) return;
+    node.setAttribute('style', this._computeNewStyle());
   },
 
   componentWillUnmount: function () {
@@ -137,9 +143,12 @@ var TransitionContainer = React.createClass({
     var currentStyle;
     if (phase === 'appear') currentStyle = this.props.childrenAppearStyle;
     else if (phase === 'enter') currentStyle = this.props.childrenEnterStyle;
-    else currentStyle = this.props.childrenLeaveStyle;
+    else if (phase === 'leave') currentStyle = this.props.childrenLeaveStyle;
+    else currentStyle = this.props.childrenBaseStyle;
 
-    var mergedStyle = merge(this.props.childrenBaseStyle, currentStyle);
+    var mergedStyle = phase
+      ? merge(this.props.childrenBaseStyle, currentStyle)
+      : currentStyle;
 
     var styleStr = '';
     Object.keys(mergedStyle).forEach(function (key) {
@@ -187,11 +196,7 @@ var TransitionContainer = React.createClass({
   },
 
   render: function () {
-    var props = {style: this.props.childrenBaseStyle};
-
-    return (
-      React.cloneElement(this.props.children, props)
-    );
+    return React.Children.only(this.props.children);
   },
 
 });

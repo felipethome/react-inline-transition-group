@@ -18,8 +18,9 @@
     "react-inline-css-transition-group"
   ],
   "peerDependencies": {
-    "react": ">=0.14.x || >=15.x",
-    "react-addons-transition-group": ">=0.14.x || >=15.x"
+    "react": "0.14.x || 15.x",
+    "react-addons-transition-group": "0.14.x || 15.x",
+    "fbjs": ">=0.6.0"
   },
   "dependencies": {},
   "devDependencies": {
@@ -32,6 +33,7 @@
     "browserify": "^13.0.1",
     "eslint": "^2.9.0",
     "eslint-plugin-react": "^5.1.1",
+    "fbjs": "^0.8.3",
     "gulp": "^3.9.1",
     "gulp-connect": "~2.2.0",
     "gulp-if": "^2.0.1",

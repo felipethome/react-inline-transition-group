@@ -120,11 +120,11 @@ var TransitionContainer = React.createClass({
     var delayGroups;
 
     for (var i = 0; i < propertyArray.length; i++) {
-      durationGroups = durationArray[i].match(re);
+      durationGroups = (durationArray[i] || '0s').match(re);
       if (durationGroups[2] === 's') durationFactor = 1000;
       else durationFactor = 1;
 
-      delayGroups = delayArray[i].match(re);
+      delayGroups = (delayArray[i] || '0s').match(re);
       if (delayGroups[2] === 's') delayFactor = 1000;
       else delayFactor = 1;
 

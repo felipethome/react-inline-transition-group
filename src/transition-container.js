@@ -25,13 +25,13 @@ var TransitionContainer = React.createClass({
 
   componentWillMount: function () {
     this._callbackTimeout = null;
-    this._tick = 17;
   },
 
   componentDidMount: function () {
     var node = ReactDOM.findDOMNode(this);
     if (!node) return;
     node.setAttribute('style', this._computeNewStyle());
+    this.flush = node.offsetWidth;
   },
 
   componentWillUnmount: function () {

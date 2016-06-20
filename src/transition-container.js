@@ -24,7 +24,6 @@ var TransitionContainer = React.createClass({
   },
 
   componentWillMount: function () {
-    this._dispatchTimeout = null;
     this._callbackTimeout = null;
     this._tick = 17;
   },
@@ -36,7 +35,6 @@ var TransitionContainer = React.createClass({
   },
 
   componentWillUnmount: function () {
-    clearTimeout(this._dispatchTimeout);
     clearTimeout(this._callbackTimeout);
   },
 
@@ -171,10 +169,7 @@ var TransitionContainer = React.createClass({
       callback();
     }
     else {
-      this._dispatchTimeout = setTimeout(
-        this._executeTransition.bind(this, callback, phase),
-        this._tick
-      );
+      this._executeTransition.call(this, callback, phase);
     }
   },
 

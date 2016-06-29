@@ -30,7 +30,10 @@ var TransitionContainer = React.createClass({
   componentDidMount: function () {
     var node = ReactDOM.findDOMNode(this);
     if (!node) return;
+
     node.setAttribute('style', this._computeNewStyle());
+
+    // Flush styles
     this.flush = node.offsetWidth;
   },
 
@@ -174,20 +177,18 @@ var TransitionContainer = React.createClass({
   },
 
   _executeTransition: function (callback, phase) {
-    var node = ReactDOM.findDOMNode(this);
+    this._lastCallback = callback;
 
+    var node = ReactDOM.findDOMNode(this);
     if (!node) return;
 
     node.setAttribute('style', this._computeNewStyle(phase));
-    var properties = this._getTransitionProperties(getComputedStyle(node));
 
-    var maxTransitionTime = this._getTransitionMaximumTime(
-      properties.transitionProperty,
-      properties.transitionDuration,
-      properties.transitionDelay
-    );
+    // Flush styles
+    this.flush = node.offsetWidth;
 
-    this._registerCallbackTimeout(callback, maxTransitionTime);
+    node.removeEventListener('transitionend', this._lastCallback);
+    node.addEventListener('transitionend', callback);
   },
 
   render: function () {

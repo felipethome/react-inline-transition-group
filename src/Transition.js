@@ -1,6 +1,6 @@
 var React = require('react');
-var ReactTransitionGroup = require('react-addons-transition-group');
-var TransitionContainer = require('./transition-container');
+var TransitionGroup = require('./TransitionGroup');
+var TransitionContainer = require('./TransitionContainer');
 
 var Transition = React.createClass({
   displayName: 'Transition',
@@ -44,15 +44,13 @@ var Transition = React.createClass({
     } = this.props;
 
     return (
-      <ReactTransitionGroup
-        component={component}
-        {...others}
-      >
+      <TransitionGroup component={component} {...others}>
         {React.Children.map(children, function (child, i) {
           return (
             <TransitionContainer
               key={i}
               id={((child || {}).props || {}).id}
+              componentKey={((child || {}).props || {}).componentKey}
               childrenBaseStyle={childrenBaseStyle}
               childrenAppearStyle={childrenAppearStyle}
               childrenEnterStyle={childrenEnterStyle}
@@ -68,7 +66,7 @@ var Transition = React.createClass({
             </TransitionContainer>
           );
         }, this)}
-      </ReactTransitionGroup>
+      </TransitionGroup>
     );
   },
 

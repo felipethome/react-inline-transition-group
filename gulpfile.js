@@ -14,7 +14,6 @@ var files = {
   dependencies: [
     'react',
     'react-dom',
-    'react-addons-transition-group',
   ],
 
   browserify: [
@@ -93,14 +92,14 @@ gulp.task('demo', function() {
     development: true,
     src: files.dependencies,
     output: 'vendors.js',
-    dest: './build/build/scripts',
+    dest: './build/scripts',
   };
 
   var browserifyOpt = {
     development: true,
     src: files.browserify,
     output: 'bundle.js',
-    dest: './build/build/scripts',
+    dest: './build/scripts',
   };
 
   var serverOpt = {

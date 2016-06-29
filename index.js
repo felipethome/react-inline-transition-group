@@ -1,1 +1,1 @@
-module.exports = require('./lib/transition');
+module.exports = require('./lib/Transition');

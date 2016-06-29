@@ -2,8 +2,8 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var hyphenateStyleName = require('fbjs/lib/hyphenateStyleName');
 
-var TransitionContainer = React.createClass({
-  displayName: 'TransitionContainer',
+var TransitionChild = React.createClass({
+  displayName: 'TransitionChild',
 
   propTypes: {
     children: React.PropTypes.any,
@@ -133,4 +133,4 @@ var TransitionContainer = React.createClass({
 
 });
 
-module.exports = TransitionContainer;
+module.exports = TransitionChild;

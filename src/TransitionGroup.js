@@ -59,12 +59,10 @@ var TransitionGroup = React.createClass({
     });
 
     enteringChildren.forEach(function (childKey) {
-      this._cancelCallback(childKey);
       this._performEnter(childKey);
     }, this);
 
     leavingChildren.forEach(function (childKey) {
-      this._cancelCallback(childKey);
       this._performLeave(childKey);
     }, this);
   },
@@ -77,6 +75,8 @@ var TransitionGroup = React.createClass({
   },
 
   _performAppear: function (key) {
+    this._cancelCallback(key);
+
     var component = this._components[key];
     var callback = this._handleDoneAppearing(key);
 
@@ -103,6 +103,8 @@ var TransitionGroup = React.createClass({
   },
 
   _performEnter: function (key) {
+    this._cancelCallback(key);
+
     var component = this._components[key];
     var callback = this._handleDoneEntering(key);
 
@@ -129,6 +131,8 @@ var TransitionGroup = React.createClass({
   },
 
   _performLeave: function (key) {
+    this._cancelCallback(key);
+
     var component = this._components[key];
     var callback = this._handleDoneLeaving(key);
 

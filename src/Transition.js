@@ -1,6 +1,6 @@
 var React = require('react');
 var TransitionGroup = require('./TransitionGroup');
-var TransitionContainer = require('./TransitionContainer');
+var TransitionChild = require('./TransitionChild');
 
 var Transition = React.createClass({
   displayName: 'Transition',
@@ -47,7 +47,7 @@ var Transition = React.createClass({
       <TransitionGroup component={component} {...others}>
         {React.Children.map(children, function (child, i) {
           return (
-            <TransitionContainer
+            <TransitionChild
               key={i}
               id={((child || {}).props || {}).id}
               componentKey={((child || {}).props || {}).componentKey}
@@ -63,7 +63,7 @@ var Transition = React.createClass({
               onChildStartLeave={onChildStartLeave}
             >
               {child}
-            </TransitionContainer>
+            </TransitionChild>
           );
         }, this)}
       </TransitionGroup>

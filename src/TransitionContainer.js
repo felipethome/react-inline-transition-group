@@ -1,7 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var hyphenateStyleName = require('fbjs/lib/hyphenateStyleName');
-var merge = require('./utils/merge');
 
 var TransitionContainer = React.createClass({
   displayName: 'TransitionContainer',
@@ -91,7 +90,7 @@ var TransitionContainer = React.createClass({
     else currentStyle = this.props.childrenBaseStyle;
 
     var mergedStyle = phase
-      ? merge(this.props.childrenBaseStyle, currentStyle)
+      ? Object.assign({}, this.props.childrenBaseStyle, currentStyle)
       : currentStyle;
 
     var styleStr = '';

@@ -83,63 +83,6 @@ var TransitionContainer = React.createClass({
     if (this.props.onChildLeft) this.props.onChildLeft(this.props.id);
   },
 
-  _getTransitionProperties: function (computedStyle) {
-    var properties = {};
-
-    properties.transitionDuration = computedStyle.transitionDuration ||
-      computedStyle.WebkitTransitionDuration ||
-      computedStyle.MozTransitionDuration ||
-      computedStyle.msTransitionDuration;
-
-    properties.transitionDelay = computedStyle.transitionDelay ||
-      computedStyle.WebkitTransitionDelay ||
-      computedStyle.MozTransitionDelay ||
-      computedStyle.msTransitionDelay;
-
-    properties.transitionProperty = computedStyle.transitionProperty ||
-      computedStyle.WebkitTransitionProperty ||
-      computedStyle.msTransitionProperty ||
-      computedStyle.MozTransitionProperty;
-
-    return properties;
-  },
-
-  // Specs: https://www.w3.org/TR/css3-transitions/
-  // A lot of assumptions could be made here, like that probably the duration
-  // and delay lists are already truncated by the size of the property list
-  // or that values will be returned by window.getComputedStyle in seconds,
-  // but I prefer to make this function less vulnerable to changes.
-  _getTransitionMaximumTime: function (property, duration, delay) {
-    var durationArray = duration.split(',');
-    var delayArray = delay.split(',');
-    var propertyArray = property.split(',');
-    var longestTime = 0;
-    var re = /([0-9]*\.?[0-9]+)(m?s)/;
-    var durationFactor;
-    var delayFactor;
-    var durationGroups;
-    var delayGroups;
-
-    for (var i = 0; i < propertyArray.length; i++) {
-      durationGroups = (durationArray[i] || '0s').match(re);
-      if (durationGroups[2] === 's') durationFactor = 1000;
-      else durationFactor = 1;
-
-      delayGroups = (delayArray[i] || '0s').match(re);
-      if (delayGroups[2] === 's') delayFactor = 1000;
-      else delayFactor = 1;
-
-      longestTime = Math.max(
-        parseFloat(
-          (durationGroups[1] * durationFactor) + (delayGroups[1] * delayFactor)
-        ),
-        longestTime
-      );
-    }
-
-    return longestTime;
-  },
-
   _computeNewStyle: function (phase) {
     var currentStyle;
     if (phase === 'appear') currentStyle = this.props.childrenAppearStyle;
@@ -157,12 +100,6 @@ var TransitionContainer = React.createClass({
     });
 
     return styleStr;
-  },
-
-  _registerCallbackTimeout: function (callback, maxTransitionTime) {
-    this._callbackTimeout = setTimeout(function () {
-      callback();
-    }, maxTransitionTime);
   },
 
   _transition: function (callback, phase) {

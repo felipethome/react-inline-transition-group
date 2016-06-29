@@ -33,27 +33,27 @@ var TransitionGroup = React.createClass({
   },
 
   componentWillReceiveProps: function (nextProps) {
-    var prevChildrenKeys = [];
-    var nextChildrenKeys = [];
+    var prevChildren = {};
+    var nextChildren = {};
     var enteringChildren = [];
     var leavingChildren = [];
 
     React.Children.forEach(this.props.children, function (prevChild) {
-      prevChildrenKeys.push(prevChild.props.componentKey);
+      prevChildren[prevChild.props.componentKey] = prevChild;
     });
 
     React.Children.forEach(nextProps.children, function (nextChild) {
-      nextChildrenKeys.push(nextChild.props.componentKey);
+      nextChildren[nextChild.props.componentKey] = nextChild;
     });
 
-    nextChildrenKeys.forEach(function (nextKey) {
-      if (typeof prevChildrenKeys[nextKey] === 'undefined') {
+    Object.keys(nextChildren).forEach(function (nextKey) {
+      if (typeof prevChildren[nextKey] === 'undefined') {
         enteringChildren.push(nextKey);
       }
     });
 
-    prevChildrenKeys.forEach(function (prevKey) {
-      if (typeof nextChildrenKeys[prevKey] === 'undefined') {
+    Object.keys(prevChildren).forEach(function (prevKey) {
+      if (typeof nextChildren[prevKey] === 'undefined') {
         leavingChildren.push(prevKey);
       }
     });

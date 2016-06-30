@@ -17,7 +17,8 @@ var TransitionGroup = React.createClass({
 
   getInitialState: function () {
     return {
-      children: this.props.children,
+      // React.Children.toArray will return an array with the keys
+      children: React.Children.toArray(this.props.children),
     };
   },
 
@@ -27,44 +28,60 @@ var TransitionGroup = React.createClass({
   },
 
   componentDidMount: function () {
-    React.Children.forEach(this.state.children, function (child) {
+    this.state.children.forEach(function (child) {
       this._performAppear(child.props.componentKey);
     }, this);
   },
 
   componentWillReceiveProps: function (nextProps) {
-    var prevChildren = {};
+    var currentChildren = {};
     var nextChildren = {};
     var enteringChildren = [];
     var leavingChildren = [];
 
-    React.Children.forEach(this.props.children, function (prevChild) {
-      prevChildren[prevChild.props.componentKey] = prevChild;
+    this.state.children.forEach(function (prevChild) {
+      currentChildren[prevChild.props.componentKey] = prevChild;
     });
 
-    React.Children.forEach(nextProps.children, function (nextChild) {
+    React.Children.toArray(nextProps.children).forEach(function (nextChild) {
       nextChildren[nextChild.props.componentKey] = nextChild;
     });
 
-    Object.keys(nextChildren).forEach(function (nextKey) {
-      if (typeof prevChildren[nextKey] === 'undefined') {
-        enteringChildren.push(nextKey);
+    // Assuming that Object.keys() return the properties in the oder they were
+    // inserted
+    Object.keys(nextChildren).forEach(function (key, i) {
+      if (typeof currentChildren[key] === 'undefined') {
+        enteringChildren.push({
+          key: key,
+          index: i,
+          instance: nextChildren[key],
+        });
       }
     });
 
-    Object.keys(prevChildren).forEach(function (prevKey) {
-      if (typeof nextChildren[prevKey] === 'undefined') {
-        leavingChildren.push(prevKey);
+    Object.keys(currentChildren).forEach(function (key, i) {
+      if (typeof nextChildren[key] === 'undefined') {
+        leavingChildren.push({
+          key: key,
+          index: i,
+        });
       }
     });
 
-    enteringChildren.forEach(function (childKey) {
-      this._performEnter(childKey);
+    enteringChildren.forEach(function (childInfo) {
+      this._performEnter(childInfo);
     }, this);
 
-    leavingChildren.forEach(function (childKey) {
-      this._performLeave(childKey);
+    leavingChildren.forEach(function (childInfo) {
+      if (!this._prevChildren || !this._prevChildren[childInfo.key]) {
+        this._performLeave(childInfo);
+      }
     }, this);
+
+    // Since the child removal will be postponed we need this variable to
+    // guarantee we are not trying to remove a child that is already in the
+    // process of being removed
+    this._prevChildren = currentChildren;
   },
 
   _cancelCallback: function (key) {
@@ -102,19 +119,26 @@ var TransitionGroup = React.createClass({
     return makeCancelable(callback, this);
   },
 
-  _performEnter: function (key) {
-    this._cancelCallback(key);
+  _performEnter: function (childInfo) {
+    this._cancelCallback(childInfo.key);
 
-    var component = this._components[key];
-    var callback = this._handleDoneEntering(key);
+    var newChildren = this.state.children.slice();
+    newChildren.splice(childInfo.index, 0, childInfo.instance);
 
-    if (component.componentWillEnter) {
-      this._callbacks[key] = callback;
-      component.componentWillEnter(callback);
-    }
-    else {
-      callback();
-    }
+    this.setState({
+      children: newChildren,
+    }, function () {
+      var component = this._components[childInfo.key];
+      var callback = this._handleDoneEntering(childInfo.key);
+
+      if (component.componentWillEnter) {
+        this._callbacks[childInfo.key] = callback;
+        component.componentWillEnter(callback);
+      }
+      else {
+        callback();
+      }
+    });
   },
 
   _handleDoneEntering: function (key) {
@@ -130,34 +154,34 @@ var TransitionGroup = React.createClass({
     return makeCancelable(callback, this);
   },
 
-  _performLeave: function (key) {
-    this._cancelCallback(key);
+  _performLeave: function (childInfo) {
+    this._cancelCallback(childInfo.key);
 
-    var component = this._components[key];
-    var callback = this._handleDoneLeaving(key);
+    var component = this._components[childInfo.key];
+    var callback = this._handleDoneLeaving(childInfo);
 
     if (component.componentWillLeave) {
-      this._callbacks[key] = callback;
-      component.componentWillAppear(callback);
+      this._callbacks[childInfo.key] = callback;
+      component.componentWillLeave(callback);
     }
     else {
       callback();
     }
   },
 
-  _handleDoneLeaving: function (key) {
-    var component = this._components[key];
+  _handleDoneLeaving: function (childInfo) {
+    var component = this._components[childInfo.key];
 
     var callback = function () {
+      this._cancelCallback(childInfo.key);
       this.setState(function (previousState) {
-        var newChildren = Object.assign({}, previousState.children);
-        delete newChildren[key];
+        var newChildren = previousState.children.slice();
+        newChildren.splice(childInfo.index, 1);
 
         return {
           children: newChildren,
         };
       }, function () {
-        this._cancelCallback(key);
         if (component.componentDidLeave) {
           component.componentDidLeave();
         }
@@ -190,7 +214,7 @@ var TransitionGroup = React.createClass({
     delete props.onChildStartEnter;
     delete props.onChildStartLeave;
 
-    var children = React.Children.map(this.state.children, function (child) {
+    var children = this.state.children.map(function (child) {
       return React.cloneElement(
         child, {ref: this._storeComponent.bind(this, child.props.componentKey)}
       );

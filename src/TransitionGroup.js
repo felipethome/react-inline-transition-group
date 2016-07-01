@@ -29,7 +29,7 @@ var TransitionGroup = React.createClass({
 
   componentDidMount: function () {
     this.state.children.forEach(function (child) {
-      this._performAppear(child.props.componentKey);
+      this._performAppear(child.key);
     }, this);
   },
 
@@ -39,11 +39,11 @@ var TransitionGroup = React.createClass({
     var leavingChildren = {};
 
     this.state.children.forEach(function (prevChild) {
-      currentChildren[prevChild.props.componentKey] = prevChild;
+      currentChildren[prevChild.key] = prevChild;
     });
 
     React.Children.toArray(nextProps.children).forEach(function (nextChild) {
-      nextChildren[nextChild.props.componentKey] = nextChild;
+      nextChildren[nextChild.key] = nextChild;
     });
 
     Object.keys(nextChildren).forEach(function (key, i) {
@@ -202,7 +202,7 @@ var TransitionGroup = React.createClass({
 
     var children = this.state.children.map(function (child) {
       return React.cloneElement(
-        child, {ref: this._storeComponent.bind(this, child.props.componentKey)}
+        child, {ref: this._storeComponent.bind(this, child.key)}
       );
     }, this);
 

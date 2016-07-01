@@ -50,7 +50,6 @@ var Transition = React.createClass({
             <TransitionChild
               key={i}
               id={((child || {}).props || {}).id}
-              componentKey={((child || {}).props || {}).componentKey}
               childrenBaseStyle={childrenBaseStyle}
               childrenAppearStyle={childrenAppearStyle}
               childrenEnterStyle={childrenEnterStyle}

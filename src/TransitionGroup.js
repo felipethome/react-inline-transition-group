@@ -36,8 +36,7 @@ var TransitionGroup = React.createClass({
   componentWillReceiveProps: function (nextProps) {
     var currentChildren = {};
     var nextChildren = {};
-    var enteringChildren = [];
-    var leavingChildren = [];
+    var leavingChildren = {};
 
     this.state.children.forEach(function (prevChild) {
       currentChildren[prevChild.props.componentKey] = prevChild;
@@ -51,37 +50,39 @@ var TransitionGroup = React.createClass({
     // inserted
     Object.keys(nextChildren).forEach(function (key, i) {
       if (typeof currentChildren[key] === 'undefined') {
-        enteringChildren.push({
+        // In case the child was leaving, but now is entering
+        if (this._prevLeavingChildren[key]) {
+          delete this._prevLeavingChildren;
+        }
+
+        this._performEnter({
           key: key,
           index: i,
           instance: nextChildren[key],
         });
       }
-    });
+    }, this);
 
-    Object.keys(currentChildren).forEach(function (key, i) {
+    var currentChildrenKeys = Object.keys(currentChildren);
+    for (var i = currentChildrenKeys.length - 1; i >= 0; i--) {
+      var key = currentChildrenKeys[i];
+
       if (typeof nextChildren[key] === 'undefined') {
-        leavingChildren.push({
-          key: key,
-          index: i,
-        });
-      }
-    });
+        if (!this._prevLeavingChildren || !this._prevLeavingChildren[key]) {
+          this._performLeave({
+            key: key,
+            index: i,
+          });
+        }
 
-    enteringChildren.forEach(function (childInfo) {
-      this._performEnter(childInfo);
-    }, this);
-
-    leavingChildren.forEach(function (childInfo) {
-      if (!this._prevChildren || !this._prevChildren[childInfo.key]) {
-        this._performLeave(childInfo);
+        leavingChildren[key] = true;
       }
-    }, this);
+    }
 
     // Since the child removal will be postponed we need this variable to
     // guarantee we are not trying to remove a child that is already in the
     // process of being removed
-    this._prevChildren = currentChildren;
+    this._prevLeavingChildren = leavingChildren;
   },
 
   _cancelCallback: function (key) {
@@ -122,11 +123,13 @@ var TransitionGroup = React.createClass({
   _performEnter: function (childInfo) {
     this._cancelCallback(childInfo.key);
 
-    var newChildren = this.state.children.slice();
-    newChildren.splice(childInfo.index, 0, childInfo.instance);
+    this.setState(function (previousState) {
+      var newChildren = previousState.children.slice();
+      newChildren.splice(childInfo.index, 0, childInfo.instance);
 
-    this.setState({
-      children: newChildren,
+      return {
+        children: newChildren,
+      };
     }, function () {
       var component = this._components[childInfo.key];
       var callback = this._handleDoneEntering(childInfo.key);
@@ -173,7 +176,9 @@ var TransitionGroup = React.createClass({
     var component = this._components[childInfo.key];
 
     var callback = function () {
+      delete this._prevLeavingChildren[childInfo.key];
       this._cancelCallback(childInfo.key);
+
       this.setState(function (previousState) {
         var newChildren = previousState.children.slice();
         newChildren.splice(childInfo.index, 1);
@@ -201,18 +206,8 @@ var TransitionGroup = React.createClass({
   },
 
   render: function () {
-    var props = Object.assign({}, this.props);
-    delete props.childrenAppearStyle;
-    delete props.childrenBaseStyle;
-    delete props.childrenEnterStyle;
-    delete props.childrenLeaveStyle;
-    delete props.component;
-    delete props.onChildAppeared;
-    delete props.onChildEntered;
-    delete props.onChildLeft;
-    delete props.onChildStartAppear;
-    delete props.onChildStartEnter;
-    delete props.onChildStartLeave;
+    var filteredProps = Object.assign({}, this.props);
+    delete filteredProps.component;
 
     var children = this.state.children.map(function (child) {
       return React.cloneElement(
@@ -221,7 +216,7 @@ var TransitionGroup = React.createClass({
     }, this);
 
     return React.createElement(
-      this.props.component, props, children
+      this.props.component, filteredProps, children
     );
   },
 

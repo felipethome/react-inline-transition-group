@@ -2,7 +2,7 @@
   "name": "react-inline-transition-group",
   "version": "0.2.3",
   "author": "Felipe Thomé",
-  "description": "Control inline style transitions for components built with React.",
+  "description": "React CSS Transition Group, but with inline style.",
   "license": "BSD-3-Clause",
   "repository": "https://github.com/felipethome/react-inline-transition-group",
   "homepage": "http://felipethome.github.io/react-inline-transition-group",
@@ -10,9 +10,8 @@
     "react",
     "react-component",
     "react-transition-group",
-    "inline-styles",
-    "transition",
-    "transition-group"
+    "react-addons-css-transition-group",
+    "inline-styles"
   ],
   "peerDependencies": {
     "react": "0.14.x || 15.x",
@@ -50,7 +49,7 @@
     "watchify": "~3.6.0"
   },
   "scripts": {
-    "build": "babel ./src --out-dir ./lib",
+    "build": "babel ./src --out-dir ./lib --ignore __tests__",
     "demo": "gulp demo",
     "lint": "eslint src/",
     "test": "jest"

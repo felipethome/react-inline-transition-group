@@ -49,7 +49,7 @@ var TransitionGroup = React.createClass({
     Object.keys(nextChildren).forEach(function (key, i) {
       if (typeof currentChildren[key] === 'undefined') {
         // In case the child was leaving, but now is entering
-        if (this._prevLeavingChildren[key]) {
+        if (this._prevLeavingChildren && this._prevLeavingChildren[key]) {
           delete this._prevLeavingChildren;
         }
 
@@ -167,7 +167,9 @@ var TransitionGroup = React.createClass({
     var component = this._components[key];
 
     var callback = function () {
-      delete this._prevLeavingChildren[key];
+      if (this._prevLeavingChildren && this._prevLeavingChildren[key]) {
+        delete this._prevLeavingChildren[key];
+      }
       this._cancelCallback(key);
 
       this.setState(function (previousState) {

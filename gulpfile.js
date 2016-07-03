@@ -1,3 +1,5 @@
+/*eslint-disable no-console */
+
 var browserify = require('browserify');
 var connect = require('gulp-connect');
 var merge = require('merge-stream');

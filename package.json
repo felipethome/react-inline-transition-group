@@ -9,8 +9,9 @@
   "keywords": [
     "react",
     "react-component",
-    "react-transition-group",
-    "react-addons-css-transition-group",
+    "react-addons",
+    "transition-group",
+    "css-transition-group",
     "inline-styles"
   ],
   "peerDependencies": {

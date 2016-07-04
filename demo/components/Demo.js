@@ -36,7 +36,7 @@ var Demo = React.createClass({
           </div>
           <Album
             images={['img/1.jpg', 'img/2.jpg']}
-            type="react-addons-transition-group"
+            type="react-addons"
           />
         </div>
       </div>

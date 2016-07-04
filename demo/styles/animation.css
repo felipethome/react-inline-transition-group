@@ -1,0 +1,38 @@
+.album {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 500px;
+  height: auto;
+  background: #FFF;
+  border-radius: 2px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+.album-enter {
+  opacity: 0;
+}
+
+.album-appear {
+  opacity: 0;
+}
+
+.album-appear.album-appear-active {
+  opacity: 1;
+  transition: opacity 1000ms ease-in;
+}
+
+.album-enter.album-enter-active {
+  opacity: 1;
+  transition: opacity 1000ms ease-in;
+}
+
+.album-leave {
+  opacity: 1;
+}
+
+.album-leave.album-leave-active {
+  opacity: 0;
+  transition: opacity 1000ms ease-in;
+}

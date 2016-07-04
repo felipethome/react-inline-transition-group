@@ -1,5 +1,6 @@
 var React = require('react');
 var Transition = require('../../src/Transition');
+var CSSTransition = require('react-addons-css-transition-group');
 
 var Album = React.createClass({
   displayName: 'Album',
@@ -102,7 +103,7 @@ var Album = React.createClass({
 
       leave: {
         opacity: '0',
-        transition: 'all 500ms',
+        transition: 'all 1000ms',
       },
 
       button: {
@@ -135,38 +136,71 @@ var Album = React.createClass({
     };
 
     var album;
+    var callback;
     var elems = [];
     if (this.state.show) {
       if (this.state.count % 2) {
         elems.push(
-          <img id={0} key={this.state.count} src="img/1.jpg" />
+          <img
+            id={0}
+            key={this.state.count}
+            src="img/1.jpg"
+            className={this.props.type === 'react-addons' ? 'album' : ''}
+          />
         );
       }
       else {
         elems.push(
-          <img id={1} key={this.state.count} src="img/2.jpg" />
+          <img
+            id={1}
+            key={this.state.count}
+            src="img/2.jpg"
+            className={this.props.type === 'react-addons' ? 'album' : ''}
+          />
         );
       }
 
-      album = (
-        <Transition
-          component={'div'}
-          childrenBaseStyle={styles.base}
-          childrenAppearStyle={styles.appear}
-          childrenEnterStyle={styles.appear}
-          childrenLeaveStyle={styles.leave}
-          onChildAppeared={this._handleAppeared}
-          onChildEntered={this._handleEntered}
-          onChildLeft={this._handleLeft}
-          onChildStartAppear={this._handleStartAppear}
-          onChildStartEnter={this._handleStartEnter}
-          onChildStartLeave={this._handleStartLeave}
-          style={{position: 'relative'}}
-          type={this.props.type}
-        >
-          {elems}
-        </Transition>
-      );
+      if (this.props.type === 'react-addons') {
+        album = (
+          <CSSTransition
+            component={'div'}
+            transitionName="album"
+            transitionAppear
+            transitionAppearTimeout={1000}
+            transitionEnterTimeout={1000}
+            transitionLeaveTimeout={1000}
+            style={{position: 'relative'}}
+          >
+            {elems}
+          </CSSTransition>
+        );
+      }
+      else {
+        callback = (
+          <div style={styles.callback}>
+            {'Callback: ' + this.state.callbackMsg}
+          </div>
+        );
+
+        album = (
+          <Transition
+            component={'div'}
+            childrenBaseStyle={styles.base}
+            childrenAppearStyle={styles.appear}
+            childrenEnterStyle={styles.appear}
+            childrenLeaveStyle={styles.leave}
+            onChildAppeared={this._handleAppeared}
+            onChildEntered={this._handleEntered}
+            onChildLeft={this._handleLeft}
+            onChildStartAppear={this._handleStartAppear}
+            onChildStartEnter={this._handleStartEnter}
+            onChildStartLeave={this._handleStartLeave}
+            style={{position: 'relative'}}
+          >
+            {elems}
+          </Transition>
+        );
+      }
     }
 
     return (
@@ -175,9 +209,7 @@ var Album = React.createClass({
           <button style={styles.button} onClick={this._handleAdd}>
             Switch Image
           </button>
-          <div style={styles.callback}>
-            {'Callback: ' + this.state.callbackMsg}
-          </div>
+          {callback}
         </div>
        {album}
       </div>

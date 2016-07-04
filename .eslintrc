@@ -67,5 +67,8 @@
   },
   "plugins": [
     "react"
-  ]
+  ],
+  "globals": {
+    "Promise": true
+  }
 }

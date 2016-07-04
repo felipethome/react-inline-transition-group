@@ -42,6 +42,7 @@
     "gulp-util": "~3.0.7",
     "jest-cli": "^13.0.0",
     "react": "^15.1.0",
+    "react-addons-css-transition-group": "^15.2.0",
     "react-addons-test-utils": "^15.2.0",
     "react-addons-transition-group": "^15.1.0",
     "react-dom": "^15.1.0",

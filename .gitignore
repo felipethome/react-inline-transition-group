@@ -1,5 +1,4 @@
 *.log
 node_modules
 lib
-demo
-build
+demo/build

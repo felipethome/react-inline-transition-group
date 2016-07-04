@@ -118,13 +118,13 @@ var TransitionChild = React.createClass({
     var node = ReactDOM.findDOMNode(this);
     if (!node) return;
 
+    node.removeEventListener('transitionend', this._lastCallback);
+    node.addEventListener('transitionend', callback);
+
     node.setAttribute('style', this._computeNewStyle(phase));
 
     // Flush styles
     this.flush = node.offsetWidth;
-
-    node.removeEventListener('transitionend', this._lastCallback);
-    node.addEventListener('transitionend', callback);
   },
 
   render: function () {

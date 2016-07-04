@@ -16,10 +16,12 @@ var files = {
   dependencies: [
     'react',
     'react-dom',
+    'react-addons-transition-group',
+    'react-addons-css-transition-group',
   ],
 
   browserify: [
-    './build/main.js',
+    './demo/main.js',
   ],
 };
 
@@ -97,18 +99,18 @@ gulp.task('demo', function() {
     development: true,
     src: files.dependencies,
     output: 'vendors.js',
-    dest: './build/scripts',
+    dest: './demo/build/scripts',
   };
 
   var browserifyOpt = {
     development: true,
     src: files.browserify,
     output: 'bundle.js',
-    dest: './build/scripts',
+    dest: './demo/build/scripts',
   };
 
   var serverOpt = {
-    root: './build',
+    root: './demo',
     port: 8889,
     livereload: true,
   };

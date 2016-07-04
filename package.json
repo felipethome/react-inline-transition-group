@@ -15,9 +15,7 @@
     "inline-styles"
   ],
   "peerDependencies": {
-    "react": "0.14.x || 15.x",
-    "react-addons-transition-group": "0.14.x || 15.x",
-    "fbjs": ">=0.6.0"
+    "react": "0.14.x || 15.x"
   },
   "dependencies": {},
   "devDependencies": {

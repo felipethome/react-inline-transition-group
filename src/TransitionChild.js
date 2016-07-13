@@ -20,6 +20,7 @@ var TransitionChild = React.createClass({
     onChildStartAppear: React.PropTypes.func,
     onChildStartEnter: React.PropTypes.func,
     onChildStartLeave: React.PropTypes.func,
+    transitionEndProperty: React.PropTypes.string,
   },
 
   componentWillMount: function () {
@@ -30,10 +31,10 @@ var TransitionChild = React.createClass({
     var node = ReactDOM.findDOMNode(this);
     if (!node) return;
 
-    node.setAttribute('style', this._computeNewStyle());
-
-    // Flush styles
-    this.flush = node.offsetWidth;
+    var component = this;
+    requestAnimationFrame(function () {
+      node.setAttribute('style', component._computeNewStyle());
+    });
   },
 
   componentWillUnmount: function () {
@@ -52,8 +53,6 @@ var TransitionChild = React.createClass({
     if (this.props.onChildAppeared) {
       this.props.onChildAppeared(this.props.id);
     }
-
-    this._appeared = true;
   },
 
   componentWillEnter: function (callback) {
@@ -82,6 +81,74 @@ var TransitionChild = React.createClass({
     if (this.props.onChildLeft) this.props.onChildLeft(this.props.id);
   },
 
+  _getTransitionProperties: function (computedStyle) {
+    var properties = {};
+
+    properties.transitionDuration = computedStyle.transitionDuration ||
+      computedStyle.WebkitTransitionDuration ||
+      computedStyle.MozTransitionDuration ||
+      computedStyle.msTransitionDuration;
+
+    properties.transitionDelay = computedStyle.transitionDelay ||
+      computedStyle.WebkitTransitionDelay ||
+      computedStyle.MozTransitionDelay ||
+      computedStyle.msTransitionDelay;
+
+    properties.transitionProperty = computedStyle.transitionProperty ||
+      computedStyle.WebkitTransitionProperty ||
+      computedStyle.msTransitionProperty ||
+      computedStyle.MozTransitionProperty;
+
+    return properties;
+  },
+
+  // Specs: https://www.w3.org/TR/css3-transitions/
+  // A lot of assumptions could be made here, like that probably the duration
+  // and delay lists are already truncated by the size of the property list
+  // or that values will be returned by window.getComputedStyle in seconds,
+  // but I prefer to make this function less vulnerable to changes.
+  _getTransitionMaximumTime: function (property, duration, delay) {
+    var durationArray = duration.split(',');
+    var delayArray = delay.split(',');
+    var propertyArray = property.split(',');
+    var longestTime = 0;
+    var re = /([0-9]*\.?[0-9]+)(m?s)/;
+    var durationFactor;
+    var delayFactor;
+    var durationGroups;
+    var delayGroups;
+
+    for (var i = 0; i < propertyArray.length; i++) {
+      durationGroups = (durationArray[i] || '0s').match(re);
+      if (durationGroups[2] === 's') durationFactor = 1000;
+      else durationFactor = 1;
+
+      delayGroups = (delayArray[i] || '0s').match(re);
+      if (delayGroups[2] === 's') delayFactor = 1000;
+      else delayFactor = 1;
+
+      longestTime = Math.max(
+        parseFloat(
+          (durationGroups[1] * durationFactor) + (delayGroups[1] * delayFactor)
+        ),
+        longestTime
+      );
+    }
+
+    return longestTime;
+  },
+
+  _handleTransitionEnd: function (node, maxTime, callback, event) {
+    if (maxTime && maxTime >= event.elapsedTime * 1000) {
+      node.removeEventListener('transitionend', this.handleRef);
+      callback();
+    }
+    else if (this.props.transitionEndProperty === event.propertyName) {
+      node.removeEventListener('transitionend', this.handleRef);
+      callback();
+    }
+  },
+
   _computeNewStyle: function (phase) {
     var currentStyle;
     if (phase === 'appear') currentStyle = this.props.childrenAppearStyle;
@@ -108,23 +175,35 @@ var TransitionChild = React.createClass({
       callback();
     }
     else {
-      this._executeTransition.call(this, callback, phase);
+      var component = this;
+      requestAnimationFrame(function () {
+        component._executeTransition(callback, phase);
+      });
     }
   },
 
   _executeTransition: function (callback, phase) {
-    this._lastCallback = callback;
-
     var node = ReactDOM.findDOMNode(this);
     if (!node) return;
 
-    node.removeEventListener('transitionend', this._lastCallback);
-    node.addEventListener('transitionend', callback);
-
     node.setAttribute('style', this._computeNewStyle(phase));
 
-    // Flush styles
-    this.flush = node.offsetWidth;
+    var properties;
+    var maxTransitionTime;
+    if (this.props.transitionEndProperty === undefined) {
+      properties = this._getTransitionProperties(getComputedStyle(node));
+      maxTransitionTime = this._getTransitionMaximumTime(
+        properties.transitionProperty,
+        properties.transitionDuration,
+        properties.transitionDelay
+      );
+    }
+
+    node.removeEventListener('transitionend', this.handleRef);
+    this.handleRef = this._handleTransitionEnd.bind(
+      this, node, maxTransitionTime, callback
+    );
+    node.addEventListener('transitionend', this.handleRef);
   },
 
   render: function () {

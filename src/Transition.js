@@ -18,6 +18,7 @@ var Transition = React.createClass({
     onChildStartAppear: React.PropTypes.func,
     onChildStartEnter: React.PropTypes.func,
     onChildStartLeave: React.PropTypes.func,
+    transitionEndProperty: React.PropTypes.string,
   },
 
   getDefaultProps: function () {
@@ -40,6 +41,7 @@ var Transition = React.createClass({
       onChildStartAppear,
       onChildStartEnter,
       onChildStartLeave,
+      transitionEndProperty,
       ...others,
     } = this.props;
 
@@ -60,6 +62,7 @@ var Transition = React.createClass({
               onChildStartAppear={onChildStartAppear}
               onChildStartEnter={onChildStartEnter}
               onChildStartLeave={onChildStartLeave}
+              transitionEndProperty={transitionEndProperty}
             >
               {child}
             </TransitionChild>

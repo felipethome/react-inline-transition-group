@@ -201,9 +201,6 @@ var TransitionChild = React.createClass({
       this, node, maxTransitionTime, callback
     );
     node.addEventListener('transitionend', this.handleRef);
-
-    // Flush styles
-    this.flush = node.offsetWidth;
   },
 
   render: function () {

@@ -21,7 +21,7 @@ var TransitionChild = React.createClass({
     onChildStartAppear: React.PropTypes.func,
     onChildStartEnter: React.PropTypes.func,
     onChildStartLeave: React.PropTypes.func,
-    transitionEndProperty: React.PropTypes.string,
+    propertyName: React.PropTypes.string,
   },
 
   componentWillMount: function () {
@@ -141,7 +141,7 @@ var TransitionChild = React.createClass({
       node.removeEventListener('transitionend', this.handleRef);
       callback();
     }
-    else if (this.props.transitionEndProperty === event.propertyName) {
+    else if (this.props.propertyName === event.propertyName) {
       node.removeEventListener('transitionend', this.handleRef);
       callback();
     }
@@ -188,7 +188,7 @@ var TransitionChild = React.createClass({
 
     var properties;
     var maxTransitionTime;
-    if (this.props.transitionEndProperty === undefined) {
+    if (this.props.propertyName === undefined) {
       // This block will make the styles calculation synchronous
       properties = this._getTransitionProperties(getComputedStyle(node));
       maxTransitionTime = this._getTransitionMaximumTime(

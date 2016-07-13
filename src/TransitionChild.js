@@ -31,10 +31,10 @@ var TransitionChild = React.createClass({
     var node = ReactDOM.findDOMNode(this);
     if (!node) return;
 
-    var component = this;
-    requestAnimationFrame(function () {
-      node.setAttribute('style', component._computeNewStyle());
-    });
+    node.setAttribute('style', this._computeNewStyle());
+
+    // Flush styles
+    this.flush = node.offsetWidth;
   },
 
   componentWillUnmount: function () {
@@ -175,10 +175,7 @@ var TransitionChild = React.createClass({
       callback();
     }
     else {
-      var component = this;
-      requestAnimationFrame(function () {
-        component._executeTransition(callback, phase);
-      });
+      this._executeTransition(callback, phase);
     }
   },
 
@@ -204,6 +201,9 @@ var TransitionChild = React.createClass({
       this, node, maxTransitionTime, callback
     );
     node.addEventListener('transitionend', this.handleRef);
+
+    // Flush styles
+    this.flush = node.offsetWidth;
   },
 
   render: function () {

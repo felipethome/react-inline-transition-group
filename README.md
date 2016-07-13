@@ -1,24 +1,24 @@
 # React Inline Transition Group
 
-Helps to control transitions defined using inline styles. Build upon [ReactTransitionGroup](https://facebook.github.io/react/docs/animation.html), the aim is to supply a component similar to ReactCSSTransitionGroup, but that instead of working with CSS classes work with inline styles. This approach brings some advantages like:
+This component helps you to control transitions defined using inline styles. Built with [ReactTransitionHooks](https://github.com/felipethome/react-transition-hooks), the goal is to supply a better alternative to [ReactCSSTransitionGroup](https://facebook.github.io/react/docs/animation.html).
+
+## Advantages
 
 * You don't need to decouple your styles from the component.
 * You don't need to supply timeout properties as in ReactCSSTransitionGroup because the component can infer them based on the style object you pass to it.
 * You have callbacks to control the start and end of your transitions for each child.
+* ReactCSSTransitionGroup uses timeouts to control the animations which means some situations can break its behavior, like having slow frame rates (slower than 60fps).
+* ReactCSSTransitionGroup uses ReactTransitionGroup which means you can not interrupt animations.
 
-# Demo
+## Live Demo
 
 Check out the [demo](http://felipethome.github.io/react-inline-transition-group/demo/index.html).
 
-# How to install
+## How to install
 
     npm install react-inline-transition-group
 
-Don't forget that you must have ReactTransitionGroup installed too. If you don't have it installed yet:
-
-    npm install react-addons-transition-group
-
-# How to use
+## How to use
 
 Import the component to your project and then wrap the nodes you want to control the transition with it. Example:
 
@@ -104,7 +104,7 @@ onChildStartLeave | Callback that will be called with the child *id* when the co
 
 **Observation:** You can pass an *id* property to your children components and the callback will be called with it so you know exactly for which child the event happened. This *id* is optional.
 
-**Observation 2:** The *start* callbacks will be called sooner a node is being added or removed to/from the group. It doesn't matter if you have a delay or not. The *end* callbacks will be called when the longest transition time (delay + duration) completes.
+**Observation 2:** The *start* callbacks will be called sooner a node is being added or removed to/from the group. If you have a delay in your CSS transition the component will not wait until the delay is finished to call the callbacks. The *end* callbacks will be called when the longest transition time (delay + duration) completes.
 
 ## LICENSE
 

@@ -7,7 +7,7 @@ This component helps you to control transitions defined using inline styles. Bui
 * You don't need to decouple your styles from the component.
 * You don't need to supply timeout properties as in ReactCSSTransitionGroup because the component can infer them based on the style object you pass to it.
 * You have callbacks to control the start and end of your transitions for each child.
-* ReactCSSTransitionGroup uses timeouts to control the animations which means some situations can break its behavior, like having slow frame rates (slower than 60fps).
+* ReactCSSTransitionGroup uses timeouts to control the animations which means some situations can break its behavior, like in slow frame rates (slower than 60fps).
 * ReactCSSTransitionGroup uses ReactTransitionGroup which means you can not interrupt animations.
 
 ## Live Demo

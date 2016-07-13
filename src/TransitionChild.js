@@ -1,5 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
+var Animation = require('./Animation');
 var hyphenateStyleName = require('fbjs/lib/hyphenateStyleName');
 
 var TransitionChild = React.createClass({
@@ -24,7 +25,7 @@ var TransitionChild = React.createClass({
   },
 
   componentWillMount: function () {
-    this._callbackTimeout = null;
+    this._Animation = new Animation();
   },
 
   componentDidMount: function () {
@@ -32,13 +33,10 @@ var TransitionChild = React.createClass({
     if (!node) return;
 
     node.setAttribute('style', this._computeNewStyle());
-
-    // Flush styles
-    this.flush = node.offsetWidth;
   },
 
   componentWillUnmount: function () {
-    clearTimeout(this._callbackTimeout);
+    this._Animation.cancelAllFrames();
   },
 
   componentWillAppear: function (callback) {
@@ -175,7 +173,10 @@ var TransitionChild = React.createClass({
       callback();
     }
     else {
-      this._executeTransition(callback, phase);
+      var component = this;
+      this._Animation.requestNextFrame(function () {
+        component._executeTransition(callback, phase);
+      });
     }
   },
 
@@ -188,6 +189,7 @@ var TransitionChild = React.createClass({
     var properties;
     var maxTransitionTime;
     if (this.props.transitionEndProperty === undefined) {
+      // This block will make the styles calculation synchronous
       properties = this._getTransitionProperties(getComputedStyle(node));
       maxTransitionTime = this._getTransitionMaximumTime(
         properties.transitionProperty,

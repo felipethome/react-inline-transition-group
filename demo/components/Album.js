@@ -1,29 +1,29 @@
-var React = require('react');
-var Transition = require('../../src/Transition');
-var CSSTransition = require('react-addons-css-transition-group');
+const React = require('react');
+const Button = require('./Button');
+const Transition = require('../../src/Transition');
+const CSSTransition = require('react-addons-css-transition-group');
 
-var Album = React.createClass({
+const Album = React.createClass({
   displayName: 'Album',
 
   propTypes: {
     images: React.PropTypes.array,
-    type: React.PropTypes.string,
   },
 
   getInitialState: function () {
     return {
-      callbackMsg: '',
+      component: '',
       count: 1,
       show: false,
     };
   },
 
   componentDidMount: function () {
-    var component = this;
+    const component = this;
 
-    var promises = this.props.images.map(function (src) {
+    const promises = this.props.images.map(function (src) {
       return new Promise(function (resolve) {
-        var img = new Image();
+        const img = new Image();
         img.src = src;
         img.onload = resolve;
       });
@@ -42,45 +42,22 @@ var Album = React.createClass({
     });
   },
 
-  _handleStartAppear: function (id) {
-    this.setState({callbackMsg: id + ' start to appear'});
-  },
-
-  _handleStartEnter: function (id) {
-    this.setState({callbackMsg: id + ' start to enter'});
-  },
-
-  _handleStartLeave: function (id) {
-    this.setState({callbackMsg: id + ' start to leave'});
-  },
-
-  _handleAppeared: function (id) {
-    this.setState({callbackMsg: id + ' appeared'});
-  },
-
-  _handleEntered: function (id) {
-    this.setState({callbackMsg: id + ' entered'});
-  },
-
-  _handleLeft: function (id) {
-    this.setState({callbackMsg: id + ' left'});
+  _handleComponentChange: function (component) {
+    this.setState({
+      component: component,
+    });
   },
 
   render: function () {
-    var styles = {
+    const styles = {
       container: {
-        width: '500px',
-        height: '220px',
         backgroundColor: '#FFF',
+        height: '300px',
+        width: '500px',
         boxShadow: '0 4px 5px 0 rgba(0, 0, 0, 0.14),' +
           '0 1px 10px 0 rgba(0, 0, 0, 0.12),' +
           '0 2px 4px -1px rgba(0, 0, 0, 0.4)',
         padding: '30px',
-      },
-
-      actionsContainer: {
-        display: 'flex',
-        width: '100%',
       },
 
       base: {
@@ -98,46 +75,30 @@ var Album = React.createClass({
 
       appear: {
         opacity: '1',
-        transition: 'all 1000ms',
+        transition: 'all 1000ms ease-in',
       },
 
       leave: {
         opacity: '0',
-        transition: 'all 1000ms',
+        transition: 'all 1000ms ease-in',
       },
 
       button: {
-        cursor: 'pointer',
-        boxSizing: 'border-box',
-        border: 'none',
-        borderRadius: '2px',
-        padding: '10px 15px',
         backgroundColor: '#2980b9',
-        height: '36px',
-        color: '#FFF',
-        fontFamily: '"Roboto", sans-serif',
-        textDecoration: 'none',
-        textTransform: 'uppercase',
         margin: '0px 15px 15px 0',
-        outline: 'none',
       },
 
-      callback: {
-        display: 'flex',
-        flex: 2,
-        alignItems: 'center',
-        height: '36px',
-        backgroundColor: '#FFF',
-        boxSizing: 'border-box',
-        border: '1px solid #81C784',
-        borderRadius: '2px',
-        padding: '5px 5px 5px 5px',
+      optionsContainer: {
+        marginBottom: '30px',
+      },
+
+      option: {
+        marginBottom: '10px',
       },
     };
 
-    var album;
-    var callback;
-    var elems = [];
+    let album;
+    const elems = [];
     if (this.state.show) {
       if (this.state.count % 2) {
         elems.push(
@@ -145,7 +106,7 @@ var Album = React.createClass({
             id={0}
             key={this.state.count}
             src="img/1.jpg"
-            className={this.props.type === 'react-addons' ? 'album' : ''}
+            className={this.state.component === 'react-addons' ? 'album' : ''}
           />
         );
       }
@@ -155,15 +116,15 @@ var Album = React.createClass({
             id={1}
             key={this.state.count}
             src="img/2.jpg"
-            className={this.props.type === 'react-addons' ? 'album' : ''}
+            className={this.state.component === 'react-addons' ? 'album' : ''}
           />
         );
       }
 
-      if (this.props.type === 'react-addons') {
+      if (this.state.component === 'react-addons') {
         album = (
           <CSSTransition
-            component={'div'}
+            component="div"
             transitionName="album"
             transitionAppear
             transitionAppearTimeout={1000}
@@ -176,12 +137,6 @@ var Album = React.createClass({
         );
       }
       else {
-        callback = (
-          <div style={styles.callback}>
-            {'Callback: ' + this.state.callbackMsg}
-          </div>
-        );
-
         album = (
           <Transition
             component={'div'}
@@ -189,12 +144,6 @@ var Album = React.createClass({
             childrenAppearStyle={styles.appear}
             childrenEnterStyle={styles.appear}
             childrenLeaveStyle={styles.leave}
-            onChildAppeared={this._handleAppeared}
-            onChildEntered={this._handleEntered}
-            onChildLeft={this._handleLeft}
-            onChildStartAppear={this._handleStartAppear}
-            onChildStartEnter={this._handleStartEnter}
-            onChildStartLeave={this._handleStartLeave}
             style={{position: 'relative'}}
           >
             {elems}
@@ -205,11 +154,31 @@ var Album = React.createClass({
 
     return (
       <div style={styles.container}>
-        <div style={styles.actionsContainer}>
-          <button style={styles.button} onClick={this._handleAdd}>
-            Switch Image
-          </button>
-          {callback}
+        <div style={styles.optionsContainer}>
+          <div style={styles.option}>
+            <input
+              defaultChecked
+              name="component"
+              type="radio"
+              onChange={this._handleComponentChange.bind(this, '')}
+            />
+            ReactInlineTransitionGroup + ReactTransitionHooks
+          </div>
+          <div style={styles.option}>
+            <input
+              name="component"
+              type="radio"
+              onChange={this._handleComponentChange.bind(this, 'react-addons')}
+            />
+            ReactCSSTransitionGroup + ReactTransitionGroup
+          </div>
+        </div>
+        <div>
+          <Button
+            label="Switch Image"
+            onClick={this._handleAdd}
+            style={styles.button}
+          />
         </div>
        {album}
       </div>

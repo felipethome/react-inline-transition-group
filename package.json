@@ -11,13 +11,15 @@
     "react-component",
     "react-addons",
     "transition-group",
-    "css-transition-group",
-    "inline-styles"
+    "inline-styles",
+    "react-addons-css-transition-group"
   ],
   "peerDependencies": {
     "react": "0.14.x || 15.x"
   },
-  "dependencies": {},
+  "dependencies": {
+    "react-transition-hooks": "^1.0.0"
+  },
   "devDependencies": {
     "babel-cli": "^6.9.0",
     "babel-eslint": "^6.0.4",

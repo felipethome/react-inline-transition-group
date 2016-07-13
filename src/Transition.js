@@ -1,5 +1,5 @@
 var React = require('react');
-var TransitionGroup = require('react-addons-transition-group');
+var TransitionHooks = require('react-transition-hooks');
 var TransitionChild = require('./TransitionChild');
 
 var Transition = React.createClass({
@@ -44,7 +44,7 @@ var Transition = React.createClass({
     } = this.props;
 
     return (
-      <TransitionGroup component={component} {...others}>
+      <TransitionHooks component={component} {...others}>
         {React.Children.map(children, function (child, i) {
           return (
             <TransitionChild
@@ -65,7 +65,7 @@ var Transition = React.createClass({
             </TransitionChild>
           );
         }, this)}
-      </TransitionGroup>
+      </TransitionHooks>
     );
   },
 

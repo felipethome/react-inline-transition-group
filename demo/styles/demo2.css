@@ -10,10 +10,6 @@
   margin-bottom: 10px;
 }
 
-.album-enter {
-  opacity: 0;
-}
-
 .album-appear {
   opacity: 0;
 }
@@ -21,6 +17,10 @@
 .album-appear.album-appear-active {
   opacity: 1;
   transition: opacity 1000ms ease-in;
+}
+
+.album-enter {
+  opacity: 0;
 }
 
 .album-enter.album-enter-active {

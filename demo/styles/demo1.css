@@ -1,0 +1,32 @@
+.circle {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid #448AFF;
+  height: 100px;
+  width: 100px;
+  opacity: 0.5;
+}
+
+.circle-appear {
+}
+
+.circle-appear.circle-appear-active {
+  opacity: 1;
+  transition: opacity 600ms;
+}
+
+.circle-enter {
+}
+
+.circle-enter.circle-enter-active {
+  opacity: 1;
+  transition: opacity 600ms;
+}
+
+.circle-leave {
+}
+
+.circle-leave.circle-leave-active {
+  opacity: 0;
+  transition: opacity 600ms;
+}

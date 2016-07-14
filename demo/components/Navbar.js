@@ -45,7 +45,7 @@ const Navbar = React.createClass({
         boxShadow: '0 0px 8px rgba(0,0,0,.28)',
         height: '56px',
         width: '100%',
-        margin: '0',
+        margin: '0px',
       },
     };
 

@@ -28,6 +28,8 @@ const Demo = React.createClass({
         page = (<List />);
         break;
       case 'Github':
+        document.location.href =
+          'https://github.com/felipethome/react-inline-transition-group';
         break;
     }
 

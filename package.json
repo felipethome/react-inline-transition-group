@@ -1,6 +1,6 @@
 {
   "name": "react-inline-transition-group",
-  "version": "0.2.3",
+  "version": "1.0.0",
   "author": "Felipe Thomé",
   "description": "Like React CSS Transition Group, but with inline style.",
   "license": "BSD-3-Clause",
@@ -15,7 +15,8 @@
     "react-addons-css-transition-group"
   ],
   "peerDependencies": {
-    "react": "0.14.x || 15.x"
+    "react": "0.14.x || 15.x",
+    "fbjs": "^0.x",
   },
   "dependencies": {
     "react-transition-hooks": "^1.0.0"

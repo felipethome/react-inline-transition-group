@@ -16,7 +16,7 @@
   ],
   "peerDependencies": {
     "react": "0.14.x || 15.x",
-    "fbjs": "^0.x",
+    "fbjs": "^0.x"
   },
   "dependencies": {
     "react-transition-hooks": "^1.0.0"

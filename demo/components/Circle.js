@@ -139,7 +139,7 @@ const Circle = React.createClass({
           childrenAppearStyle={styles.appear}
           childrenEnterStyle={styles.appear}
           childrenLeaveStyle={styles.leave}
-          transitionEndProperty="opacity"
+          propertyName="opacity"
         >
           {circles}
         </Transition>

@@ -15,11 +15,11 @@
     "react-addons-css-transition-group"
   ],
   "peerDependencies": {
-    "react": "0.14.x || 15.x",
-    "fbjs": "^0.x"
+    "react": "0.14.x || 15.x"
   },
   "dependencies": {
-    "react-transition-hooks": "^1.0.0"
+    "react-transition-hooks": "^1.0.0",
+    "fbjs": "^0.8.3"
   },
   "devDependencies": {
     "babel-cli": "^6.9.0",

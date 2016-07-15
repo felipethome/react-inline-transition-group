@@ -48,6 +48,7 @@
     "react-addons-test-utils": "^15.2.1",
     "react-addons-transition-group": "^15.2.1",
     "react-dom": "^15.2.1",
+    "react-transition-hooks": "^1.0.1",
     "vinyl-source-stream": "~1.1.0",
     "watchify": "~3.6.0"
   },

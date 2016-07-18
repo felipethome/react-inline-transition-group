@@ -22,6 +22,7 @@ var TransitionChild = React.createClass({
     onChildStartEnter: React.PropTypes.func,
     onChildStartLeave: React.PropTypes.func,
     propertyName: React.PropTypes.string,
+    style: React.PropTypes.object,
   },
 
   componentWillMount: function () {
@@ -154,9 +155,9 @@ var TransitionChild = React.createClass({
     else if (phase === 'leave') currentStyle = this.props.childrenLeaveStyle;
     else currentStyle = this.props.childrenBaseStyle;
 
-    var mergedStyle = phase
-      ? Object.assign({}, this.props.childrenBaseStyle, currentStyle)
-      : currentStyle;
+    var mergedStyle = Object.assign(
+      {}, this.props.style, this.props.childrenBaseStyle, currentStyle
+    );
 
     var styleStr = '';
     Object.keys(mergedStyle).forEach(function (key) {

@@ -7,6 +7,7 @@ This component helps you to control transitions defined with inline styles. Buil
 * You don't need to decouple your styles from the component.
 * You don't need to supply timeout properties as in *ReactCSSTransitionGroup*.
 * You have callbacks to control the start and end of your transitions for each child.
+* Better performance for complex animations.
 * Facebook will drop support for *ReactCSSTransitionGroup*.
 * *ReactCSSTransitionGroup* uses timeouts to control the animations which means some situations can break its behavior, like in frame rates slower than 60fps.
 * *ReactCSSTransitionGroup* uses *ReactTransitionGroup* which means you can not interrupt animations.

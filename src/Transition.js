@@ -63,6 +63,7 @@ var Transition = React.createClass({
               onChildStartEnter={onChildStartEnter}
               onChildStartLeave={onChildStartLeave}
               propertyName={propertyName}
+              style={((child || {}).props || {}).style}
             >
               {child}
             </TransitionChild>

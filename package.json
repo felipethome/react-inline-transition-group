@@ -1,6 +1,6 @@
 {
   "name": "react-inline-transition-group",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "author": "Felipe Thomé",
   "description": "Like React CSS Transition Group, but with inline style.",
   "license": "BSD-3-Clause",
@@ -18,7 +18,7 @@
     "react": "0.14.x || 15.x"
   },
   "dependencies": {
-    "react-transition-hooks": "^1.0.0",
+    "react-transition-hooks": "^1.0.1",
     "fbjs": "^0.8.3"
   },
   "devDependencies": {
@@ -26,6 +26,7 @@
     "babel-eslint": "^6.1.2",
     "babel-jest": "^13.2.2",
     "babel-plugin-transform-class-properties": "^6.10.2",
+    "babel-plugin-transform-object-assign": "^6.8.0",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-2": "^6.11.0",
@@ -48,6 +49,7 @@
     "react-addons-test-utils": "^15.2.1",
     "react-addons-transition-group": "^15.2.1",
     "react-dom": "^15.2.1",
+    "react-transition-hooks": "^1.0.1",
     "vinyl-source-stream": "~1.1.0",
     "watchify": "~3.6.0"
   },

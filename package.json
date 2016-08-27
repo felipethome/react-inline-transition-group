@@ -1,6 +1,6 @@
 {
   "name": "react-inline-transition-group",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "author": "Felipe Thomé",
   "description": "Like React CSS Transition Group, but with inline style.",
   "license": "BSD-3-Clause",

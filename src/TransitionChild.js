@@ -1,7 +1,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
+var CSSPropertyOperations = require('react/lib/CSSPropertyOperations');
 var Animation = require('./Animation');
-var hyphenateStyleName = require('fbjs/lib/hyphenateStyleName');
 
 var TransitionChild = React.createClass({
   displayName: 'TransitionChild',
@@ -159,12 +159,7 @@ var TransitionChild = React.createClass({
       {}, this.props.style, this.props.childrenBaseStyle, currentStyle
     );
 
-    var styleStr = '';
-    Object.keys(mergedStyle).forEach(function (key) {
-      styleStr += hyphenateStyleName(key) + ':' + mergedStyle[key] + ';';
-    });
-
-    return styleStr;
+    return CSSPropertyOperations.createMarkupForStyles(mergedStyle);
   },
 
   _transition: function (callback, phase) {

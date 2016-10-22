@@ -6,3 +6,4 @@ build
 .babelrc
 .eslintrc
 gulpfile.js
+package-backup-*.json

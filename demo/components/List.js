@@ -117,7 +117,7 @@ const List = React.createClass({
           />
         </div>
         <div style={styles.callback}>
-         {'Callback: ' + this.state.callbackMsg}
+          {'Callback: ' + this.state.callbackMsg}
         </div>
         <Transition
           childrenBaseStyle={styles.base}
@@ -131,7 +131,7 @@ const List = React.createClass({
           onChildStartEnter={this._handleStartEnter}
           onChildStartLeave={this._handleStartLeave}
         >
-         {elems}
+          {elems}
         </Transition>
       </div>
 

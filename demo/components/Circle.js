@@ -112,8 +112,7 @@ const Circle = React.createClass({
         key={this.count++}
         style={circleStyle}
         className={this.state.component === 'react-addons' ? 'circle' : ''}
-      >
-      </div>
+      />
     );
 
     let transitionComponent;

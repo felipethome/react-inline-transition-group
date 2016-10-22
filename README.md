@@ -103,7 +103,7 @@ onChildLeft | *Function*. Callback that will be called with the child *id* when 
 onChildStartAppear | *Function*. Callback that will be called with the child *id* when the component start to appear
 onChildStartEnter | *Function*. Callback that will be called with the child *id* when the component start to enter
 onChildStartLeave | *Function*. Callback that will be called with the child *id* when the component start to leave
-propertyName | *String*. The name of the CSS property you want the final callbacks (onChildAppeared, onChildEntered, onChildLeft) to be called for. If specified these callbacks will be called when the transition for this CSS property is complete, otherwise they will be called for the transition with the longest duration. This property is optional, but it can improve performance if you need to, becase allow the browser to batch styles instead of synchronously applying them.
+propertyName | *String*. The name of the CSS property you want the final callbacks (onChildAppeared, onChildEntered, onChildLeft) to be called for. If specified these callbacks will be called when the transition for this CSS property is complete, otherwise they will be called for the transition with the longest duration. This property is optional, but it can improve performance if you need to, because allow the browser to batch styles instead of synchronously applying them.
 
 **Observation:** You can pass an *id* property to your children components and the callback will be called with it so you know exactly for which child the event happened. This *id* is optional.
 

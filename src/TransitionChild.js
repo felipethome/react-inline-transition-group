@@ -176,7 +176,7 @@ var TransitionChild = React.createClass({
     var node = ReactDOM.findDOMNode(this);
     if (!node) return;
 
-    this.setState({style: this._computeNewStyle(phase)}, () => {
+    this.setState({style: this._computeNewStyle(phase)}, (function () {
       var properties;
       var maxTransitionTime;
       if (this.props.propertyName === undefined) {
@@ -194,7 +194,7 @@ var TransitionChild = React.createClass({
         this, node, maxTransitionTime, callback
       );
       node.addEventListener('transitionend', this.handleRef);
-    });
+    }).bind(this));
   },
 
   render: function () {

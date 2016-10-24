@@ -102,8 +102,8 @@ var TransitionChild = React.createClass({
   // Specs: https://www.w3.org/TR/css3-transitions/
   // A lot of assumptions could be made here, like that probably the duration
   // and delay lists are already truncated by the size of the property list
-  // or that values will be returned by window.getComputedStyle in seconds,
-  // but I prefer to make this function less vulnerable to changes.
+  // or that values will be in seconds, but I'm not sure all browser vendors do
+  // the computation this way.
   _getTransitionMaximumTime: function (property, duration, delay) {
     var durationArray = duration.split(',');
     var delayArray = delay.split(',');
@@ -179,8 +179,11 @@ var TransitionChild = React.createClass({
     this.setState({style: this._computeNewStyle(phase)}, (function () {
       var properties;
       var maxTransitionTime;
+
+      // If the user didn't pass a propertyName to track the transition get the
+      // one with the longest duration. This will, unfortunately, force the
+      // browser to apply the styles synchronously.
       if (this.props.propertyName === undefined) {
-        // This block will make the styles calculation synchronous
         properties = this._getTransitionProperties(getComputedStyle(node));
         maxTransitionTime = this._getTransitionMaximumTime(
           properties.transitionProperty,

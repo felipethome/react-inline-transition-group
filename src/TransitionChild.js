@@ -1,6 +1,5 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var CSSPropertyOperations = require('react/lib/CSSPropertyOperations');
 var Animation = require('./Animation');
 
 var TransitionChild = React.createClass({
@@ -25,15 +24,14 @@ var TransitionChild = React.createClass({
     style: React.PropTypes.object,
   },
 
-  componentWillMount: function () {
-    this._Animation = new Animation();
+  getInitialState: function () {
+    return {
+      style: this._computeNewStyle(),
+    };
   },
 
-  componentDidMount: function () {
-    var node = ReactDOM.findDOMNode(this);
-    if (!node) return;
-
-    node.setAttribute('style', this._computeNewStyle());
+  componentWillMount: function () {
+    this._Animation = new Animation();
   },
 
   componentWillUnmount: function () {
@@ -155,11 +153,9 @@ var TransitionChild = React.createClass({
     else if (phase === 'leave') currentStyle = this.props.childrenLeaveStyle;
     else currentStyle = this.props.childrenBaseStyle;
 
-    var mergedStyle = Object.assign(
+    return Object.assign(
       {}, this.props.style, this.props.childrenBaseStyle, currentStyle
     );
-
-    return CSSPropertyOperations.createMarkupForStyles(mergedStyle);
   },
 
   _transition: function (callback, phase) {
@@ -180,29 +176,31 @@ var TransitionChild = React.createClass({
     var node = ReactDOM.findDOMNode(this);
     if (!node) return;
 
-    node.setAttribute('style', this._computeNewStyle(phase));
+    this.setState({style: this._computeNewStyle(phase)}, () => {
+      var properties;
+      var maxTransitionTime;
+      if (this.props.propertyName === undefined) {
+        // This block will make the styles calculation synchronous
+        properties = this._getTransitionProperties(getComputedStyle(node));
+        maxTransitionTime = this._getTransitionMaximumTime(
+          properties.transitionProperty,
+          properties.transitionDuration,
+          properties.transitionDelay
+        );
+      }
 
-    var properties;
-    var maxTransitionTime;
-    if (this.props.propertyName === undefined) {
-      // This block will make the styles calculation synchronous
-      properties = this._getTransitionProperties(getComputedStyle(node));
-      maxTransitionTime = this._getTransitionMaximumTime(
-        properties.transitionProperty,
-        properties.transitionDuration,
-        properties.transitionDelay
+      node.removeEventListener('transitionend', this.handleRef);
+      this.handleRef = this._handleTransitionEnd.bind(
+        this, node, maxTransitionTime, callback
       );
-    }
-
-    node.removeEventListener('transitionend', this.handleRef);
-    this.handleRef = this._handleTransitionEnd.bind(
-      this, node, maxTransitionTime, callback
-    );
-    node.addEventListener('transitionend', this.handleRef);
+      node.addEventListener('transitionend', this.handleRef);
+    });
   },
 
   render: function () {
-    return React.Children.only(this.props.children);
+    return React.Children.only(
+      React.cloneElement(this.props.children, {style: this.state.style})
+    );
   },
 
 });

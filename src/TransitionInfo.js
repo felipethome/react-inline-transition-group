@@ -11,9 +11,17 @@ var getMaximumTimeProperty = function (transitions) {
     var durationArray = transitions.transitionDuration;
     var delayArray = transitions.transitionDelay;
 
+    if (durationArray === undefined || durationArray.length === 0) {
+      durationArray = [0];
+    }
+
+    if (delayArray === undefined || delayArray.length === 0) {
+      delayArray = [0];
+    }
+
     for (var i = 0; i < propertyArray.length; i++) {
       duration = durationArray[i % durationArray.length];
-      delay = delayArray[i % durationArray.length];
+      delay = delayArray[i % delayArray.length];
 
       if (duration + delay >= longestTime) {
         longestTime = duration + delay;

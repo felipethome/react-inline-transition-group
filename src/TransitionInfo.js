@@ -27,9 +27,9 @@ var getMaximumTimeProperty = function (transitions) {
   return longestTimeProperty;
 };
 
-var isInPropertyList = function (propertyName, propertyArray) {
-  var shorthandArray = AnimatedProperties.getShorthandNames(propertyName);
-  shorthandArray.push(propertyName);
+var isInPropertyList = function (property, propertyArray) {
+  var shorthandArray = AnimatedProperties.getShorthandNames(property);
+  shorthandArray.push(property);
 
   for (var i = 0; i < shorthandArray.length; i++) {
     if (propertyArray.indexOf(shorthandArray[i]) >= 0) return true;

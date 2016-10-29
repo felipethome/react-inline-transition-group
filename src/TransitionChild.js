@@ -85,18 +85,18 @@ var TransitionChild = React.createClass({
   },
 
   _handleTransitionEnd: function (
-    node, propertyName, propertyArray, callback, event
+    node, maxTimeProperty, propertyArray, callback, event
   ) {
-    // Check if the element where the transitinoend event occurred was the
+    // Check if the element where the transitionend event occurred was the
     // node we are working with and not one of its children.
     if (node === event.target) {
       // TODO: Instead of this huge and ugly if statement expand the shorthand
       // properties and bind the expansion to the handler.
-      if (propertyName === event.propertyName ||
+      if (maxTimeProperty === event.propertyName ||
           TransitionInfo.isShorthand(
-            propertyName, event.propertyName, propertyArray
+            maxTimeProperty, event.propertyName, propertyArray
           ) ||
-          propertyName === 'all' && !TransitionInfo.isInPropertyList(
+          maxTimeProperty === 'all' && !TransitionInfo.isInPropertyList(
             event.propertyName, propertyArray
           )) {
         node.removeEventListener('transitionend', this._handleReference);
@@ -139,20 +139,20 @@ var TransitionChild = React.createClass({
     var nextStyle = this._computeNewStyle(phase);
     var transitionValues = TransitionParser.getTransitionValues(nextStyle);
 
-    var maxTransitionTimeProperty = TransitionInfo.getMaximumTimeProperty(
+    var maxTimeProperty = TransitionInfo.getMaximumTimeProperty(
       transitionValues
     );
 
     node.removeEventListener('transitionend', this._handleReference);
 
-    if (maxTransitionTimeProperty) {
+    if (maxTimeProperty) {
       // To guarantee the transitionend handler of another phase will not
       // interfere with the handler of the current phase create a new one every
       // time.
       this._handleReference = this._handleTransitionEnd.bind(
         this,
         node,
-        maxTransitionTimeProperty,
+        maxTimeProperty,
         transitionValues.transitionProperty,
         callback
       );

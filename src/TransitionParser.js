@@ -108,7 +108,7 @@ var getTransitionValues = function (styleObj) {
   for (var i = keys.length - 1; i >= 0; i--) {
     switch (keys[i]) {
       case 'transition':
-      case 'WebikitTransition':
+      case 'WebkitTransition':
       case 'MozTransition':
       case 'msTransition':
         var shorthandValues = _parseShorthand(styleObj[keys[i]]);

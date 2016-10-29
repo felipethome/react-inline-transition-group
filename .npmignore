@@ -4,6 +4,6 @@ src
 demo
 build
 .babelrc
-.eslintrc
+.eslintrc.js
 gulpfile.js
 package-backup-*.json

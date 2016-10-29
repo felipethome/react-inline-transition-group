@@ -1,3 +1,8 @@
+/**
+ * Implements requestNextFrame allowing to apply transitions without worry about
+ * the browser batch the styles.
+ */
+
 var _frameIds = {};
 
 var _getKey = function () {

@@ -147,8 +147,8 @@ var TransitionChild = React.createClass({
 
     if (maxTransitionTimeProperty) {
       // To guarantee the transitionend handler of another phase will not
-      // interfere with the handler of the current phase I create a new one
-      // every time.
+      // interfere with the handler of the current phase create a new one every
+      // time.
       this._handleReference = this._handleTransitionEnd.bind(
         this,
         node,

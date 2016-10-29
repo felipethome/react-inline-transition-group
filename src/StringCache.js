@@ -1,3 +1,8 @@
+/**
+ * String cache. The cache has a capacity that is defined in the moment of its
+ * creation.
+ */
+
 function StringCache(capacity) {
   this._cache = {};
   this._capacity = capacity;

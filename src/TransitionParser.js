@@ -3,6 +3,10 @@
  * objects. The timing function is not considered, because it is not important
  * for the purpose of ReactInlineTransitionGroup.
  *
+ * Also, it is not responsability of this parser to make the match between
+ * properties and their delays and duration values. This will be performed by
+ * the TransitionInfo module.
+ *
  * Specs: https://www.w3.org/TR/css3-transitions/
  */
 

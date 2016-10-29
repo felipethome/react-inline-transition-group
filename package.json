@@ -60,16 +60,9 @@
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
-    "testFileExtensions": [
-      "js"
-    ],
+    "testRegex": "(/__tests__/.*|\\.(test))\\.(js)$",
     "testPathDirs": [
       "<rootDir>/src"
-    ],
-    "unmockedModulePathPatterns": [
-      "react",
-      "react-dom",
-      "enzyme"
     ]
   }
 }

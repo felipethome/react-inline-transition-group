@@ -196,4 +196,86 @@ describe('TransitionParser', function () {
     });
   });
 
+  it('should handle extra spaces correctly', function () {
+    var style = {
+      background: '#FFF',
+      height: '50px',
+      width: '50px',
+      transition: '    all     1s   ,background   20ms    ',
+    };
+
+    var transitions = TransitionParser.getTransitionValues(style);
+
+    expect(transitions).toEqual({
+      transitionProperty: ['all', 'background'],
+      transitionDuration: [1000, 20],
+      transitionDelay: [0, 0],
+    });
+
+    style = {
+      background: '#FFF',
+      height: '50px',
+      width: '50px',
+      transitionProperty: '    all   ,    background',
+      transitionDuration: '1s,20ms',
+    };
+
+    transitions = TransitionParser.getTransitionValues(style);
+
+    expect(transitions).toEqual({
+      transitionProperty: ['all', 'background'],
+      transitionDuration: [1000, 20],
+    });
+  });
+
+  it('should handle browser prefixes correctly', function () {
+    var style = {
+      background: '#FFF',
+      height: '50px',
+      width: '50px',
+      transition: 'all 1s ,background 20ms',
+      WebkitTransition: 'all 1s ,background 2s',
+    };
+
+    var transitions = TransitionParser.getTransitionValues(style);
+
+    expect(transitions).toEqual({
+      transitionProperty: ['all', 'background'],
+      transitionDuration: [1000, 2000],
+      transitionDelay: [0, 0],
+    });
+
+    style = {
+      background: '#FFF',
+      height: '50px',
+      width: '50px',
+      transition: 'all 1s ,background 20ms',
+      MozTransition: 'all 1s ,background 2s',
+    };
+
+    transitions = TransitionParser.getTransitionValues(style);
+
+    expect(transitions).toEqual({
+      transitionProperty: ['all', 'background'],
+      transitionDuration: [1000, 2000],
+      transitionDelay: [0, 0],
+    });
+
+    style = {
+      background: '#FFF',
+      height: '50px',
+      width: '50px',
+      transition: 'all 1s ,background 20ms',
+      msTransition: 'all 1s ,background 2s',
+    };
+
+    transitions = TransitionParser.getTransitionValues(style);
+
+    expect(transitions).toEqual({
+      transitionProperty: ['all', 'background'],
+      transitionDuration: [1000, 2000],
+      transitionDelay: [0, 0],
+    });
+  });
+
 });

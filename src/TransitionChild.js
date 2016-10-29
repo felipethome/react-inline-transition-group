@@ -114,7 +114,7 @@ var TransitionChild = React.createClass({
     else nextStyle = this.props.childrenBaseStyle;
 
     return Object.assign(
-      {}, this.props.style, this.props.childrenBaseStyle, nextStyle
+      {}, this.props.childrenBaseStyle, nextStyle, this.props.style
     );
   },
 

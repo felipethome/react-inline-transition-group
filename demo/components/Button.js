@@ -1,6 +1,6 @@
-const React = require('react');
+var React = require('react');
 
-const Button = React.createClass({
+var Button = React.createClass({
   displayName: 'Button',
 
   propTypes: {
@@ -34,7 +34,7 @@ const Button = React.createClass({
   },
 
   render: function () {
-    const {
+    var {
       label, // eslint-disable-line no-unused-vars
       onMouseDown, // eslint-disable-line no-unused-vars
       onMouseUp, // eslint-disable-line no-unused-vars
@@ -64,7 +64,7 @@ const Button = React.createClass({
       },
     };
 
-    const buttonStyle = Object.assign(
+    var buttonStyle = Object.assign(
       {},
       styles.button,
       this.state.mouseDown && styles.buttonMouseDown,

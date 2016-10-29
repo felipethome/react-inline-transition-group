@@ -1,9 +1,9 @@
-const React = require('react');
-const Button = require('./Button');
-const Transition = require('../../src/Transition');
-const CSSTransition = require('react-addons-css-transition-group');
+var React = require('react');
+var Button = require('./Button');
+var Transition = require('../../src/Transition');
+var CSSTransition = require('react-addons-css-transition-group');
 
-const Album = React.createClass({
+var Album = React.createClass({
   displayName: 'Album',
 
   propTypes: {
@@ -19,11 +19,11 @@ const Album = React.createClass({
   },
 
   componentDidMount: function () {
-    const component = this;
+    var component = this;
 
-    const promises = this.props.images.map(function (src) {
+    var promises = this.props.images.map(function (src) {
       return new Promise(function (resolve) {
-        const img = new Image();
+        var img = new Image();
         img.src = src;
         img.onload = resolve;
       });
@@ -49,7 +49,7 @@ const Album = React.createClass({
   },
 
   render: function () {
-    const styles = {
+    var styles = {
       container: {
         backgroundColor: '#FFF',
         height: '300px',
@@ -97,8 +97,8 @@ const Album = React.createClass({
       },
     };
 
-    let album;
-    const elems = [];
+    var album;
+    var elems = [];
     if (this.state.show) {
       if (this.state.count % 2) {
         elems.push(
@@ -180,7 +180,7 @@ const Album = React.createClass({
             style={styles.button}
           />
         </div>
-       {album}
+        {album}
       </div>
     );
   },

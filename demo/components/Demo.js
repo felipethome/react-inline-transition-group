@@ -1,11 +1,11 @@
-const React = require('react');
-const Navbar = require('./Navbar');
-const Button = require('./Button');
-const Circle = require('./Circle');
-const Album = require('./Album');
-const List = require('./List');
+var React = require('react');
+var Navbar = require('./Navbar');
+var Button = require('./Button');
+var Circle = require('./Circle');
+var Album = require('./Album');
+var List = require('./List');
 
-const Demo = React.createClass({
+var Demo = React.createClass({
   displayName: 'Demo',
 
   getInitialState: function () {
@@ -15,7 +15,7 @@ const Demo = React.createClass({
   },
 
   _getPage: function () {
-    let page;
+    var page;
 
     switch (this.state.page) {
       case 'Demo 1':
@@ -43,7 +43,7 @@ const Demo = React.createClass({
   },
 
   render: function () {
-    const styles = {
+    var styles = {
       container: {
         display: 'flex',
         alignItems: 'center',
@@ -55,7 +55,7 @@ const Demo = React.createClass({
       },
     };
 
-    const navbarActions = [];
+    var navbarActions = [];
     navbarActions.push(
       <Button
         key="Github"
@@ -85,7 +85,7 @@ const Demo = React.createClass({
       />
     );
 
-    const page = this._getPage();
+    var page = this._getPage();
 
     return (
       <div style={styles.container}>

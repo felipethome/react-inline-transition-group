@@ -1,8 +1,8 @@
-const React = require('react');
-const Transition = require('../../src/Transition');
-const CSSTransition = require('react-addons-css-transition-group');
+var React = require('react');
+var Transition = require('../../src/Transition');
+var CSSTransition = require('react-addons-css-transition-group');
 
-const Circle = React.createClass({
+var Circle = React.createClass({
   displayName: 'Circle',
 
   propTypes: {
@@ -44,7 +44,7 @@ const Circle = React.createClass({
   },
 
   render: function () {
-    const styles = {
+    var styles = {
       container: {
         position: 'relative',
         background: '#000',
@@ -97,7 +97,7 @@ const Circle = React.createClass({
       },
     };
 
-    let circleStyle;
+    var circleStyle;
     if (this.state.component === 'react-addons') {
       circleStyle = {
         top: (this.state.top - 50) + 'px',
@@ -105,7 +105,7 @@ const Circle = React.createClass({
       };
     }
 
-    const circles = [];
+    var circles = [];
     circles.pop();
     circles.push(
       <div
@@ -115,7 +115,7 @@ const Circle = React.createClass({
       />
     );
 
-    let transitionComponent;
+    var transitionComponent;
     if (this.state.component === 'react-addons') {
       transitionComponent = (
         <CSSTransition

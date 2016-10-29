@@ -1,6 +1,6 @@
-const React = require('react');
+var React = require('react');
 
-const Navbar = React.createClass({
+var Navbar = React.createClass({
   displayName: 'Navbar',
 
   propTypes: {
@@ -8,7 +8,7 @@ const Navbar = React.createClass({
   },
 
   render: function () {
-    const styles = {
+    var styles = {
       container: {
         position: 'fixed',
         left: '0px',

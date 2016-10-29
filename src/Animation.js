@@ -1,22 +1,19 @@
-function Animation() {
-  this._frameIds = {};
-}
+var _frameIds = {};
 
-Animation.prototype._getKey = function (){
+var _getKey = function () {
   var key;
-  while (!key || this._frameIds.hasOwnProperty(key)){
+  while (!key || _frameIds.hasOwnProperty(key)) {
     key = Math.floor(Math.random() * 1E9);
   }
   return key;
 };
 
-Animation.prototype.requestNextFrame = function (callback) {
-  var instance = this;
-  var key = instance._getKey();
+var requestNextFrame = function (callback) {
+  var key = _getKey();
 
-  instance._frameIds[key] = requestAnimationFrame(function() {
-    instance._frameIds[key] = requestAnimationFrame(function(timestamp) {
-      delete instance._frameIds[key];
+  _frameIds[key] = requestAnimationFrame(function () {
+    _frameIds[key] = requestAnimationFrame(function (timestamp) {
+      delete _frameIds[key];
       callback(timestamp);
     });
   });
@@ -24,21 +21,21 @@ Animation.prototype.requestNextFrame = function (callback) {
   return key;
 };
 
-Animation.prototype.cancelFrame = function (key) {
-  if (this._frameIds[key]) {
-    cancelAnimationFrame(this._frameIds[key]);
-    delete this._frameIds[key];
-  }
-};
-
-Animation.prototype.cancelAllFrames = function () {
-  for (var key in this._frameIds) {
-    if (this._frameIds.hasOwnProperty(key)) {
-      cancelAnimationFrame(this._frameIds[key]);
+var cancelFrames = function (key) {
+  if (Array.isArray(key)) {
+    for (var i = 0; i < key.length; i++) {
+      if (_frameIds[key[i]]) {
+        cancelAnimationFrame(_frameIds[key[i]]);
+      }
     }
   }
-
-  this._frameIds = {};
+  else if (_frameIds[key]) {
+    cancelAnimationFrame(_frameIds[key]);
+    delete _frameIds[key];
+  }
 };
 
-module.exports = Animation;
+module.exports = {
+  requestNextFrame: requestNextFrame,
+  cancelFrames: cancelFrames,
+};

@@ -91,8 +91,8 @@ var List = React.createClass({
         color: 'white',
         opacity: '1',
         transform: 'scale(1) rotate(360deg) skew(0deg, 0deg)',
-        transition: 'color 0.5s 1s, opacity 1s 1s, border-radius 3s ease-out,' +
-          'background 3s, transform 2s',
+        transition: 'color 0.5s 1s, opacity 2s 1s, border-radius 2.5s, ' +
+          'background 3s ease-out, transform 2s',
       },
 
       leave: {

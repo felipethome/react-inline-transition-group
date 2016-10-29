@@ -4,6 +4,7 @@ var Button = require('./Button');
 var Circle = require('./Circle');
 var Album = require('./Album');
 var List = require('./List');
+var Numbers = require('./Numbers');
 
 var Demo = React.createClass({
   displayName: 'Demo',
@@ -26,6 +27,9 @@ var Demo = React.createClass({
         break;
       case 'Demo 3':
         page = (<List />);
+        break;
+      case 'Demo 4':
+        page = (<Numbers />);
         break;
       case 'Github':
         document.location.href =
@@ -82,6 +86,13 @@ var Demo = React.createClass({
         key="Demo 3"
         label="Demo 3"
         onClick={this._handleButtonClick.bind(this, 'Demo 3')}
+      />
+    );
+    navbarActions.push(
+      <Button
+        key="Demo 4"
+        label="Demo 4"
+        onClick={this._handleButtonClick.bind(this, 'Demo 4')}
       />
     );
 

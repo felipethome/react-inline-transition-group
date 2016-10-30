@@ -1,3 +1,18 @@
+/**
+ * Copyright (c) 2016, Felipe Thomé
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/**
+ * Extract information of the parsed values of CSS transitions obtained from
+ * TransitionParser.
+ *
+ * Specs: https://www.w3.org/TR/css3-transitions/
+ */
+
 var AnimatedProperties = require('./AnimatedProperties');
 
 var getMaximumTimeProperty = function (transitions) {

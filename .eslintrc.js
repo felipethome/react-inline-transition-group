@@ -85,6 +85,10 @@ module.exports = {
     'react/sort-prop-types': ERROR,
     'react/jsx-uses-react': WARNING,
     'react/jsx-uses-vars': WARNING,
+    'react/jsx-wrap-multilines': [
+      ERROR,
+      {'declaration': true, 'assignment': true, 'return': true},
+    ],
     'react/no-danger': ERROR,
     'react/no-deprecated': ERROR,
     'react/no-did-update-set-state': ERROR,
@@ -93,15 +97,7 @@ module.exports = {
     'react/no-string-refs': ERROR,
     'react/no-unknown-property': ERROR,
     'react/prop-types': ERROR,
-    'react/require-extension': [
-      ERROR,
-      {'extensions': ['.js', '.jsx', '.json']},
-    ],
     'react/self-closing-comp': ERROR,
     'react/sort-comp': ERROR,
-    'react/wrap-multilines': [
-      ERROR,
-      {'declaration': true, 'assignment': true, 'return': true},
-    ],
   },
 };

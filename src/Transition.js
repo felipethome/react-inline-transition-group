@@ -32,7 +32,7 @@ var Transition = React.createClass({
       component,
       onPhaseEnd,
       onPhaseStart,
-      ...others,
+      ...others
     } = this.props;
 
     return (

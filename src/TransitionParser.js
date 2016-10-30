@@ -66,11 +66,6 @@ var _parseShorthand = function (propertyStr) {
   for (var i = 0; i < transitions.length; i++) {
     var transitionPieces = transitions[i].split(/\s+/);
 
-    if (transitionPieces.length < 1) {
-      throw new Error('A transition shorthand must have at least the ' +
-        'property value');
-    }
-
     propertyArray.push(transitionPieces[0]);
     durationArray.push(transitionPieces[1] || '0s');
     if (transitionPieces[2] === undefined) {

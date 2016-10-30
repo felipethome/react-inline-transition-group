@@ -1,6 +1,11 @@
-var TransitionParser = require('../TransitionParser');
+var TransitionParser;
 
 describe('TransitionParser', function () {
+
+  beforeEach(function () {
+    jest.resetModuleRegistry();
+    TransitionParser = require('../TransitionParser');
+  });
 
   it('should return an empty object when there is no transition', function () {
     var style = {
@@ -19,7 +24,8 @@ describe('TransitionParser', function () {
       background: '#FFF',
       height: '50px',
       width: '50px',
-      transition: 'background 1s, height 2s, width 3s',
+      transition: 'background 1s 1s, height 2s cubic-bezier(0,0,0,0) 2s, ' +
+        'width 3s linear',
     };
 
     var transitions = TransitionParser.getTransitionValues(style);
@@ -27,7 +33,7 @@ describe('TransitionParser', function () {
     expect(transitions).toEqual({
       transitionProperty: ['background', 'height', 'width'],
       transitionDuration: [1000, 2000, 3000],
-      transitionDelay: [0, 0, 0],
+      transitionDelay: [1000, 2000, 0],
     });
   });
 
@@ -164,7 +170,7 @@ describe('TransitionParser', function () {
     });
   });
 
-  it('should not handle "s" and "ms" units', function () {
+  it('should handle "s" and "ms" units', function () {
     var style = {
       background: '#FFF',
       height: '50px',
@@ -276,6 +282,17 @@ describe('TransitionParser', function () {
       transitionDuration: [1000, 2000],
       transitionDelay: [0, 0],
     });
+  });
+
+  it('should throw an error when was expected a numeric value', function () {
+    var style = {
+      background: '#FFF',
+      transition: 'background ease-out 1s',
+    };
+
+    expect(function () {
+      TransitionParser.getTransitionValues(style);
+    }).toThrow();
   });
 
 });

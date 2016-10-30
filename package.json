@@ -56,12 +56,12 @@
     "build": "babel ./src --out-dir ./lib --ignore __tests__",
     "demo": "gulp demo",
     "lint": "eslint src/",
-    "test": "jest"
+    "test": "jest --verbose"
   },
   "jest": {
     "collectCoverage": true,
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
-    "testRegex": "(/__tests__/.*|\\.(test))\\.(js)$",
+    "testRegex": "(/__tests__/.*\\-test)\\.(js)$",
     "testPathDirs": [
       "<rootDir>/src"
     ]

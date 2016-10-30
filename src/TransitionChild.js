@@ -93,7 +93,7 @@ var TransitionChild = React.createClass({
       // TODO: Instead of this huge and ugly if statement expand the shorthand
       // properties and bind the expansion to the handler.
       if (maxTimeProperty === event.propertyName ||
-          TransitionInfo.isShorthand(
+          TransitionInfo.isShorthandEqualProperty(
             maxTimeProperty, event.propertyName, propertyArray
           ) ||
           maxTimeProperty === 'all' && !TransitionInfo.isInPropertyList(

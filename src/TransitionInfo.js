@@ -46,12 +46,18 @@ var isInPropertyList = function (property, propertyArray) {
   return false;
 };
 
-var isShorthand = function (shorthand, property, propertyArray) {
+var isShorthandEqualProperty = function (shorthand, property, propertyArray) {
   var shorthandArray = AnimatedProperties.getShorthandNames(property);
   var idx = shorthandArray.indexOf(shorthand);
 
   if (idx === -1) return false;
 
+  // Elements with a higher index in the shorthand array have a greater
+  // specificity. So if one of the other elements in the shorthand array
+  // is present in the property list we should return false because this
+  // property we are current analysing is actually part of this other shorthand.
+  // E.g.: shorthand = 'border', propertyArray = ['border', 'border-bottom'],
+  // property = 'border-bottom-width'.
   for (var i = idx + 1; i < shorthandArray.length; i++) {
     if (isInPropertyList(shorthandArray[i], propertyArray)) return false;
   }
@@ -62,5 +68,5 @@ var isShorthand = function (shorthand, property, propertyArray) {
 module.exports = {
   getMaximumTimeProperty: getMaximumTimeProperty,
   isInPropertyList: isInPropertyList,
-  isShorthand: isShorthand,
+  isShorthandEqualProperty: isShorthandEqualProperty,
 };

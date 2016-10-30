@@ -59,6 +59,7 @@
     "test": "jest"
   },
   "jest": {
+    "collectCoverage": true,
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
     "testRegex": "(/__tests__/.*|\\.(test))\\.(js)$",
     "testPathDirs": [

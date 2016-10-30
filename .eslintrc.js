@@ -22,6 +22,10 @@ module.exports = {
     'react',
   ],
 
+  'globals': {
+    'Promise': true,
+  },
+
   'rules': {
     'brace-style': [ERROR, 'stroustrup', { 'allowSingleLine': true }],
     'comma-dangle': [ERROR, 'always-multiline'],

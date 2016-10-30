@@ -139,11 +139,12 @@ var Album = React.createClass({
       else {
         album = (
           <Transition
-            component={'div'}
-            childrenBaseStyle={styles.base}
-            childrenAppearStyle={styles.appear}
-            childrenEnterStyle={styles.appear}
-            childrenLeaveStyle={styles.leave}
+            childrenStyles={{
+              base: styles.base,
+              appear: styles.appear,
+              enter: styles.appear,
+              leave: styles.leave,
+            }}
             style={{position: 'relative'}}
           >
             {elems}

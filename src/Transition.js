@@ -7,22 +7,20 @@ var Transition = React.createClass({
 
   propTypes: {
     children: React.PropTypes.node,
-    childrenAppearStyle: React.PropTypes.object,
-    childrenBaseStyle: React.PropTypes.object,
-    childrenEnterStyle: React.PropTypes.object,
-    childrenLeaveStyle: React.PropTypes.object,
+    childrenStyles: React.PropTypes.shape({
+      base: React.PropTypes.object,
+      appear: React.PropTypes.object,
+      enter: React.PropTypes.object,
+      leave: React.PropTypes.object,
+    }),
     component: React.PropTypes.string,
-    onChildAppeared: React.PropTypes.func,
-    onChildEntered: React.PropTypes.func,
-    onChildLeft: React.PropTypes.func,
-    onChildStartAppear: React.PropTypes.func,
-    onChildStartEnter: React.PropTypes.func,
-    onChildStartLeave: React.PropTypes.func,
-    propertyName: React.PropTypes.string,
+    onPhaseEnd: React.PropTypes.func,
+    onPhaseStart: React.PropTypes.func,
   },
 
   getDefaultProps: function () {
     return {
+      childrenStyles: {},
       component: 'div',
     };
   },
@@ -30,18 +28,10 @@ var Transition = React.createClass({
   render: function () {
     var {
       children,
-      childrenAppearStyle,
-      childrenBaseStyle,
-      childrenEnterStyle,
-      childrenLeaveStyle,
+      childrenStyles,
       component,
-      onChildAppeared,
-      onChildEntered,
-      onChildLeft,
-      onChildStartAppear,
-      onChildStartEnter,
-      onChildStartLeave,
-      propertyName,
+      onPhaseEnd,
+      onPhaseStart,
       ...others,
     } = this.props;
 
@@ -52,17 +42,16 @@ var Transition = React.createClass({
             <TransitionChild
               key={i}
               id={((child || {}).props || {}).id}
-              childrenBaseStyle={childrenBaseStyle}
-              childrenAppearStyle={childrenAppearStyle}
-              childrenEnterStyle={childrenEnterStyle}
-              childrenLeaveStyle={childrenLeaveStyle}
-              onChildAppeared={onChildAppeared}
-              onChildEntered={onChildEntered}
-              onChildLeft={onChildLeft}
-              onChildStartAppear={onChildStartAppear}
-              onChildStartEnter={onChildStartEnter}
-              onChildStartLeave={onChildStartLeave}
-              propertyName={propertyName}
+              childrenBaseStyle={childrenStyles.base}
+              childrenAppearStyle={childrenStyles.appear}
+              childrenEnterStyle={childrenStyles.enter}
+              childrenLeaveStyle={childrenStyles.leave}
+              onChildAppeared={onPhaseEnd}
+              onChildEntered={onPhaseEnd}
+              onChildLeft={onPhaseEnd}
+              onChildStartAppear={onPhaseStart}
+              onChildStartEnter={onPhaseStart}
+              onChildStartLeave={onPhaseStart}
               style={((child || {}).props || {}).style}
             >
               {child}

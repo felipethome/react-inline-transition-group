@@ -48,13 +48,13 @@ var TransitionChild = React.createClass({
     this._transition(callback, 'appear');
 
     if (this.props.onChildStartAppear) {
-      this.props.onChildStartAppear(this.props.id);
+      this.props.onChildStartAppear('appear', this.props.id);
     }
   },
 
   componentDidAppear: function () {
     if (this.props.onChildAppeared) {
-      this.props.onChildAppeared(this.props.id);
+      this.props.onChildAppeared('appear', this.props.id);
     }
   },
 
@@ -62,13 +62,13 @@ var TransitionChild = React.createClass({
     this._transition(callback, 'enter');
 
     if (this.props.onChildStartEnter) {
-      this.props.onChildStartEnter(this.props.id);
+      this.props.onChildStartEnter('enter', this.props.id);
     }
   },
 
   componentDidEnter: function () {
     if (this.props.onChildEntered) {
-      this.props.onChildEntered(this.props.id);
+      this.props.onChildEntered('enter', this.props.id);
     }
   },
 
@@ -76,12 +76,14 @@ var TransitionChild = React.createClass({
     this._transition(callback, 'leave');
 
     if (this.props.onChildStartLeave) {
-      this.props.onChildStartLeave(this.props.id);
+      this.props.onChildStartLeave('leave', this.props.id);
     }
   },
 
   componentDidLeave: function () {
-    if (this.props.onChildLeft) this.props.onChildLeft(this.props.id);
+    if (this.props.onChildLeft) {
+      this.props.onChildLeft('leave', this.props.id);
+    }
   },
 
   _handleTransitionEnd: function (

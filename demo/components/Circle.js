@@ -133,12 +133,12 @@ var Circle = React.createClass({
     else {
       transitionComponent = (
         <Transition
-          component="div"
-          childrenBaseStyle={styles.circle}
-          childrenAppearStyle={styles.appear}
-          childrenEnterStyle={styles.appear}
-          childrenLeaveStyle={styles.leave}
-          propertyName="opacity"
+          childrenStyles={{
+            base: styles.circle,
+            appear: styles.appear,
+            enter: styles.appear,
+            leave: styles.leave,
+          }}
         >
           {circles}
         </Transition>

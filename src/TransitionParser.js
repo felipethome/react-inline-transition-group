@@ -96,11 +96,14 @@ var _parseShorthand = function (propertyStr) {
 };
 
 var getTransitionValues = function (styleObj) {
+  var ans = {};
+
+  if (styleObj === undefined) return ans;
+
   var keys = Object.keys(styleObj);
   var propertyFound = false;
   var durationFound = false;
   var delayFound = false;
-  var ans = {};
 
   // Not guaranteed by spec, but normally Object.keys() return the keys in
   // the order they were assigned. Since, further transition keys in the

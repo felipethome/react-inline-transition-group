@@ -53,11 +53,11 @@ var TransitionChild = React.createClass({
   },
 
   componentWillAppear: function (callback) {
-    this._transition(callback, 'appear');
-
     if (this.props.onChildStartAppear) {
       this.props.onChildStartAppear('appear', this.props.id);
     }
+
+    this._transition(callback, 'appear');
   },
 
   componentDidAppear: function () {
@@ -67,11 +67,11 @@ var TransitionChild = React.createClass({
   },
 
   componentWillEnter: function (callback) {
-    this._transition(callback, 'enter');
-
     if (this.props.onChildStartEnter) {
       this.props.onChildStartEnter('enter', this.props.id);
     }
+
+    this._transition(callback, 'enter');
   },
 
   componentDidEnter: function () {
@@ -81,11 +81,11 @@ var TransitionChild = React.createClass({
   },
 
   componentWillLeave: function (callback) {
-    this._transition(callback, 'leave');
-
     if (this.props.onChildStartLeave) {
       this.props.onChildStartLeave('leave', this.props.id);
     }
+
+    this._transition(callback, 'leave');
   },
 
   componentDidLeave: function () {

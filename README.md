@@ -2,6 +2,8 @@
 
 This component helps you to control transitions defined with inline styles. Built with [ReactTransitionHooks](https://github.com/felipethome/react-transition-hooks), the goal is to supply a more up-to-date alternative to [ReactCSSTransitionGroup](https://facebook.github.io/react/docs/animation.html).
 
+[![Coverage Status](https://coveralls.io/repos/github/felipethome/react-inline-transition-group/badge.svg)](https://coveralls.io/github/felipethome/react-inline-transition-group)
+
 ## Advantages
 
 * You don't need to decouple your styles from the component.

@@ -101,8 +101,8 @@ Property name | Description
 ------------ | -------------
 **component** | String. The component that will wrap all the children. Default: div.
 **chindrenStyles** | Object. This object has the properties: `base`, `appear`, `enter` and `leave`. Each of this properties is another object containing the styles for the respective phase. The `base` styles are applied to all children in all phases.
-**onPhaseStart** | Function. Callback that will be called with the current phase (`base`, `appear`, `enter` or `leave`) and the child `id` when the phase begins in this order.
-**onPhaseEnd** | Function. Callback that will be called with the current phase (`base`, `appear`, `enter` or `leave`) and the child `id` when the phase ends in this order.
+**onPhaseStart** | Function. Callback that will be called with the current phase (`appear`, `enter` or `leave`) and the child `id` when the phase begins in this order.
+**onPhaseEnd** | Function. Callback that will be called with the current phase (`appear`, `enter` or `leave`) and the child `id` when the phase ends in this order.
 
 ### Notes
 

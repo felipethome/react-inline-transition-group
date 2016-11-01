@@ -99,7 +99,7 @@ Import the component to your project and then wrap the nodes you want to control
 
 Property name | Description
 ------------ | -------------
-**component** | String. The component that will wrap all the children. Default: div.
+**component** | String. The component that will wrap all the children. Default: `div`.
 **chindrenStyles** | Object. This object has the properties: `base`, `appear`, `enter` and `leave`. Each of this properties is another object containing the styles for the respective phase. The `base` styles are applied to all children in all phases.
 **onPhaseStart** | Function. Callback that will be called with the current phase (`appear`, `enter` or `leave`) and the child `id` when the phase begins in this order.
 **onPhaseEnd** | Function. Callback that will be called with the current phase (`appear`, `enter` or `leave`) and the child `id` when the phase ends in this order.
@@ -111,6 +111,16 @@ Property name | Description
 2. The `onPhaseStart` callbacks will be called sooner a node is being added or removed to/from the group. If you have a delay in your CSS transition the component will not wait until the delay is complete to call the callbacks.
 
 3. The `onPhaseEnd` callbacks will be called when the longest transition time (delay + duration) completes. Notice that if a transition is interrupted this callback will not be called.
+
+## What is meant by phase
+
+There are three phases in this component (the same as in ReactCSSTransitionGroup):
+
+* **appear**: happens to any child component that is already inside of ReactInlineTransitionGroup at the moment of its creation, or in other words, at the time the ReactInlineTransitionGroup component just mounted.
+
+* **enter**: happens to any child component that is inserted in ReactInlineTransitionGroup after its creation.
+
+* **leave**: happens to any child component that is being removed from ReactInlineTransitionGroup.
 
 ## LICENSE
 

@@ -55,7 +55,7 @@
     "demo": "gulp demo",
     "lint": "eslint src/",
     "test": "jest --verbose",
-    "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "jest": {
     "collectCoverage": true,

@@ -24,78 +24,80 @@ Check out the [demo](http://felipethome.github.io/react-inline-transition-group/
 
 Import the component to your project and then wrap the nodes you want to control the transition with it. Example:
 
-    import React from 'react';
-    import Transition from 'react-inline-transition-group';
+```jsx
+import React from 'react';
+import Transition from 'react-inline-transition-group';
 
-    export default class Demo extends React.Component {
-      constructor() {
-        super();
-        this.state = {count: 1};
-      }
+export default class Demo extends React.Component {
+  constructor() {
+    super();
+    this.state = {count: 1};
+  }
 
-      handleAdd = () => {
-        this.setState(function (previousState) {
-          return {count: previousState.count + 1};
-        });
-      };
+  handleAdd = () => {
+    this.setState(function (previousState) {
+      return {count: previousState.count + 1};
+    });
+  };
 
-      handleRemove = () => {
-        this.setState(function (previousState) {
-          return {count: Math.max(previousState.count - 1, 0)};
-        });
-      };
+  handleRemove = () => {
+    this.setState(function (previousState) {
+      return {count: Math.max(previousState.count - 1, 0)};
+    });
+  };
 
-      handlePhaseEnd = (phase, id) => {
-        if (phase === 'leave') console.log(id + ' left');
-      };
+  handlePhaseEnd = (phase, id) => {
+    if (phase === 'leave') console.log(id + ' left');
+  };
 
-      render() {
-        const styles = {
-          base: {
-            background: '#F00',
-            width: '500px',
-            height: '50px',
-          },
+  render() {
+    const styles = {
+      base: {
+        background: '#F00',
+        width: '500px',
+        height: '50px',
+      },
 
-          appear: {
-            background: '#FF0',
-            transition: 'all 500ms',
-          },
+      appear: {
+        background: '#FF0',
+        transition: 'all 500ms',
+      },
 
-          leave: {
-            background: '#F00',
-            transition: 'all 250ms',
-          },
-        };
+      leave: {
+        background: '#F00',
+        transition: 'all 250ms',
+      },
+    };
 
-        const elems = [];
+    const elems = [];
 
-        // Don't forget that for most React components use array indexes as
-        // keys is a bad idea (but not for this example).
-        for (let i = 0; i < this.state.count; i++)
-          elems.push(<div key={i} id={i}>{i}</div>);
+    // Don't forget that for most React components use array indexes as
+    // keys is a bad idea (but not for this example).
+    for (let i = 0; i < this.state.count; i++)
+      elems.push(<div key={i} id={i}>{i}</div>);
 
-        return (
-          <div>
-            <div>
-              <button onClick={this.handleAdd}>Add</button>
-              <button onClick={this.handleRemove}>Remove</button>
-            </div>
-            <Transition
-              childrenStyles={{
-                base: styles.base,
-                appear: styles.appear,
-                enter: styles.appear,
-                leave: styles.leave,
-              }}
-              onPhaseEnd={this.handlePhaseEnd}
-            >
-              {elems}
-            </Transition>
-          </div>
-        );
-      }
-    }
+    return (
+      <div>
+        <div>
+          <button onClick={this.handleAdd}>Add</button>
+          <button onClick={this.handleRemove}>Remove</button>
+        </div>
+        <Transition
+          childrenStyles={{
+            base: styles.base,
+            appear: styles.appear,
+            enter: styles.appear,
+            leave: styles.leave,
+          }}
+          onPhaseEnd={this.handlePhaseEnd}
+        >
+          {elems}
+        </Transition>
+      </div>
+    );
+  }
+}
+```
 
 ## Properties
 

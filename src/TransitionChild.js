@@ -190,7 +190,7 @@ var TransitionChild = React.createClass({
     node.removeEventListener('transitionend', this._handleReference);
 
     if (maxTimeProperty) {
-      // To guarantee the transitionend handler of another phase will not
+      // To guarantee the transitionend event of another phase will not
       // interfere with the handler of the current phase create a new one every
       // time.
       this._handleReference = this._handleTransitionEnd.bind(

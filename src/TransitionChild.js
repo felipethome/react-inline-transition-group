@@ -11,6 +11,7 @@ var ReactDOM = require('react-dom');
 var Animation = require('./Animation');
 var TransitionInfo = require('./TransitionInfo');
 var TransitionParser = require('./TransitionParser');
+var shallowEqual = require('./shallowEqual');
 
 var TransitionChild = React.createClass({
   displayName: 'TransitionChild',
@@ -41,6 +42,38 @@ var TransitionChild = React.createClass({
 
   componentDidMount: function () {
     this._frameIds = [];
+  },
+
+  componentWillReceiveProps: function (nextProps) {
+    var oldBaseStyle = this.props.childrenBaseStyle;
+    var newBaseStyle = nextProps.childrenBaseStyle;
+    var oldPropsStyle = this.props.style;
+    var newPropsStyle = nextProps.style;
+    var oldPhaseStyle;
+    var newPhaseStyle;
+
+    switch(this._phase) {
+      case 'appear':
+        oldPhaseStyle = this.props.childrenAppearStyle;
+        newPhaseStyle = nextProps.childrenAppearStyle;
+        break;
+      case 'enter':
+        oldPhaseStyle = this.props.childrenEnterStyle;
+        newPhaseStyle = nextProps.childrenEnterStyle;
+        break;
+      case 'leave':
+        oldPhaseStyle = this.props.childrenLeaveStyle;
+        newPhaseStyle = nextProps.childrenLeaveStyle;
+        break;
+    }
+
+    if (!shallowEqual(oldBaseStyle, newBaseStyle) ||
+        !shallowEqual(oldPropsStyle, newPropsStyle) ||
+        !shallowEqual(oldPhaseStyle, newPhaseStyle)) {
+      this.setState({
+        style: Object.assign({}, newBaseStyle, newPhaseStyle, newPropsStyle),
+      });
+    }
   },
 
   componentWillUnmount: function () {
@@ -116,15 +149,14 @@ var TransitionChild = React.createClass({
   },
 
   _computeNewStyle: function (phase) {
-    var nextStyle;
+    var phaseStyle;
 
-    if (phase === 'appear') nextStyle = this.props.childrenAppearStyle;
-    else if (phase === 'enter') nextStyle = this.props.childrenEnterStyle;
-    else if (phase === 'leave') nextStyle = this.props.childrenLeaveStyle;
-    else nextStyle = this.props.childrenBaseStyle;
+    if (phase === 'appear') phaseStyle = this.props.childrenAppearStyle;
+    else if (phase === 'enter') phaseStyle = this.props.childrenEnterStyle;
+    else if (phase === 'leave') phaseStyle = this.props.childrenLeaveStyle;
 
     return Object.assign(
-      {}, this.props.childrenBaseStyle, nextStyle, this.props.style
+      {}, this.props.childrenBaseStyle, phaseStyle, this.props.style
     );
   },
 
@@ -145,6 +177,8 @@ var TransitionChild = React.createClass({
   _executeTransition: function (callback, phase) {
     var node = ReactDOM.findDOMNode(this);
     if (!node) return;
+
+    this._phase = phase;
 
     var nextStyle = this._computeNewStyle(phase);
     var transitionValues = TransitionParser.getTransitionValues(nextStyle);

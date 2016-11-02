@@ -45,10 +45,9 @@ var Transition = React.createClass({
 
     return (
       <TransitionHooks component={component} {...others}>
-        {React.Children.map(children, function (child, i) {
+        {React.Children.map(children, function (child) {
           return (
             <TransitionChild
-              key={i}
               id={((child || {}).props || {}).id}
               childrenBaseStyle={childrenStyles.base}
               childrenAppearStyle={childrenStyles.appear}

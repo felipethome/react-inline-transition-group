@@ -70,6 +70,8 @@ Import the component to your project and then wrap the nodes you want to control
 
         const elems = [];
 
+        // Don't forget that for most React components use array indexes as
+        // keys is a bad idea (but not for this example).
         for (let i = 0; i < this.state.count; i++)
           elems.push(<div key={i} id={i}>{i}</div>);
 

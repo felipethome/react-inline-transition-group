@@ -105,16 +105,16 @@ Property name | Description
 ------------ | -------------
 **component** | String. The component that will wrap all the children. Default: `div`.
 **chindrenStyles** | Object. This object has the properties: `base`, `appear`, `enter` and `leave`. Each of these properties is another object containing the styles for the respective phase. The `base` styles are applied to all children in all phases.
-**onPhaseStart** | Function. Callback that will be called with the current phase (`appear`, `enter` or `leave`) and the child `id` when the phase begins in this order.
-**onPhaseEnd** | Function. Callback that will be called with the current phase (`appear`, `enter` or `leave`) and the child `id` when the phase ends in this order.
+**onPhaseStart** | Function. Callback that will be called with the current phase (`appear`, `enter` or `leave`) and the child `id` when the phase begins, in this order.
+**onPhaseEnd** | Function. Callback that will be called with the current phase (`appear`, `enter` or `leave`) and the child `id` when the phase ends, in this order.
 
 ### Notes
 
 1. You can pass an `id` property to your children components and the callback will be called with it so you know exactly for which child the event happened. This `id` is optional.
 
-2. The `onPhaseStart` callbacks will be called sooner a node is being added or removed to/from the group. If you have a delay in your CSS transition the component will not wait until the delay is complete to call the callbacks.
+2. The `onPhaseStart` callback will be called sooner a node is being added or removed to/from the group. If you have a delay in your CSS transition the component will not wait until the delay is complete to call the callback.
 
-3. The `onPhaseEnd` callbacks will be called when the longest transition time (delay + duration) completes. Notice that if a transition is interrupted this callback will not be called.
+3. The `onPhaseEnd` callback will be called when the longest transition time (delay + duration) completes. Notice that if a transition is interrupted this callback will not be called.
 
 ## What is meant by phase
 

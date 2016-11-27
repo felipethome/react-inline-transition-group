@@ -18,7 +18,7 @@
     "react": "0.14.x || 15.x"
   },
   "dependencies": {
-    "react-transition-hooks": "^1.0.5"
+    "react-transition-hooks": "^1.0.7"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",

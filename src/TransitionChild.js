@@ -178,8 +178,6 @@ var TransitionChild = React.createClass({
     var node = ReactDOM.findDOMNode(this);
     if (!node) return;
 
-    this._phase = phase;
-
     var nextStyle = this._computeNewStyle(phase);
     var transitionValues = TransitionParser.getTransitionValues(nextStyle);
 
@@ -191,8 +189,8 @@ var TransitionChild = React.createClass({
 
     if (maxTimeProperty) {
       // To guarantee the transitionend event of another phase will not
-      // interfere with the handler of the current phase create a new one every
-      // time.
+      // interfere with the handler of the current phase create a new one
+      // every time.
       this._handleReference = this._handleTransitionEnd.bind(
         this,
         node,
@@ -210,6 +208,8 @@ var TransitionChild = React.createClass({
     // probably be faster, but stateless components are not working well with
     // this approach.
     this.setState({style: nextStyle});
+
+    this._phase = phase;
   },
 
   render: function () {

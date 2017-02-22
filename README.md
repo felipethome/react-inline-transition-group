@@ -26,6 +26,7 @@ Import the component to your project and then wrap the nodes you want to control
 
 ```jsx
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Transition from 'react-inline-transition-group';
 
 export default class Demo extends React.Component {
@@ -35,13 +36,13 @@ export default class Demo extends React.Component {
   }
 
   handleAdd = () => {
-    this.setState(function (previousState) {
+    this.setState((previousState) => {
       return {count: previousState.count + 1};
     });
   };
 
   handleRemove = () => {
-    this.setState(function (previousState) {
+    this.setState((previousState) => {
       return {count: Math.max(previousState.count - 1, 0)};
     });
   };
@@ -52,20 +53,29 @@ export default class Demo extends React.Component {
 
   render() {
     const styles = {
-      base: {
-        background: '#F00',
+      container: {
         width: '500px',
+      },
+
+      base: {
+        width: '100%',
         height: '50px',
+        background: '#4CAF50',
+        opacity: 0,
       },
 
       appear: {
-        background: '#FF0',
+        opacity: 1,
         transition: 'all 500ms',
       },
 
       leave: {
-        background: '#F00',
+        opacity: 0,
         transition: 'all 250ms',
+      },
+
+      custom: {
+        background: '#3F51B5',
       },
     };
 
@@ -74,7 +84,7 @@ export default class Demo extends React.Component {
     // Don't forget that for most React components use array indexes as
     // keys is a bad idea (but not for this example).
     for (let i = 0; i < this.state.count; i++)
-      elems.push(<div key={i} id={i}>{i}</div>);
+      elems.push(<div key={i} id={i} style={i % 2 ? styles.custom : {}}>{i}</div>);
 
     return (
       <div>
@@ -90,6 +100,7 @@ export default class Demo extends React.Component {
             leave: styles.leave,
           }}
           onPhaseEnd={this.handlePhaseEnd}
+          style={styles.container}
         >
           {elems}
         </Transition>
@@ -97,7 +108,38 @@ export default class Demo extends React.Component {
     );
   }
 }
+
+ReactDOM.render(<Demo />, document.getElementById('container'));
 ```
+
+Notice above that `{elems}` are *divs*, but they could be any other React component, just remember to pass the property *style* that your React component is receiving down to the HTML element that will get these styles. Example:
+
+```jsx
+const SomeComponent = (props) => (
+  <div style={props.style}>
+    {props.children}
+  </div>
+);
+
+const App = () => {
+  const elems = [];
+
+  // Don't worry, you can still apply custom styles to each element.
+  const otherStyle = { ... };
+
+  for (let i = 0; i < this.state.count; i++)
+    elems.push(<SomeComponent style={otherStyle} key={i} id={i}>{i}</SomeComponent>);
+
+  return (
+    <Transition
+      childrenStyles={{ ... }}
+    >
+      {elems}
+    </Transition>
+  );
+};
+```
+
 
 ## Properties
 

@@ -1,13 +1,13 @@
-var React = require('react');
+import React from 'react';
 
-var Navbar = React.createClass({
-  displayName: 'Navbar',
+export default class Navbar extends React.Component {
+  static displayName = 'Navbar';
 
-  propTypes: {
+  static propTypes = {
     actions: React.PropTypes.array,
-  },
+  };
 
-  render: function () {
+  render() {
     var styles = {
       container: {
         position: 'fixed',
@@ -22,7 +22,7 @@ var Navbar = React.createClass({
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column',
-        background: 'linear-gradient(45deg, #2980b9, #2c3e50)',
+        background: '#01579B',
         height: '100px',
         width: '100%',
       },
@@ -41,7 +41,7 @@ var Navbar = React.createClass({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: 'linear-gradient(45deg, #2980b9, #2c3e50)',
+        background: '#01579B',
         boxShadow: '0 0px 8px rgba(0,0,0,.28)',
         height: '56px',
         width: '100%',
@@ -64,8 +64,5 @@ var Navbar = React.createClass({
         </div>
       </div>
     );
-  },
-
-});
-
-module.exports = Navbar;
+  }
+}

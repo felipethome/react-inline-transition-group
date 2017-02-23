@@ -1,8 +1,8 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var Demo = require('./components/Demo');
+import React from 'react';
+import {render} from 'react-dom';
+import Demo from './components/Demo';
 
-ReactDOM.render(
+render(
   <Demo />,
   document.getElementById('demo')
 );

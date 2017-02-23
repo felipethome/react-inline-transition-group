@@ -1,50 +1,48 @@
-var React = require('react');
-var Transition = require('../../src/Transition');
-var CSSTransition = require('react-addons-css-transition-group');
+import React from 'react';
+import Transition from '../../src/Transition';
+import CSSTransition from 'react-addons-css-transition-group';
 
-var Circle = React.createClass({
-  displayName: 'Circle',
+export default class Circle extends React.Component {
+  static displayName = 'Circle';
 
-  propTypes: {
+  static propTypes = {
     active: React.PropTypes.bool,
     left: React.PropTypes.number,
     top: React.PropTypes.number,
-  },
+  };
 
-  getInitialState: function () {
-    return {
-      component: '',
-      left: 0,
-      top: 0,
-    };
-  },
+  state = {
+    component: '',
+    left: 0,
+    top: 0,
+  };
 
-  componentWillMount: function () {
+  componentWillMount() {
     this.count = 0;
-  },
+  }
 
-  _handleMouseMove: function (event) {
+  _handleMouseMove = (event) => {
     this.setState({
       top: event.clientY,
       left: event.clientX,
     });
-  },
+  };
 
-  _handleTouchMove: function (event) {
+  _handleTouchMove = (event) => {
     this.setState({
       top: event.touches[0].pageY,
       left: event.touches[0].pageX,
     });
-  },
+  };
 
-  _handleComponentChange: function (component) {
+  _handleComponentChange = (component) => {
     this.setState({
       component: component,
     });
-  },
+  };
 
-  render: function () {
-    var styles = {
+  render() {
+    const styles = {
       container: {
         position: 'relative',
         background: '#000',
@@ -66,8 +64,6 @@ var Circle = React.createClass({
       appear: {
         transition: 'all 600ms',
         opacity: '1',
-        height: '100px',
-        width: '100px',
       },
 
       leave: {
@@ -81,23 +77,28 @@ var Circle = React.createClass({
         left: '0px',
         right: '0px',
         width: '450px',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        marginBottom: '30px',
+        margin: '0 auto 0px auto',
         padding: '10px 10px 0px 10px',
         color: '#FFF',
         textAlign: 'center',
-        boxShadow: '0 4px 5px 0 rgba(255, 255, 255, 0.14),' +
-          '0 1px 10px 0 rgba(255, 255, 255, 0.12),' +
-          '0 2px 4px -1px rgba(255, 255, 255, 0.4)',
+        border: '1px solid #333',
+        borderRadius: '2px',
       },
 
       option: {
         marginBottom: '10px',
       },
+
+      description: {
+        position: 'absolute',
+        top: '300px',
+        width: '100%',
+        textAlign: 'center',
+        color: '#FFF',
+      },
     };
 
-    var circleStyle;
+    let circleStyle;
     if (this.state.component === 'react-addons') {
       circleStyle = {
         top: (this.state.top - 50) + 'px',
@@ -105,7 +106,7 @@ var Circle = React.createClass({
       };
     }
 
-    var circles = [];
+    const circles = [];
     circles.pop();
     circles.push(
       <div
@@ -115,7 +116,7 @@ var Circle = React.createClass({
       />
     );
 
-    var transitionComponent;
+    let transitionComponent;
     if (this.state.component === 'react-addons') {
       transitionComponent = (
         <CSSTransition
@@ -152,6 +153,7 @@ var Circle = React.createClass({
         onTouchMove={this._handleTouchMove}
       >
         {transitionComponent}
+        <div style={styles.description}>Move your cursor across the screen</div>
         <div style={styles.optionsContainer}>
           <div style={styles.option}>
             <input
@@ -173,8 +175,5 @@ var Circle = React.createClass({
         </div>
       </div>
     );
-  },
-
-});
-
-module.exports = Circle;
+  }
+}

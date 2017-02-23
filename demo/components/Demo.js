@@ -1,110 +1,68 @@
-var React = require('react');
-var Navbar = require('./Navbar');
-var Button = require('./Button');
-var Circle = require('./Circle');
-var Album = require('./Album');
-var List = require('./List');
-var Numbers = require('./Numbers');
+import React from 'react';
+import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
+import Navbar from './Navbar';
+import Button from './Button';
+import Circle from './Circle';
+import Album from './Album';
+import List from './List';
 
-var Demo = React.createClass({
-  displayName: 'Demo',
+const supportsHistory = 'pushState' in window.history;
 
-  getInitialState: function () {
-    return {
-      page: 'Demo 1',
-    };
-  },
+export default class Demo extends React.Component {
+  static displayName = 'Demo';
 
-  _getPage: function () {
-    var page;
-
-    switch (this.state.page) {
-      case 'Demo 1':
-        page = (<Circle />);
-        break;
-      case 'Demo 2':
-        page = (<Album images={['img/1.jpg', 'img/2.jpg']} />);
-        break;
-      case 'Demo 3':
-        page = (<List />);
-        break;
-      case 'Demo 4':
-        page = (<Numbers />);
-        break;
-      case 'Github':
-        document.location.href =
-          'https://github.com/felipethome/react-inline-transition-group';
-        break;
-    }
-
-    return page;
-  },
-
-  _handleButtonClick: function (page) {
-    this.setState({
-      page: page,
-    });
-  },
-
-  render: function () {
-    var styles = {
+  render() {
+    const styles = {
       container: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: '#F5F5F5',
         boxSizing: 'padding-box',
         height: '100%',
         width: '100%',
       },
+
+      button: {
+        backgroundColor: '#0277BD',
+      },
+
+      link: {
+        margin: '0 -4px 0 12px',
+      },
     };
 
-    var navbarActions = [];
-    navbarActions.push(
-      <Button
-        key="Github"
-        label="Github"
-        onClick={this._handleButtonClick.bind(this, 'Github')}
-      />
-    );
-    navbarActions.push(
-      <Button
-        key="Demo 1"
-        label="Demo 1"
-        onClick={this._handleButtonClick.bind(this, 'Demo 1')}
-      />
-    );
-    navbarActions.push(
-      <Button
-        key="Demo 2"
-        label="Demo 2"
-        onClick={this._handleButtonClick.bind(this, 'Demo 2')}
-      />
-    );
-    navbarActions.push(
-      <Button
-        key="Demo 3"
-        label="Demo 3"
-        onClick={this._handleButtonClick.bind(this, 'Demo 3')}
-      />
-    );
-    navbarActions.push(
-      <Button
-        key="Demo 4"
-        label="Demo 4"
-        onClick={this._handleButtonClick.bind(this, 'Demo 4')}
-      />
-    );
-
-    var page = this._getPage();
+    const navbarActions = [
+      <a
+        key="github"
+        href="https://github.com/felipethome/react-inline-transition-group"
+        style={styles.link}
+      >
+        <Button style={styles.button}>Github</Button>
+      </a>,
+      <Link key="/demo1" to="/demo1" style={styles.link}>
+        <Button style={styles.button}>Demo 1</Button>
+      </Link>,
+      <Link key="/demo2" to="/demo2" style={styles.link}>
+        <Button style={styles.button}>Demo 2</Button>
+      </Link>,
+      <Link key="/demo3" to="/demo3" style={styles.link}>
+        <Button style={styles.button}>Demo 3</Button>
+      </Link>,
+    ];
 
     return (
-      <div style={styles.container}>
-        <Navbar actions={navbarActions} />
-        {page}
-      </div>
+      <Router forceRefresh={!supportsHistory}>
+        <div style={styles.container}>
+          <Navbar actions={navbarActions} />
+          <Route exact path="/" component={Circle}/>
+          <Route path="/demo1" component={Circle}/>
+          <Route
+            path="/demo2"
+            render={() => <Album images={['img/1.jpg', 'img/2.jpg']} />}
+          />
+          <Route path="/demo3" component={List}/>
+        </div>
+      </Router>
     );
-  },
-});
-
-module.exports = Demo;
+  }
+}

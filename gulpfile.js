@@ -113,6 +113,7 @@ gulp.task('demo', function () {
     root: './demo',
     port: 8889,
     livereload: true,
+    fallback: './demo/index.html',
   };
 
   connect.server(serverOpt);

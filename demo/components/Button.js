@@ -1,45 +1,41 @@
-var React = require('react');
+import React from 'react';
 
-var Button = React.createClass({
-  displayName: 'Button',
+export default class Button extends React.Component {
+  static displayName = 'Button';
 
-  propTypes: {
-    backgro: React.PropTypes.string,
-    label: React.PropTypes.string,
+  static propTypes = {
+    children: React.PropTypes.any,
     onMouseDown: React.PropTypes.func,
     onMouseUp: React.PropTypes.func,
     style: React.PropTypes.object,
-  },
+  };
 
-  getInitialState: function () {
-    return {
-      mouseDown: false,
-    };
-  },
+  state = {
+    mouseDown: false,
+  };
 
-  _handleMouseDown: function (event) {
+  _handleMouseDown = (event) => {
     this.setState({
       mouseDown: true,
     });
 
     if (this.props.onMouseDown) this.props.onMouseDown(event);
-  },
+  };
 
-  _handleMouseUp: function (event) {
+  _handleMouseUp = (event) => {
     this.setState({
       mouseDown: false,
     });
 
     if (this.props.onMouseUp) this.props.onMouseUp(event);
-  },
+  };
 
-  render: function () {
-    var {
-      label, // eslint-disable-line no-unused-vars
+  render() {
+    let {
       onMouseDown, // eslint-disable-line no-unused-vars
       onMouseUp, // eslint-disable-line no-unused-vars
       style, // eslint-disable-line no-unused-vars
-      ...others,
+      ...others, // eslint-disable-line comma-dangle
     } = this.props;
 
     const styles = {
@@ -49,7 +45,6 @@ var Button = React.createClass({
         borderRadius: '2px',
         cursor: 'pointer',
         padding: '10px 15px',
-        margin: '0 -4px 0 12px',
         height: '36px',
         color: '#FFF',
         fontFamily: '"Roboto", sans-serif',
@@ -64,7 +59,7 @@ var Button = React.createClass({
       },
     };
 
-    var buttonStyle = Object.assign(
+    const buttonStyle = Object.assign(
       {},
       styles.button,
       this.state.mouseDown && styles.buttonMouseDown,
@@ -78,11 +73,8 @@ var Button = React.createClass({
         style={buttonStyle}
         {...others}
       >
-        {this.props.label}
+        {this.props.children}
       </button>
     );
-  },
-
-});
-
-module.exports = Button;
+  }
+}

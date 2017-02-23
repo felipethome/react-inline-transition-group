@@ -1,63 +1,64 @@
-var React = require('react');
-var Button = require('./Button');
-var Transition = require('../../src/Transition');
-var CSSTransition = require('react-addons-css-transition-group');
+import React from 'react';
+import Button from './Button';
+import Transition from '../../src/Transition';
+import CSSTransition from 'react-addons-css-transition-group';
 
-var Album = React.createClass({
-  displayName: 'Album',
+export default class Album extends React.Component {
+  static displayName = 'Album';
 
-  propTypes: {
+  static propTypes = {
     images: React.PropTypes.array,
-  },
+  };
 
-  getInitialState: function () {
-    return {
-      component: '',
-      count: 1,
-      show: false,
-    };
-  },
+  state = {
+    component: '',
+    count: 1,
+    show: false,
+  };
 
-  componentDidMount: function () {
-    var component = this;
-
-    var promises = this.props.images.map(function (src) {
-      return new Promise(function (resolve) {
+  componentDidMount() {
+    const promises = this.props.images.map(function (src) {
+      return new Promise((resolve) => {
         var img = new Image();
         img.src = src;
         img.onload = resolve;
       });
     });
 
-    Promise.all(promises).then(function () {
-      component.setState({
+    Promise.all(promises).then(() => {
+      this.setState({
         show: true,
       });
     });
-  },
+  }
 
-  _handleAdd: function () {
-    this.setState(function (previousState) {
+  _handleAdd = () => {
+    this.setState((previousState) => {
       return {count: previousState.count + 1};
     });
-  },
+  };
 
-  _handleComponentChange: function (component) {
+  _handleComponentChange = (component) => {
     this.setState({
       component: component,
     });
-  },
+  };
 
-  render: function () {
-    var styles = {
+  render() {
+    const styles = {
       container: {
-        backgroundColor: '#FFF',
-        height: '300px',
+        position: 'absolute',
+        top: '200px',
+        left: '0px',
+        right: '0px',
+        margin: '0 auto 30px auto',
+        padding: '30px',
+        height: '360px',
         width: '500px',
+        backgroundColor: '#FFF',
         boxShadow: '0 4px 5px 0 rgba(0, 0, 0, 0.14),' +
           '0 1px 10px 0 rgba(0, 0, 0, 0.12),' +
           '0 2px 4px -1px rgba(0, 0, 0, 0.4)',
-        padding: '30px',
       },
 
       base: {
@@ -84,21 +85,29 @@ var Album = React.createClass({
       },
 
       button: {
-        backgroundColor: '#2980b9',
+        backgroundColor: '#0277BD',
         margin: '0px 15px 15px 0',
       },
 
       optionsContainer: {
-        marginBottom: '30px',
+        padding: '10px 10px 0px 10px',
+        border: '1px solid #333',
+        borderRadius: '2px',
+        marginBottom: '20px',
+        textAlign: 'center',
       },
 
       option: {
         marginBottom: '10px',
       },
+
+      description: {
+        marginBottom: '20px',
+      },
     };
 
-    var album;
-    var elems = [];
+    let album;
+    const elems = [];
     if (this.state.show) {
       if (this.state.count % 2) {
         elems.push(
@@ -174,17 +183,19 @@ var Album = React.createClass({
             ReactCSSTransitionGroup + ReactTransitionGroup
           </div>
         </div>
+        <div style={styles.description}>
+          Press the Switch Image button before the transition finishes to see
+          the difference between the components.
+        </div>
         <div>
-          <Button
-            label="Switch Image"
-            onClick={this._handleAdd}
-            style={styles.button}
-          />
+          <Button onClick={this._handleAdd} style={styles.button}>
+            Switch Image
+          </Button>
         </div>
         {album}
       </div>
     );
-  },
-});
+  }
+}
 
 module.exports = Album;

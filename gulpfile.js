@@ -4,6 +4,7 @@ var browserify = require('browserify');
 var connect = require('gulp-connect');
 var merge = require('merge-stream');
 var notify = require('gulp-notify');
+var ghPages = require('gulp-gh-pages');
 var gulp = require('gulp');
 var gulpif = require('gulp-if');
 var gutil = require('gulp-util');
@@ -93,6 +94,11 @@ var browserifyDepsTask = function (options) {
       console.log('VENDORS bundle built in ' + (Date.now() - start) + 'ms');
     }));
 };
+
+gulp.task('ghpages', ['deploy'], function () {
+  return gulp.src('./demo/deploy/**/*')
+    .pipe(ghPages());
+});
 
 gulp.task('deploy', function () {
   process.env.NODE_ENV = 'production';

@@ -31,6 +31,8 @@ export default class Demo extends React.Component {
       },
     };
 
+    const basename = (sessionStorage || {}).basename;
+
     const navbarActions = [
       <a
         key="github"
@@ -51,7 +53,10 @@ export default class Demo extends React.Component {
     ];
 
     return (
-      <Router forceRefresh={!supportsHistory}>
+      <Router
+        basename={basename}
+        forceRefresh={!supportsHistory}
+      >
         <div style={styles.container}>
           <Navbar actions={navbarActions} />
           <Route exact path="/" component={Circle}/>

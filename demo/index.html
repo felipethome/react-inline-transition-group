@@ -6,11 +6,15 @@
 
   <script>
     (function (){
-      var savedSessionStorage = windows.sessionStorage || {};
+      var savedSessionStorage = window.sessionStorage || {};
       var redirect = savedSessionStorage.redirect;
       delete savedSessionStorage.redirect;
       if (redirect && redirect != location.href && history) {
         history.replaceState(null, null, redirect);
+      }
+
+      if (document.location.hostname == 'felipethome.github.io') {
+        savedSessionStorage.basename = '/react-inline-transition-group';
       }
     })();
   </script>

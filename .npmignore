@@ -3,6 +3,7 @@ node_modules
 src
 demo
 build
+.publish
 .babelrc
 .eslintrc.js
 gulpfile.js

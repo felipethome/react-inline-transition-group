@@ -12,7 +12,7 @@
      * current URL in the sessionStorage so it can be retrieved later to finally
      * access the page the client was asking for with client-routing.
      */
-    var savedSessionStorage = windows.sessionStorage || {};
+    var savedSessionStorage = window.sessionStorage || {};
     savedSessionStorage.redirect = location.href;
   </script>
   <meta http-equiv="refresh" content="0;URL='/react-inline-transition-group'"></meta>

@@ -128,7 +128,7 @@ gulp.task('deploy', function () {
   );
 });
 
-gulp.task('demo', function () {
+gulp.task('dev', function () {
   process.env.NODE_ENV = 'development';
 
   var browserifyDepsOpt = {

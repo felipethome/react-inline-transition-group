@@ -14,7 +14,7 @@ This component helps you to control transitions defined with inline styles. Buil
 
 ## Live Demo
 
-Check out the [demo](http://felipethome.github.io/react-inline-transition-group/demo/index.html).
+Check out the [demo](http://felipethome.github.io/react-inline-transition-group/).
 
 ## How to install
 

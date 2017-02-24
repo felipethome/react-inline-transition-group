@@ -13,6 +13,13 @@ var uglify = require('gulp-uglify');
 var watchify = require('watchify');
 
 var files = {
+  deploy: [
+    'demo/index.html',
+    'demo/404.html',
+    'demo/img/**',
+    'demo/styles/**',
+  ],
+
   dependencies: [
     'react',
     'react-dom',
@@ -26,7 +33,6 @@ var files = {
 };
 
 var browserifyTask = function (options) {
-
   var bundler = browserify({
     entries: [options.src],
     transform: [
@@ -66,11 +72,9 @@ var browserifyTask = function (options) {
   }
 
   return rebundle();
-
 };
 
 var browserifyDepsTask = function (options) {
-
   var vendorsBundler = browserify({
     debug: options.development,
     require: files.dependencies,
@@ -88,11 +92,37 @@ var browserifyDepsTask = function (options) {
     .pipe(notify(function () {
       console.log('VENDORS bundle built in ' + (Date.now() - start) + 'ms');
     }));
-
 };
 
-gulp.task('demo', function () {
+gulp.task('deploy', function () {
+  process.env.NODE_ENV = 'production';
 
+  var browserifyDepsOpt = {
+    development: false,
+    src: files.dependencies,
+    output: 'vendors.js',
+    dest: './demo/deploy/build/scripts',
+  };
+
+  var browserifyOpt = {
+    development: false,
+    src: files.browserify,
+    output: 'bundle.js',
+    dest: './demo/deploy/build/scripts',
+  };
+
+  var copyFiles = gulp.src(files.deploy, {base: './demo'})
+    .on('error', gutil.log)
+    .pipe(gulp.dest('./demo/deploy'));
+
+  return merge(
+    copyFiles,
+    browserifyDepsTask(browserifyDepsOpt),
+    browserifyTask(browserifyOpt)
+  );
+});
+
+gulp.task('demo', function () {
   process.env.NODE_ENV = 'development';
 
   var browserifyDepsOpt = {
@@ -122,5 +152,4 @@ gulp.task('demo', function () {
     browserifyDepsTask(browserifyDepsOpt),
     browserifyTask(browserifyOpt)
   );
-
 });

@@ -2,6 +2,7 @@
 node_modules
 lib
 demo/build
+demo/deploy
 .DS_Store
 package-backup-*.json
 coverage

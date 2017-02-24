@@ -4,6 +4,16 @@
   <meta charset="UTF-8">
   <title>React Inline Transition Group</title>
 
+  <script>
+    (function(){
+      var redirect = sessionStorage.redirect;
+      delete sessionStorage.redirect;
+      if (redirect && redirect != location.href) {
+        history.replaceState(null, null, redirect);
+      }
+    })();
+  </script>
+
   <link rel="stylesheet" type="text/css" href="styles/base.css">
   <link rel="stylesheet" type="text/css" href="styles/demo1.css">
   <link rel="stylesheet" type="text/css" href="styles/demo2.css">

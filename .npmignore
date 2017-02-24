@@ -6,6 +6,7 @@ build
 .publish
 .babelrc
 .eslintrc.js
+.travis.yml
 gulpfile.js
 package-backup-*.json
 coverage

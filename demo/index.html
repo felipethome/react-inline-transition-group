@@ -5,10 +5,11 @@
   <title>React Inline Transition Group</title>
 
   <script>
-    (function(){
-      var redirect = sessionStorage.redirect;
-      delete sessionStorage.redirect;
-      if (redirect && redirect != location.href) {
+    (function (){
+      var savedSessionStorage = windows.sessionStorage || {};
+      var redirect = savedSessionStorage.redirect;
+      delete savedSessionStorage.redirect;
+      if (redirect && redirect != location.href && history) {
         history.replaceState(null, null, redirect);
       }
     })();

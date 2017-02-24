@@ -52,6 +52,7 @@
   },
   "scripts": {
     "build": "babel ./src --out-dir ./lib --ignore __tests__",
+    "clean": "rm -rf demo/{build,deploy}",
     "demo": "gulp demo",
     "deploy": "gulp deploy",
     "lint": "eslint src/",

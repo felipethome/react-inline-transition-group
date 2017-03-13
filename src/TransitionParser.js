@@ -68,7 +68,7 @@ var _parseShorthand = function (propertyStr) {
   var delayArray = [];
   var re = /^([0-9]*\.?[0-9]+)(m?s)$/;
   var transitions =
-    propertyStr.toLowerCase().replace(/cubic\-bezier\(.*\)/, '').trim()
+    propertyStr.toLowerCase().replace(/cubic\-bezier\((.*?)\)/g, '').trim()
     .split(/\s*,\s*/);
 
   for (var i = 0; i < transitions.length; i++) {

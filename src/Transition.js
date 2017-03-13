@@ -22,7 +22,7 @@ var Transition = React.createClass({
       leave: React.PropTypes.object,
     }),
     component: React.PropTypes.oneOfType([
-      React.PropTypes.node,
+      React.PropTypes.string,
       React.PropTypes.func,
     ]),
     onPhaseEnd: React.PropTypes.func,

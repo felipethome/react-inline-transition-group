@@ -179,6 +179,13 @@ var TransitionChild = React.createClass({
     if (!node) return;
 
     var nextStyle = this._computeNewStyle(phase);
+
+    // matching styles results in no "transitionend" event
+    if (JSON.stringify(this.state.style) === JSON.stringify(nextStyle)) {
+      callback();
+      return;
+    }
+
     var transitionValues = TransitionParser.getTransitionValues(nextStyle);
 
     var maxTimeProperty = TransitionInfo.getMaximumTimeProperty(

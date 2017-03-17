@@ -24,8 +24,9 @@ describe('TransitionParser', function () {
       background: '#FFF',
       height: '50px',
       width: '50px',
-      transition: 'background 1s 1s, height 2s cubic-bezier(0,0,0,0) 2s, ' +
-        'width 3s linear',
+      transition: 'background 1s 1s, height 2s ' +
+        'color 2s cubic-bezier(0.25, 0, .45, 2), ' +
+        'width 3s cubic-bezier(0.15, 1, 0.75, 4)',
     };
 
     var transitions = TransitionParser.getTransitionValues(style);

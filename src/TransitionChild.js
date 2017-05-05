@@ -8,30 +8,32 @@
 
 var React = require('react');
 var ReactDOM = require('react-dom');
+var createReactClass = require('create-react-class');
+var PropTypes = require('prop-types');
 var Animation = require('./Animation');
 var TransitionInfo = require('./TransitionInfo');
 var TransitionParser = require('./TransitionParser');
 var shallowEqual = require('./shallowEqual');
 
-var TransitionChild = React.createClass({
+var TransitionChild = createReactClass({
   displayName: 'TransitionChild',
 
   propTypes: {
-    children: React.PropTypes.any,
-    childrenAppearStyle: React.PropTypes.object,
-    childrenBaseStyle: React.PropTypes.object,
-    childrenEnterStyle: React.PropTypes.object,
-    childrenLeaveStyle: React.PropTypes.object,
-    id: React.PropTypes.oneOfType(
-      [React.PropTypes.string, React.PropTypes.number]
+    children: PropTypes.any,
+    childrenAppearStyle: PropTypes.object,
+    childrenBaseStyle: PropTypes.object,
+    childrenEnterStyle: PropTypes.object,
+    childrenLeaveStyle: PropTypes.object,
+    id: PropTypes.oneOfType(
+      [PropTypes.string, PropTypes.number]
     ),
-    onChildAppeared: React.PropTypes.func,
-    onChildEntered: React.PropTypes.func,
-    onChildLeft: React.PropTypes.func,
-    onChildStartAppear: React.PropTypes.func,
-    onChildStartEnter: React.PropTypes.func,
-    onChildStartLeave: React.PropTypes.func,
-    style: React.PropTypes.object,
+    onChildAppeared: PropTypes.func,
+    onChildEntered: PropTypes.func,
+    onChildLeft: PropTypes.func,
+    onChildStartAppear: PropTypes.func,
+    onChildStartEnter: PropTypes.func,
+    onChildStartLeave: PropTypes.func,
+    style: PropTypes.object,
   },
 
   getInitialState: function () {

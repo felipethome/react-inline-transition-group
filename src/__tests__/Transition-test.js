@@ -1,7 +1,8 @@
-/* eslint-disable react/no-multi-comp, max-len */
+/* eslint-disable react/no-multi-comp, max-len, react/display-name */
 
 var React;
 var ReactDOM;
+var createReactClass;
 var Transition;
 var installMockRAF;
 var TransitionEvent;
@@ -14,6 +15,7 @@ describe('Transition', function () {
 
     React = require('react');
     ReactDOM = require('react-dom');
+    createReactClass = require('create-react-class');
     Transition = require('../Transition');
     TransitionEvent = require('./TransitionEvent');
     installMockRAF = require('./installMockRAF');
@@ -24,7 +26,7 @@ describe('Transition', function () {
   });
 
   it('should apply the base style in all children', function () {
-    var Group = React.createClass({
+    var Group = createReactClass({
       render: function () {
         var styles = {
           base: {
@@ -56,7 +58,7 @@ describe('Transition', function () {
   });
 
   it('should overwrite the phase style with props.style', function () {
-    var Group = React.createClass({
+    var Group = createReactClass({
       render: function () {
         var styles = {
           base: {
@@ -107,7 +109,7 @@ describe('Transition', function () {
       }
     };
 
-    var Group = React.createClass({
+    var Group = createReactClass({
       render: function () {
         var styles = {
           base: {
@@ -152,7 +154,7 @@ describe('Transition', function () {
       }
     };
 
-    var Group = React.createClass({
+    var Group = createReactClass({
       getInitialState: function () {
         return {count: 1};
       },
@@ -211,7 +213,7 @@ describe('Transition', function () {
       }
     };
 
-    var Group = React.createClass({
+    var Group = createReactClass({
       getInitialState: function () {
         return {count: 1};
       },
@@ -256,7 +258,7 @@ describe('Transition', function () {
   });
 
   it('should apply different styles for appear and enter phases', function (done) {
-    var Group = React.createClass({
+    var Group = createReactClass({
       getInitialState: function () {
         return {count: 1};
       },
@@ -314,7 +316,7 @@ describe('Transition', function () {
       }
     };
 
-    var Group = React.createClass({
+    var Group = createReactClass({
       getInitialState: function () {
         return {count: 1};
       },

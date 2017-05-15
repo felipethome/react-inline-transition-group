@@ -7,26 +7,28 @@
  */
 
 var React = require('react');
+var createReactClass = require('create-react-class');
+var PropTypes = require('prop-types');
 var TransitionHooks = require('react-transition-hooks');
 var TransitionChild = require('./TransitionChild');
 
-var Transition = React.createClass({
+var Transition = createReactClass({
   displayName: 'Transition',
 
   propTypes: {
-    children: React.PropTypes.node,
-    childrenStyles: React.PropTypes.shape({
-      base: React.PropTypes.object,
-      appear: React.PropTypes.object,
-      enter: React.PropTypes.object,
-      leave: React.PropTypes.object,
+    children: PropTypes.node,
+    childrenStyles: PropTypes.shape({
+      base: PropTypes.object,
+      appear: PropTypes.object,
+      enter: PropTypes.object,
+      leave: PropTypes.object,
     }),
-    component: React.PropTypes.oneOfType([
-      React.PropTypes.string,
-      React.PropTypes.func,
+    component: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.func,
     ]),
-    onPhaseEnd: React.PropTypes.func,
-    onPhaseStart: React.PropTypes.func,
+    onPhaseEnd: PropTypes.func,
+    onPhaseStart: PropTypes.func,
   },
 
   getDefaultProps: function () {
@@ -36,7 +38,7 @@ var Transition = React.createClass({
     };
   },
 
-  render: function () {
+  render: function () { // eslint-disable-line
     var {
       children,
       childrenStyles,

@@ -215,11 +215,15 @@ var TransitionChild = createReactClass({
   },
 
   render: function () {
-    return React.Children.only(
-      React.cloneElement(this.props.children, {
-        style: this.state.style,
-      })
-    );
+    if (this.props.children) {
+      return React.Children.only(
+        React.cloneElement(this.props.children, {
+          style: this.state.style,
+        })
+      );
+    }
+    // Null.
+    return this.props.children;
   },
 
 });

@@ -1,32 +1,33 @@
-.circle {
+.square {
   position: absolute;
-  border-radius: 50%;
   border: 2px solid #448AFF;
-  height: 100px;
-  width: 100px;
+  height: 50px;
+  width: 81px;
   opacity: 0.5;
+  transform: scale(0) rotate(0deg);
 }
 
-.circle-appear {
+.square-appear {
 }
 
-.circle-appear.circle-appear-active {
+.square-appear.square-appear-active {
   opacity: 1;
-  transition: opacity 600ms;
+  transition: all 600ms;
 }
 
-.circle-enter {
+.square-enter {
 }
 
-.circle-enter.circle-enter-active {
+.square-enter.square-enter-active {
   opacity: 1;
-  transition: opacity 600ms;
+  transition: all 600ms;
 }
 
-.circle-leave {
+.square-leave {
 }
 
-.circle-leave.circle-leave-active {
+.square-leave.square-leave-active {
   opacity: 0;
-  transition: opacity 600ms;
+  transform: scale(2) rotate(135deg);
+  transition: all 600ms;
 }

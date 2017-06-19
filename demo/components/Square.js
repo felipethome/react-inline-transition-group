@@ -2,8 +2,8 @@ import React from 'react';
 import Transition from '../../src/Transition';
 import CSSTransition from 'react-addons-css-transition-group';
 
-export default class Circle extends React.Component {
-  static displayName = 'Circle';
+export default class square extends React.Component {
+  static displayName = 'square';
 
   static propTypes = {
     active: React.PropTypes.bool,
@@ -50,15 +50,15 @@ export default class Circle extends React.Component {
         width: '100%',
       },
 
-      circle: {
+      square: {
         position: 'absolute',
-        top: (this.state.top - 50) + 'px',
-        left: (this.state.left - 50) + 'px',
-        borderRadius: '50%',
+        top: (this.state.top - 25) + 'px',
+        left: (this.state.left - 40) + 'px',
         border: '2px solid #448AFF',
-        height: '100px',
-        width: '100px',
+        height: '50px',
+        width: '81px',
         opacity: '0.5',
+        transform: 'scale(0) rotate(0deg)',
       },
 
       appear: {
@@ -69,6 +69,7 @@ export default class Circle extends React.Component {
       leave: {
         transition: 'all 600ms',
         opacity: '0',
+        transform: 'scale(2) rotate(135deg)',
       },
 
       optionsContainer: {
@@ -98,21 +99,20 @@ export default class Circle extends React.Component {
       },
     };
 
-    let circleStyle;
+    let squareStyle;
     if (this.state.component === 'react-addons') {
-      circleStyle = {
-        top: (this.state.top - 50) + 'px',
-        left: (this.state.left - 50) + 'px',
+      squareStyle = {
+        top: (this.state.top - 25) + 'px',
+        left: (this.state.left - 40) + 'px',
       };
     }
 
-    const circles = [];
-    circles.pop();
-    circles.push(
+    const squares = [];
+    squares.push(
       <div
         key={this.count++}
-        style={circleStyle}
-        className={this.state.component === 'react-addons' ? 'circle' : ''}
+        style={squareStyle}
+        className={this.state.component === 'react-addons' ? 'square' : ''}
       />
     );
 
@@ -121,13 +121,13 @@ export default class Circle extends React.Component {
       transitionComponent = (
         <CSSTransition
           component="div"
-          transitionName="circle"
+          transitionName="square"
           transitionAppear
           transitionAppearTimeout={600}
           transitionEnterTimeout={600}
           transitionLeaveTimeout={600}
         >
-          {circles}
+          {squares}
         </CSSTransition>
       );
     }
@@ -135,13 +135,13 @@ export default class Circle extends React.Component {
       transitionComponent = (
         <Transition
           childrenStyles={{
-            base: styles.circle,
+            base: styles.square,
             appear: styles.appear,
             enter: styles.appear,
             leave: styles.leave,
           }}
         >
-          {circles}
+          {squares}
         </Transition>
       );
     }

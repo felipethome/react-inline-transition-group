@@ -2,7 +2,7 @@ import React from 'react';
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 import Navbar from './Navbar';
 import Button from './Button';
-import Circle from './Circle';
+import Square from './Square';
 import Album from './Album';
 import List from './List';
 
@@ -59,8 +59,8 @@ export default class Demo extends React.Component {
       >
         <div style={styles.container}>
           <Navbar actions={navbarActions} />
-          <Route exact path="/" component={Circle}/>
-          <Route path="/demo1" component={Circle}/>
+          <Route exact path="/" component={Square}/>
+          <Route path="/demo1" component={Square}/>
           <Route
             path="/demo2"
             render={() => <Album images={['img/1.jpg', 'img/2.jpg']} />}

@@ -1,34 +1,33 @@
 /* eslint-disable react/no-multi-comp, max-len, react/display-name */
 
-var React;
-var ReactDOM;
-var createReactClass;
-var Transition;
-var installMockRAF;
-var TransitionEvent;
+let React;
+let ReactDOM;
+let Transition;
+let installMockRAF;
+let TransitionEvent;
 
 describe('Transition', function () {
-  var container;
+  let container;
 
   beforeEach(function () {
     jest.resetModuleRegistry();
+    jest.useRealTimers();
+
+    installMockRAF = require('./installMockRAF');
+    installMockRAF();
 
     React = require('react');
     ReactDOM = require('react-dom');
-    createReactClass = require('create-react-class');
     Transition = require('../Transition');
     TransitionEvent = require('./TransitionEvent');
-    installMockRAF = require('./installMockRAF');
-
-    installMockRAF();
 
     container = document.createElement('div');
   });
 
   it('should apply the base style in all children', function () {
-    var Group = createReactClass({
-      render: function () {
-        var styles = {
+    class Group extends React.Component {
+      render() {
+        const styles = {
           base: {
             background: 'red',
           },
@@ -44,22 +43,22 @@ describe('Transition', function () {
             <div>2</div>
           </Transition>
         );
-      },
-    });
+      }
+    }
 
-    var container = document.createElement('div');
-    var instance = ReactDOM.render(<Group />, container);
+    const container = document.createElement('div');
+    const instance = ReactDOM.render(<Group />, container);
 
-    var children = ReactDOM.findDOMNode(instance).getElementsByTagName('div');
+    const children = ReactDOM.findDOMNode(instance).getElementsByTagName('div');
 
-    for (var i = 0; i < children.length; i++) {
+    for (let i = 0; i < children.length; i++) {
       expect(children[i].style.background).toBe('red');
     }
   });
 
   it('should overwrite the phase style with props.style', function () {
-    var Group = createReactClass({
-      render: function () {
+    class Group extends React.Component {
+      render() {
         var styles = {
           base: {
             background: 'red',
@@ -79,23 +78,23 @@ describe('Transition', function () {
             <div style={styles.custom}>1</div>
           </Transition>
         );
-      },
-    });
+      }
+    }
 
-    var container = document.createElement('div');
-    var instance = ReactDOM.render(<Group />, container);
+    const container = document.createElement('div');
+    const instance = ReactDOM.render(<Group />, container);
 
-    var children = ReactDOM.findDOMNode(instance).getElementsByTagName('div');
+    const children = ReactDOM.findDOMNode(instance).getElementsByTagName('div');
 
-    for (var i = 0; i < children.length; i++) {
+    for (let i = 0; i < children.length; i++) {
       expect(children[i].style.background).toEqual('black');
     }
   });
 
   it('should call the onPhaseStart and onPhaseEnd callbacks in the appear phase', function (done) {
-    var log = [];
+    const log = [];
 
-    var handlePhaseEnd = function (phase) {
+    const handlePhaseEnd = function (phase) {
       if (phase === 'appear') {
         log.push('end');
         expect(log).toEqual(['start', 'end']);
@@ -103,15 +102,15 @@ describe('Transition', function () {
       }
     };
 
-    var handlePhaseStart = function (phase) {
+    const handlePhaseStart = function (phase) {
       if (phase === 'appear') {
         log.push('start');
       }
     };
 
-    var Group = createReactClass({
-      render: function () {
-        var styles = {
+    class Group extends React.Component {
+      render() {
+        const styles = {
           base: {
             background: 'red',
           },
@@ -133,34 +132,32 @@ describe('Transition', function () {
             <div key={1}>1</div>
           </Transition>
         );
-      },
-    });
+      }
+    }
 
     ReactDOM.render(<Group />, container);
   });
 
   it('should call the onPhaseStart and onPhaseEnd callbacks in the enter phase', function (done) {
-    var log = [];
+    const log = [];
 
-    var handlePhaseEnd = function (phase) {
+    const handlePhaseEnd = function (phase) {
       if (phase === 'enter') {
         log.push('end');
       }
     };
 
-    var handlePhaseStart = function (phase) {
+    const handlePhaseStart = function (phase) {
       if (phase === 'enter') {
         log.push('start');
       }
     };
 
-    var Group = createReactClass({
-      getInitialState: function () {
-        return {count: 1};
-      },
+    class Group extends React.Component {
+      state = {count: 1};
 
-      render: function () {
-        var styles = {
+      render() {
+        const styles = {
           base: {
             background: 'red',
           },
@@ -170,8 +167,8 @@ describe('Transition', function () {
           },
         };
 
-        var elems = [];
-        for (var i = 0; i < this.state.count; i++) {
+        const elems = [];
+        for (let i = 0; i < this.state.count; i++) {
           elems.push(<div key={i} id={i}>{i}</div>);
         }
 
@@ -187,10 +184,10 @@ describe('Transition', function () {
             {elems}
           </Transition>
         );
-      },
-    });
+      }
+    }
 
-    var instance = ReactDOM.render(<Group />, container);
+    const instance = ReactDOM.render(<Group />, container);
 
     instance.setState({count: 2}, function () {
       expect(log).toEqual(['start', 'end']);
@@ -199,27 +196,31 @@ describe('Transition', function () {
   });
 
   it('should call the onPhaseStart and onPhaseEnd callbacks in the leave phase', function (done) {
-    var log = [];
+    const log = [];
 
-    var handlePhaseEnd = function (phase) {
+    const terminateTest = function () {
+      expect(log).toEqual(['start', 'end']);
+      done();
+    };
+
+    const handlePhaseEnd = function (phase) {
       if (phase === 'leave') {
         log.push('end');
+        terminateTest();
       }
     };
 
-    var handlePhaseStart = function (phase) {
+    const handlePhaseStart = function (phase) {
       if (phase === 'leave') {
         log.push('start');
       }
     };
 
-    var Group = createReactClass({
-      getInitialState: function () {
-        return {count: 1};
-      },
+    class Group extends React.Component {
+      state = {count: 1};
 
-      render: function () {
-        var styles = {
+      render() {
+        const styles = {
           base: {
             background: 'red',
           },
@@ -229,8 +230,8 @@ describe('Transition', function () {
           },
         };
 
-        var elems = [];
-        for (var i = 0; i < this.state.count; i++) {
+        const elems = [];
+        for (let i = 0; i < this.state.count; i++) {
           elems.push(<div key={i} id={i}>{i}</div>);
         }
 
@@ -246,25 +247,40 @@ describe('Transition', function () {
             {elems}
           </Transition>
         );
-      },
-    });
+      }
+    }
 
-    var instance = ReactDOM.render(<Group />, container);
+    const instance = ReactDOM.render(<Group />, container);
 
-    instance.setState({count: 0}, function () {
-      expect(log).toEqual(['start', 'end']);
-      done();
-    });
+    instance.setState({count: 0});
   });
 
   it('should apply different styles for appear and enter phases', function (done) {
-    var Group = createReactClass({
-      getInitialState: function () {
-        return {count: 1};
-      },
+    let instance;
+    let children;
+    const log = [];
 
-      render: function () {
-        var styles = {
+    const terminateTest = function () {
+      children = ReactDOM.findDOMNode(instance).getElementsByTagName('div');
+
+      log.push(children[0].style.background);
+      log.push(children[1].style.background);
+      expect(log).toEqual(['black', 'blue']);
+
+      done();
+    };
+
+    const handlePhaseEnd = function (phase) {
+      if (phase === 'leave') {
+        terminateTest();
+      }
+    };
+
+    class Group extends React.Component {
+      state = {count: 1};
+
+      render() {
+        const styles = {
           base: {
             background: 'red',
           },
@@ -278,8 +294,8 @@ describe('Transition', function () {
           },
         };
 
-        var elems = [];
-        for (var i = 0; i < this.state.count; i++) {
+        const elems = [];
+        for (let i = 0; i < this.state.count; i++) {
           elems.push(<div key={i} id={i}>{i}</div>);
         }
 
@@ -290,39 +306,31 @@ describe('Transition', function () {
               appear: styles.appear,
               enter: styles.enter,
             }}
+            onPhaseEnd={handlePhaseEnd}
           >
             {elems}
           </Transition>
         );
-      },
-    });
+      }
+    }
 
-    var instance = ReactDOM.render(<Group />, container);
-
-    instance.setState({count: 2}, function () {
-      var children = ReactDOM.findDOMNode(instance).getElementsByTagName('div');
-
-      expect(children[0].style.background).toBe('black');
-      expect(children[1].style.background).toBe('blue');
-
-      done();
-    });
+    instance = ReactDOM.render(<Group />, container);
+    instance.setState({count: 3});
+    instance.setState({count: 2});
   });
 
   it('should handle correctly the transitionend event', function (done) {
-    var handlePhaseEnd = function (phase) {
+    const handlePhaseEnd = function (phase) {
       if (phase === 'appear') {
         done();
       }
     };
 
-    var Group = createReactClass({
-      getInitialState: function () {
-        return {count: 1};
-      },
+    class Group extends React.Component {
+      state = {count: 1};
 
-      render: function () {
-        var styles = {
+      render() {
+        const styles = {
           base: {
             background: 'red',
           },
@@ -333,8 +341,8 @@ describe('Transition', function () {
           },
         };
 
-        var elems = [];
-        for (var i = 0; i < this.state.count; i++) {
+        const elems = [];
+        for (let i = 0; i < this.state.count; i++) {
           elems.push(<div key={i} id={i}>{i}</div>);
         }
 
@@ -349,16 +357,15 @@ describe('Transition', function () {
             {elems}
           </Transition>
         );
-      },
-    });
+      }
+    }
 
-    var instance = ReactDOM.render(<Group />, container);
-    var children = ReactDOM.findDOMNode(instance).getElementsByTagName('div');
+    const instance = ReactDOM.render(<Group />, container);
+    const children = ReactDOM.findDOMNode(instance).getElementsByTagName('div');
 
     var event = new TransitionEvent('transitionend', {
       propertyName: 'background-color',
     });
     children[0].dispatchEvent(event);
   });
-
 });

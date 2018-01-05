@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Button from './Button';
 import Transition from '../../src/Transition';
 import CSSTransition from 'react-addons-css-transition-group';
@@ -7,7 +8,7 @@ export default class Album extends React.Component {
   static displayName = 'Album';
 
   static propTypes = {
-    images: React.PropTypes.array,
+    images: PropTypes.array,
   };
 
   state = {

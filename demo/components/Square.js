@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Transition from '../../src/Transition';
 import CSSTransition from 'react-addons-css-transition-group';
 
@@ -6,9 +7,9 @@ export default class square extends React.Component {
   static displayName = 'square';
 
   static propTypes = {
-    active: React.PropTypes.bool,
-    left: React.PropTypes.number,
-    top: React.PropTypes.number,
+    active: PropTypes.bool,
+    left: PropTypes.number,
+    top: PropTypes.number,
   };
 
   state = {

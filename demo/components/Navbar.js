@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class Navbar extends React.Component {
   static displayName = 'Navbar';
 
   static propTypes = {
-    actions: React.PropTypes.array,
+    actions: PropTypes.array,
   };
 
   render() {

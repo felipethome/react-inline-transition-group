@@ -1,13 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class Button extends React.Component {
   static displayName = 'Button';
 
   static propTypes = {
-    children: React.PropTypes.any,
-    onMouseDown: React.PropTypes.func,
-    onMouseUp: React.PropTypes.func,
-    style: React.PropTypes.object,
+    children: PropTypes.any,
+    onMouseDown: PropTypes.func,
+    onMouseUp: PropTypes.func,
+    style: PropTypes.object,
   };
 
   state = {

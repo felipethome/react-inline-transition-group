@@ -1,4 +1,4 @@
-var TransitionParser;
+let TransitionParser;
 
 describe('TransitionParser', function () {
 
@@ -8,19 +8,19 @@ describe('TransitionParser', function () {
   });
 
   it('should return an empty object when there is no transition', function () {
-    var style = {
+    const style = {
       background: '#FFF',
       height: '50px',
       width: '50px',
     };
 
-    var transitions = TransitionParser.getTransitionValues(style);
+    const transitions = TransitionParser.getTransitionValues(style);
 
     expect(transitions).toEqual({});
   });
 
   it('should parse transition shorthand correctly', function () {
-    var style = {
+    const style = {
       background: '#FFF',
       height: '50px',
       width: '50px',
@@ -29,7 +29,7 @@ describe('TransitionParser', function () {
         'width 3s cubic-bezier(0.15, 1, 0.75, 4)',
     };
 
-    var transitions = TransitionParser.getTransitionValues(style);
+    const transitions = TransitionParser.getTransitionValues(style);
 
     expect(transitions).toEqual({
       transitionProperty: ['background', 'height', 'width'],
@@ -39,7 +39,7 @@ describe('TransitionParser', function () {
   });
 
   it('should parse transitions with different lengths correctly', function () {
-    var style = {
+    const style = {
       background: '#FFF',
       height: '50px',
       width: '50px',
@@ -48,7 +48,7 @@ describe('TransitionParser', function () {
       transitionDelay: '3s',
     };
 
-    var transitions = TransitionParser.getTransitionValues(style);
+    const transitions = TransitionParser.getTransitionValues(style);
 
     expect(transitions).toEqual({
       transitionProperty: ['background', 'height', 'width'],
@@ -58,14 +58,14 @@ describe('TransitionParser', function () {
   });
 
   it('should parse respecting the order of appearance', function () {
-    var style = {
+    let style = {
       background: '#FFF',
       height: '50px',
       transition: 'background 1s 3s, height 2s 3s',
       transitionDelay: '4s',
     };
 
-    var transitions = TransitionParser.getTransitionValues(style);
+    let transitions = TransitionParser.getTransitionValues(style);
 
     expect(transitions).toEqual({
       transitionProperty: ['background', 'height'],
@@ -106,7 +106,7 @@ describe('TransitionParser', function () {
   });
 
   it('should parse the "all" property correctly', function () {
-    var style = {
+    const style = {
       background: '#FFF',
       height: '50px',
       width: '50px',
@@ -114,7 +114,7 @@ describe('TransitionParser', function () {
       transitionDuration: '1s, 2s',
     };
 
-    var transitions = TransitionParser.getTransitionValues(style);
+    const transitions = TransitionParser.getTransitionValues(style);
 
     expect(transitions).toEqual({
       transitionProperty: ['all', 'background'],
@@ -123,14 +123,14 @@ describe('TransitionParser', function () {
   });
 
   it('should parse the "all" property in shorthands correctly', function () {
-    var style = {
+    const style = {
       background: '#FFF',
       height: '50px',
       width: '50px',
       transition: 'all 1s ease-out 1s, background 2s',
     };
 
-    var transitions = TransitionParser.getTransitionValues(style);
+    const transitions = TransitionParser.getTransitionValues(style);
 
     expect(transitions).toEqual({
       transitionProperty: ['all', 'background'],
@@ -140,14 +140,14 @@ describe('TransitionParser', function () {
   });
 
   it('should not differentiate uppercase and lowercase letters', function () {
-    var style = {
+    let style = {
       background: '#FFF',
       height: '50px',
       width: '50px',
       transition: 'AlL 1S, backgroUnD 2s',
     };
 
-    var transitions = TransitionParser.getTransitionValues(style);
+    let transitions = TransitionParser.getTransitionValues(style);
 
     expect(transitions).toEqual({
       transitionProperty: ['all', 'background'],
@@ -172,14 +172,14 @@ describe('TransitionParser', function () {
   });
 
   it('should handle "s" and "ms" units', function () {
-    var style = {
+    let style = {
       background: '#FFF',
       height: '50px',
       width: '50px',
       transition: 'all 1s, background 20ms',
     };
 
-    var transitions = TransitionParser.getTransitionValues(style);
+    let transitions = TransitionParser.getTransitionValues(style);
 
     expect(transitions).toEqual({
       transitionProperty: ['all', 'background'],
@@ -204,14 +204,14 @@ describe('TransitionParser', function () {
   });
 
   it('should handle extra spaces correctly', function () {
-    var style = {
+    let style = {
       background: '#FFF',
       height: '50px',
       width: '50px',
       transition: '    all     1s   ,background   20ms    ',
     };
 
-    var transitions = TransitionParser.getTransitionValues(style);
+    let transitions = TransitionParser.getTransitionValues(style);
 
     expect(transitions).toEqual({
       transitionProperty: ['all', 'background'],
@@ -236,7 +236,7 @@ describe('TransitionParser', function () {
   });
 
   it('should handle browser prefixes correctly', function () {
-    var style = {
+    let style = {
       background: '#FFF',
       height: '50px',
       width: '50px',
@@ -244,7 +244,7 @@ describe('TransitionParser', function () {
       WebkitTransition: 'all 1s ,background 2s',
     };
 
-    var transitions = TransitionParser.getTransitionValues(style);
+    let transitions = TransitionParser.getTransitionValues(style);
 
     expect(transitions).toEqual({
       transitionProperty: ['all', 'background'],
@@ -286,7 +286,7 @@ describe('TransitionParser', function () {
   });
 
   it('should throw an error when was expected a numeric value', function () {
-    var style = {
+    const style = {
       background: '#FFF',
       transition: 'background ease-out 1s',
     };

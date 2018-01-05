@@ -147,7 +147,7 @@ gulp.task('dev', function () {
 
   var serverOpt = {
     root: './demo',
-    port: 8889,
+    port: 8080,
     livereload: true,
     fallback: './demo/index.html',
   };

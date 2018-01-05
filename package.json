@@ -1,6 +1,6 @@
 {
   "name": "react-inline-transition-group",
-  "version": "2.1.7",
+  "version": "2.2.0",
   "author": "Felipe Thomé",
   "description": "Like React CSS Transition Group, but with inline style.",
   "license": "BSD-3-Clause",
@@ -64,8 +64,12 @@
   },
   "jest": {
     "collectCoverage": true,
-    "transform": {".*": "<rootDir>/node_modules/babel-jest"},
+    "transform": {
+      ".*": "<rootDir>/node_modules/babel-jest"
+    },
     "testRegex": "(/__tests__/.*\\-test)\\.(js)$",
-    "roots": ["<rootDir>/src"]
+    "roots": [
+      "<rootDir>/src"
+    ]
   }
 }

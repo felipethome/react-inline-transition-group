@@ -1,9 +1,0 @@
-*.log
-node_modules
-lib
-demo/build
-demo/deploy
-.publish
-.DS_Store
-package-backup-*.json
-coverage
